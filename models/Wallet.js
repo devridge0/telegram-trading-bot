@@ -6,14 +6,14 @@ const WalletSchema = new Schema({
   chatId: { type: Number, required: true },
   publicKey: { type: String, required: true },
   privateKey: { type: String, required: true },
-  // referral: [
-  //   {
-  //     chatId: Number,
-  //     username: String,
-  //     payAmount: Number
-  //   }
+  referral: [
+    {
+      chatId: Number,
+      username: String,
+      payAmount: Number
+    }
 
-  // ],
+  ],
   referralWallet: { type: String },
   buyAmount: { type: Number, default: 0.5, },
   slippage: { type: Number, default: 25, },
