@@ -46,7 +46,7 @@ const ReferralController = {
 If you want to change it, just send a new one. Otherwise <code>/start</code> to go back to the main menu.`
 
             await bot.sendMessage(chatId, title, {
-                reply_markup: {}, // Provide appropriate keyboard object here if needed
+                reply_markup: {},
                 disable_web_page_preview: true,
                 parse_mode: 'HTML'
             });
