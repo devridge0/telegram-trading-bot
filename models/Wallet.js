@@ -15,11 +15,12 @@ const WalletSchema = new Schema({
 
   ],
   referralWallet: { type: String },
-  buyAmount: { type: Number, default: 0.5, },
+  buyAmount: { type: Number, default: 0.005, },
   slippage: { type: Number, default: 25, },
   selltype: { type: String, default: `all` },
   stopLoss: { type: Number, default: 2, },
   takeProfit: { type: Number, default: 5, },
+  jitoTip: { type: Number, default: 100000, },
 });
 
 const Wallet = mongoose.model("Wallet", WalletSchema);
