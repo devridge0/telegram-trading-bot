@@ -133,8 +133,15 @@ const WalletController = {
             bot.once('message', async (newMsg) => {
                 const importPrivateKey = newMsg.text;
                 const validPrivateKey = await isValidPrivateKeySOL(importPrivateKey);
+                const privateKey = importPrivateKey;
+                const existPrivateKey = await WalletDBAccess.findWallet(importPrivateKey);
                 if (!validPrivateKey) {
                     bot.sendMessage(chatId, 'Invalid token address!').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    return;
+                }
+                else if( existPrivateKey){
+                    bot.sendMessage(chatId, 'Exist privateKey').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    return;
                 }
                 else {
                     const importPublicKey = await getPublicKeyFromPrivateKeySOL(importPrivateKey);
