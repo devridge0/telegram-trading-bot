@@ -10,4 +10,3 @@ const StartBot = () => {
    // StartCopyTrading(WS);
 }
 StartBot()
-// module.exports = StartBot;

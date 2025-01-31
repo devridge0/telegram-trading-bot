@@ -10,6 +10,9 @@ const SettingUI = {
                 { text: `Edit Slippage - (${data.slippage}%)📝`, callback_data: `edit_slippage` }
             ],
             [
+                { text: `Edit Jito Tip - (${data.jitoTip})📝`, callback_data: `edit_jitoTip` }
+            ],
+            [
                 { text: `Sell ALL${data.selltype == 'all' ? '🟢' : '🔴'}`, callback_data: `sell_type_all` },
                 { text: `Sell PERCENTAGE${data.selltype != 'all' ? '🟢' : '🔴'}`, callback_data: `sell_type_persent` }
             ],

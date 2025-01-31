@@ -114,6 +114,43 @@ Example: 20
             Red(`settingEditSlippagePage     ===> ${error}`);
         }
     },
+    settingEditJitoTipPage: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+
+            const chatId = queryData.message.chat.id;
+            const messageId = queryData.message?.message_id;
+            bot.sendMessage(chatId, `Enter your Jito Tip below.`);
+            bot.once(`message`, async (newMsg) => {
+                const jitoTip = newMsg.text;
+                if (jitoTip != Number(jitoTip)) {
+                    bot.sendMessage(chatId, `🚫 Invalid JitoTip value, try again`);
+                    return;
+                } else {
+                    const updateResult = await WalletDBAccess.findOneAndUpdateWallet(chatId, { jitoTip });
+                    if (!updateResult) {
+                        bot.sendMessage(chatId, `Updeate failed.`)
+                    }
+                    else {
+                        const findUserWallet = await WalletDBAccess.findWallet(chatId);
+                        const { title, button } = SettingUI.settingPage(findUserWallet);
+                        bot.sendMessage(chatId, title,
+                            {
+                                reply_markup: {
+                                    inline_keyboard: button
+                                }
+                            }
+                        );
+                    }
+                }
+            })
+        } catch (error) {
+            Red(`settingEditSlippagePage     ===> ${error}`);
+        }
+    },
 
     settingSellTypeAllPage: async (bot, queryData) => {
         try {
