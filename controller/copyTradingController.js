@@ -156,17 +156,24 @@ const CopyTradingController = {
                 if (result.isSwap) {
                     console.log(`📌 Find oppotunity!!!📌`);
                     Green(JSON.stringify(result))
-                    bot.sendMessage(chatId, `Find oppounity!!`)
+                    bot.sendMessage(chatId, `Find oppounity!!`);
                     const findUserWallet = await WalletDBAccess.findWallet(chatId);
+                    const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
+                    if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
+                        bot.sendMessage(chatId, `Not enough SOL balance.`);
+                        return;
+                    }
 
                     let mode;
                     let copyTradingResult;
                     if (result.receiveToken == `So11111111111111111111111111111111111111112`) {
                         mode = "sell";
-                        copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, 100, findUserWallet.slippage, mode);
+                        const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
+                        Blue(`sell Amount  --------> ${sellAmount}`)
+                        copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
                     } else {
                         mode = 'buy';
-                        copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, mode);
+                        copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
                     }
                     if (copyTradingResult) {
                         const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(userId, chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address)
@@ -181,7 +188,7 @@ const CopyTradingController = {
             }
             CopyTradingController.actionMainCopyTrading(bot, updateData.userId, updateData.chatId, address, updateData.status);
         } catch (error) {
-            Red(`actionMainCopyTrading ====>   ${error}`)
+            Red(`actionMainCopyTrading ====>   ${error}`);
         }
     }
 

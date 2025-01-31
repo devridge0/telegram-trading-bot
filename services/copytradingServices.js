@@ -20,7 +20,7 @@ const StartCopyTrading = (ws) => {
     Green(`start.........`)
     ws.onopen = async function open() {
         console.log('WebSocket is open');
-        const copyOrders = await WalletDBAccess.findAllTargetWallet();
+        const copyOrders = await WalletDBAccess.findAllTargetWallet(7364905773);
         Green(copyOrders);
         for (let i = 0; i < copyOrders.length; i++) {
             if (copyOrders[i].status && copyOrders[i].address) {

@@ -7,7 +7,7 @@ const UI = require('../ui');
 const WalletController = require('../controller/walletController');
 const PositionController = require('../controller/positionController');
 const CopyTradingController = require('./../controller/copyTradingController');
-const ReferralController = require('../controller/referralContriller');
+const ReferralController = require('../controller/referralController');
 const SettingController = require('../controller/settingController');
 
 dotenv.config();
@@ -27,14 +27,17 @@ const init = () => {
 
     bot.onText(/\/start(.*)/, startCommand);
 
+    let chatId;
+    let userId;
+
     function startCommand(msg, match) {
-        const chatId = msg.chat.id;
-        const userId = msg.chat.username;
+        chatId = msg.chat.id;
+        userId = msg.chat.username;
         StartController.startCommand(bot, chatId, userId);
         console.log(`referral ====🚀`, match[1]);
-        if(chatId == match[1]){
+        if (chatId == match[1]) {
             console.log(`referralMAN ====🚀`, `referralMAN`);
-            
+
         }
     }
 
@@ -61,7 +64,7 @@ const init = () => {
             else if (callBackQuery === 'import_wallet') {
                 WalletController.importWalletSOL(bot, query);
             }
-            else if (callBackQuery === 'back' || callBackQuery ==='refresh') {
+            else if (callBackQuery === 'back') {
                 StartController.back(bot, query);
             }
             else if (callBackQuery === 'withdraw') {
@@ -174,6 +177,9 @@ const init = () => {
             }
             else if (callBackQuery === `edit_slippage`) {
                 SettingController.settingEditSlippagePage(bot, query);
+            }
+            else if (callBackQuery === `edit_jitoTip`) {
+                SettingController.settingEditJitoTipPage(bot, query);
             }
             else if (callBackQuery === `sell_type_all`) {
                 SettingController.settingSellTypeAllPage(bot, query);

@@ -2,6 +2,9 @@ const bs58 = require('bs58');
 const fetch = require('cross-fetch')
 const chalk = require('chalk');
 const { TOKEN_PROGRAM_ID, Token, AccountLayout } = require('@solana/spl-token');
+const dotenv = require('dotenv');
+dotenv.config();
+
 let newSignList = [];
 
 const {
@@ -136,6 +139,25 @@ const SolanaNetwork = {
         }
     },
 
+    getSellTokenAmount: async (publicKey, address) => {
+        try {
+            const walletPublicKey = new PublicKey(publicKey);
+            const tokenAccounts = await connection.getParsedTokenAccountsByOwner(walletPublicKey, {
+                programId: TOKEN_PROGRAM_ID
+            });
+            const sellTokenAmountResult = tokenAccounts.value.filter(account => {
+                if (account.account.data.parsed.info.mint == address) {
+                    return account.account.data.parsed.info.tokenAmount.uiAmount;
+                }
+            });
+
+            return sellTokenAmountResult;
+
+        } catch (error) {
+            Red(`getSellTokenAmount ====🚀${error}`);
+        }
+    },
+
     getMyTokensInWalletSOL: async (publicKey) => {
         try {
             const walletPublicKey = new PublicKey(publicKey);
@@ -205,7 +227,7 @@ const SolanaNetwork = {
         }
     },
 
-    JUPITER_TOKN_SWAP: async (tokenMintAddress, payerSecretKey, amount, slippage, mode) => {
+    JUPITER_TOKN_SWAP: async (tokenMintAddress, payerSecretKey, amount, slippage, jitoTip, mode) => {
         try {
 
             const wallet = new Wallet(Keypair.fromSecretKey(bs58.decode(payerSecretKey)));
@@ -213,10 +235,12 @@ const SolanaNetwork = {
 
             let quoteResponse;
             if (mode == 'buy') {
+                return;
                 White(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`)
                 quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`);
             }
             else {
+                Blue(`Sell mode............`)
                 White(`https://quote-api.jup.ag/v6/quote?inputMint=${tokenMintAddress}&outputMint=So11111111111111111111111111111111111111112&amount=${amount}&slippageBps=${slippage}`)
                 quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${tokenMintAddress}&outputMint=So11111111111111111111111111111111111111112&amount=${amount}&slippageBps=${slippage}`);
             }
@@ -247,12 +271,11 @@ const SolanaNetwork = {
             let transaction = VersionedTransaction.deserialize(swapTransactionBuf);
             transaction.sign([wallet.payer]);
 
+
             const txid = bs58.encode(transaction.signatures[0]);
-
             const latestBlockHash = await connection.getLatestBlockhash();
-            const jito_tip = 100000;
 
-            let result = await SolanaNetwork.JITO_BUNDLE(transaction, keypair, latestBlockHash, jito_tip);
+            let result = await SolanaNetwork.JITO_BUNDLE(transaction, keypair, latestBlockHash, jitoTip);
 
             if (result) {
                 console.log(`--> Tx confirmed! Details: https://solscan.io/tx/${txid}`);
@@ -491,10 +514,10 @@ const SolanaNetwork = {
                 params: [final_transaction],
             });
 
-            if(data){
+            if (data) {
                 return true;
             }
-            else{
+            else {
                 return false;
             }
 
