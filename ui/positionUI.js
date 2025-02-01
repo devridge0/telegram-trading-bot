@@ -118,15 +118,15 @@ Click “Yes” or “No” below to confirm your burn ⬇️`;
         return { title, button };
     },
     myTradesPage: (trade, currentPageNumber) => {
-        const title = `🚨Price at 🔥${Math.round(trade.currentPrice / trade.price)}X 🔥
+        console.log(`trade ====🚀`, trade);
+        
+        const title = `
 
-        🪙Coin: ${trade.tokenName}
-        📊Cost: ${trade.price}$
-        📈Current Price: ${trade.currentPrice}$
+        🪙Coin: <code>${trade.whaleWallet}</code>
         💳Wallet: 
         <code>${trade.myWallet}</code>
         👑Copy Trader:
-        <code>${trade.copyWallet}</code>
+        <code>${trade.whaleWallet}</code>
         
         👆Tap to copy the copy trader 💸
 
