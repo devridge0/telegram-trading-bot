@@ -43,7 +43,6 @@ const StartController = {
 
     startCommand: async (bot, chatId, userId) => {
         try {
-
             const findUserWallet = await WalletDBAccess.findWallet(chatId);
             currentPublicKey = findUserWallet.publicKey;
             currentPrivateKey = findUserWallet.privateKey;
