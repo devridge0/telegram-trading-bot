@@ -7,7 +7,8 @@ const walletAddresses = [
 
 const chalk = require("chalk");
 const WalletDBAccess = require('../db/wallet-db-access');
-const { getSwapInfo } = require('./solana');
+const { getSwapInfo, getSolBalanceSOL } = require('./solana');
+const { copyTradingStartAndStopPageSOL } = require('../controller/copyTradingController');
 
 const Red = (str) => console.log(chalk.bgRed(str));
 const Yellow = (str) => console.log(chalk.bgYellow(str));
@@ -17,57 +18,73 @@ const White = (str) => console.log(chalk.bgWhite(str));
 
 const WS = new WebSocket(SOLANA_WSS_ENDPOINT);
 
-let activeAddresses = []
+let activeAddresses = [];
 
 const StartCopyTrading = (ws) => {
     console.log(`Copy Trading WebSocket starting...`);
+    try {
 
-    ws.on('message', (data) => {
-        const response = JSON.parse(data);
-        activeAddresses[activeAddresses.length - 1].id = response.result
-        Blue(JSON.stringify(activeAddresses[activeAddresses.length - 1]))
-        Green(JSON.stringify(response))
-        if (response.method === "logsNotification") {
-            const signature = response.params.result.value.signature;
-            console.log(`✅Transaction find!!! ===> ${signature}`);
-        }
-    });
+        ws.on('message', async (data) => {
+            const response = JSON.parse(data);
+            Green(`New address starting ... ${JSON.stringify(response)}`);
+            if (typeof response.result == 'number') {
+                activeAddresses[activeAddresses.length - 1].id = response.result;
+            }
+            if (response.method === "logsNotification") {
+                const signature = response.params.result.value.signature;
+                const subscriptionId = response.params.subscription;
+                const subAddress = activeAddresses.filter((e) => e.id == subscriptionId);
+                console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
+                const swapInfoResult = await getSwapInfo(signature);
+                const swapInfo = { ...swapInfoResult, whaleAddress: subAddress[0].address };
 
+            }
+        });
+    } catch (error) {
+        Red(`StartCopy Trading : ${error}`)
+    }
 }
 
-function startTracking(address) {
-    subscribeAddress(address);
+function startTracking(address, chatId) {
+    subscribeAddress(address, chatId);
 }
 
 // Stop button (unsubscribe from an address)
-function stopTracking(address) {
-    unsubscribeAddress(address);
+function stopTracking(address, chatId) {
+    unsubscribeAddress(address, chatId);
 }
 
-function subscribeAddress(address) {
-    console.log(`Subscribed to: ${address}`);
-    activeAddresses.push({ address, id: 1 })
+function subscribeAddress(address, chatId) {
+    try {
+        activeAddresses = activeAddresses.filter((e) => e.address != address);
+        activeAddresses.push({ address, chatId, id: 1, })
 
-    WS.send(JSON.stringify({
-        jsonrpc: "2.0",
-        id: `sub-${address}`,
-        method: "logsSubscribe",
-        params: [{ mentions: [address] }, { commitment: "confirmed" }]
-    }));
+        WS.send(JSON.stringify({
+            jsonrpc: "2.0",
+            id: `sub-${address}`,
+            method: "logsSubscribe",
+            params: [{ mentions: [address] }, { commitment: "confirmed" }]
+        }));
+    } catch (e) {
+        Red(`subscription  ${e} `)
+    }
 }
 
 // Function to unsubscribe an address
 function unsubscribeAddress(address) {
-    const result = activeAddresses.filter((e) => e.address == address);
-    White(result[0].id)
-    console.log(`Unsubscribed from: ${address}`);
+    try {
 
-    WS.send(JSON.stringify({
-        jsonrpc: "2.0",
-        id: `unsub-${address}`,
-        method: "logsUnsubscribe",
-        params: [result[0].id] // Using the subscription ID
-    }));
+        const result = activeAddresses.filter((e) => e.address == address);
+
+        WS.send(JSON.stringify({
+            jsonrpc: "2.0",
+            id: `unsub-${address}`,
+            method: "logsUnsubscribe",
+            params: [result[0].id] // Using the subscription ID
+        }));
+    } catch (error) {
+        Red(`unsubsciption ===== ${error}`)
+    }
 }
 
 // StartCopyTrading(WS);
