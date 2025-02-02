@@ -17,59 +17,60 @@ const White = (str) => console.log(chalk.bgWhite(str));
 
 const WS = new WebSocket(SOLANA_WSS_ENDPOINT);
 
-const StartCopyTrading = (ws, chatId) => {
-    ws.on("open", async () => {
-        Green(`Copy Trading start Socket ......`);
-        try {
-            const copyOrders = await WalletDBAccess.findAllTargetWallet(chatId);
-            for (let i = 0; i < copyOrders.length; i++) {
-                if (copyOrders[i].status === 'true' && copyOrders[i].address) {
-                    const request = {
-                        jsonrpc: "2.0",
-                        id: copyOrders[i]._id,
-                        method: "logsSubscribe",
-                        params: [
-                            { mentions: [copyOrders[i].address] },
-                            { commitment: "confirmed" }
-                        ]
-                    };
-                    ws.send(JSON.stringify(request));
-                }
-            }
-        } catch (error) {
-            Red(`Error in WebSocket open event: ${error.message}`);
+let activeAddresses = []
+
+const StartCopyTrading = (ws) => {
+    console.log(`Copy Trading WebSocket starting...`);
+
+    ws.on('message', (data) => {
+        const response = JSON.parse(data);
+        activeAddresses[activeAddresses.length - 1].id = response.result
+        Blue(JSON.stringify(activeAddresses[activeAddresses.length - 1]))
+        Green(JSON.stringify(response))
+        if (response.method === "logsNotification") {
+            const signature = response.params.result.value.signature;
+            console.log(`✅Transaction find!!! ===> ${signature}`);
         }
     });
 
-    ws.on("message", async (data) => {
-        const parsedData = JSON.parse(data);
-        Green(JSON.stringify(parsedData));
-
-        // if (parsedData.method === 'logsNotification') {
-        //     const signature = parsedData.params.result.value.signature;
-        //     console.log(`✅ Transaction Detected for Wallet: ${signature}`);
-        //     const getSwapInfoResult = await getSwapInfo(signature);
-
-        // }
-
-    });
-
-    // ws.on('error', function error(err) {
-    //     console.log('❌WebSocket error:', err);
-    //     let WS = new WebSocket(SOLANA_WSS_ENDPOINT);
-    //     StartCopyTrading(WS, chatId);
-    //     console.log('Start Web Socket again...');
-    //     return;
-    // });
-
-    // ws.on('close', function close() {
-    //     console.log('StartCopyTrading is closed');
-    //     let WS = new WebSocket(SOLANA_WSS_ENDPOINT);
-    //     StartCopyTrading(WS, chatId);
-    //     console.log('StartCopyTrading is opening again...');
-    // });
-
-
 }
 
-module.exports = { StartCopyTrading, WS };
+function startTracking(address) {
+    subscribeAddress(address);
+}
+
+// Stop button (unsubscribe from an address)
+function stopTracking(address) {
+    unsubscribeAddress(address);
+}
+
+function subscribeAddress(address) {
+    console.log(`Subscribed to: ${address}`);
+    activeAddresses.push({ address, id: 1 })
+
+    WS.send(JSON.stringify({
+        jsonrpc: "2.0",
+        id: `sub-${address}`,
+        method: "logsSubscribe",
+        params: [{ mentions: [address] }, { commitment: "confirmed" }]
+    }));
+}
+
+// Function to unsubscribe an address
+function unsubscribeAddress(address) {
+    const result = activeAddresses.filter((e) => e.address == address);
+    White(result[0].id)
+    console.log(`Unsubscribed from: ${address}`);
+
+    WS.send(JSON.stringify({
+        jsonrpc: "2.0",
+        id: `unsub-${address}`,
+        method: "logsUnsubscribe",
+        params: [result[0].id] // Using the subscription ID
+    }));
+}
+
+// StartCopyTrading(WS);
+
+
+module.exports = { StartCopyTrading, WS, startTracking, stopTracking };

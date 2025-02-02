@@ -5,7 +5,7 @@ const axios = require('axios');
 const UI = require("../ui");
 const CopyTradingUI = require("../ui/copyTradingUI");
 const TargetWallet = require("../models/targetWallet");
-const { StartCopyTrading } = require("../services/copytradingServices");
+const { StartCopyTrading, AddorRemoveTradingWallet, startTracking, stopTracking } = require("../services/copytradingServices");
 const WebSocket = require('ws');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -143,7 +143,12 @@ const CopyTradingController = {
             const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
             await UI.switchMenu(bot, chatId, messageId, title, button,);
 
-            await StartCopyTrading(WS, chatId);
+            if (newData[1] == 'true') {
+                await stopTracking(newData[0], chatId);
+            }
+            else {
+                await startTracking(newData[0], chatId);
+            }
             // const myTargetWallet = await WalletDBAccess.findTargetWallet(chatId, newData[0]);
             // await CopyTradingController.actionMainCopyTrading(bot, userId, chatId, myTargetWallet.address, myTargetWallet.status)
 
