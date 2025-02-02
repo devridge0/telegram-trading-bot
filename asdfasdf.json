@@ -1,5 +1,44 @@
-{'id': 8348, 'name': '6vs4zp3spd', 'symbol': '002nhiwpm4s1x', 'slug': 'a1xaq99t11h', 'cmc_rank': 3713, 'num_market_pairs': 5082, 'circulating_supply': 37, 'total_supply': 7053, 'max_supply': 5517, 'infinite_supply': None, 'last_updated': '2025-01-31T07: 43: 45.605Z', 'date_added': '2025-01-31T07: 43: 45.605Z', 'tags': ['w2bxw4tsl3q', '1u7lv055k2d', 'swl3hdmilb', 'fxanxx38huj', 'snbk05e8e18', 'ez93sxt9tyh', 'pndejcytb8', '36mepdl17xd', '0jikurmope9', 'uxuuiho5tpf'
-    ], 'platform': None, 'self_reported_circulating_supply': None, 'self_reported_market_cap': None, 'quote': {'USD': {'price': 0.08231315519801252, 'volume_24h': 5822, 'volume_change_24h': 0.06968254680340724, 'percent_change_1h': 0.13867326423836857, 'percent_change_24h': 0.49521664370011687, 'percent_change_7d': 0.48410155189169135, 'market_cap': 0.8052189103514265, 'market_cap_dominance': 6754, 'fully_diluted_market_cap': 0.9960041773482531, 'last_updated': '2025-01-31T07: 43: 45.605Z'
-        }
+{
+    "jsonrpc": "2.0",
+    "method": "logsNotification",
+    "params": {
+        "result": {
+            "context": {
+                "slot": 318045950
+            },
+            "value": {
+                "signature": "YURbAeyPRtGQtvAmq4oC2odfGL8tT6oVopq2RMzT3BkWF5C5xicdf5RyoBEemVcuc5Bw9KgN1yCJtdM6zmBHT9t",
+                "err": null,
+                "logs": [
+                    "Program ComputeBudget111111111111111111111111111111 invoke [1]",
+                    "Program ComputeBudget111111111111111111111111111111 success",
+                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+                    "Program log: CreateIdempotent",
+                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4338 of 249850 compute units",
+                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
+                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+                    "Program log: CreateIdempotent",
+                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 5839 of 245512 compute units",
+                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
+                    "Program 9gE6qg2UMAukPj67wM6Jy2L2C1wxeqMRWceg2T6tkzV4 invoke [1]",
+                    "Program log: Instruction: TradeRaydiumAmm",
+                    "Program 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8 invoke [2]",
+                    "Program log: ray_log: A0u4mm5zAAAAAAAAAAAAAAACAAAAAAAAANoXVa8uAQAAyThyl9OSAADYxv95YAYAAG9ATfwEAAAA",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]",
+                    "Program log: Instruction: Transfer",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 202084 compute units",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]",
+                    "Program log: Instruction: Transfer",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4736 of 194458 compute units",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+                    "Program 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8 consumed 30588 of 219442 compute units",
+                    "Program 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8 success",
+                    "Program 9gE6qg2UMAukPj67wM6Jy2L2C1wxeqMRWceg2T6tkzV4 consumed 54761 of 239673 compute units",
+                    "Program 9gE6qg2UMAukPj67wM6Jy2L2C1wxeqMRWceg2T6tkzV4 success"
+                ]
+            }
+        },
+        "subscription": 409137
     }
-},
+}
