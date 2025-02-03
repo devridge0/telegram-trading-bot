@@ -9,12 +9,17 @@ const PositionController = require('../controller/positionController');
 const CopyTradingController = require('./../controller/copyTradingController');
 const ReferralController = require('../controller/referralController');
 const SettingController = require('../controller/settingController');
+const BaseStartController = require('../controller/base/baseStartController');
+const BaseWalletController = require('../controller/base/baseWalletController');
 
 dotenv.config();
 
 
 
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
+let chatId;
+let userId;
+
 
 const init = () => {
     bot.setMyCommands(
@@ -27,8 +32,6 @@ const init = () => {
 
     bot.onText(/\/start(.*)/, startCommand);
 
-    let chatId;
-    let userId;
 
     function startCommand(msg, match) {
         chatId = msg.chat.id;
@@ -48,6 +51,11 @@ const init = () => {
 
             if (callBackQuery === 'wallet' || callBackQuery === 'wallet_delete_no') {
                 WalletController.wallet(bot, query);
+            }
+            if (callBackQuery === 'sol_network') {
+                const chatId = query.message.chat.id;
+                const userId = query.message.chat.username;
+                StartController.startCommand(bot, chatId, userId)
             }
             else if (callBackQuery === 'wallet_delete') {
                 WalletController.walletDeleteSOL(bot, query);
@@ -193,6 +201,16 @@ const init = () => {
             else if (callBackQuery === `edit_take_profit`) {
                 SettingController.settingEditTakeProfitPage(bot, query);
             }
+
+
+
+            else if (callBackQuery === `base_network`) {
+                BaseStartController.baseStartCommand(bot, query);
+            }
+            else if (callBackQuery === 'base_wallet' || callBackQuery === 'base_wallet_delete_no') {
+                BaseWalletController.baseWallet(bot, query);
+            }
+
 
         } catch (error) {
             console.log(error)
