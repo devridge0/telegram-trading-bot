@@ -17,8 +17,8 @@ const UI = {
         const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Ethereum and Solana networks. 🐳. \n ____________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
         const button = [
             [
-                { text: `SOL`, callback_data: `sol_network` },
-                { text: `BASE`, callback_data: `base_network` }
+                { text: `SOL🟢`, callback_data: `sol_network` },
+                { text: `BASE🔴`, callback_data: `base_network` }
             ],
             [
                 { text: `Wallet : ${balance.toFixed(3)} SOL ~ $${(balance * usd).toFixed(2)} 💰`, callback_data: `wallet` }
