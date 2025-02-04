@@ -18,7 +18,7 @@ Discover our top wallets -><a href="https://t.me/eclipsewhales">CLICK HERE</a>`;
             showAllWhale(whale);
         }
         button.push([
-            { text: `Back 🔙`, callback_data: `base_copy_trading` }
+            { text: `Back 🔙`, callback_data: `base_network` }
         ]);
 
         return { title, button };

@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
 const BaseTargetWallet = require("../../models/base/baseTargetWallet");
 const BaseUI = require("../../ui/base/baseLandingUI");
-const BaseCopyTradingUI = require("../../ui/base/copyTradingUI");
+const BaseCopyTradingUI = require("../../ui/base/baseCopyTradingUI");
 const { isValidBasePublicKey } = require("../../services/base");
 dotenv.config();
 

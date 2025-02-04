@@ -13,6 +13,7 @@ const BaseStartController = require('../controller/base/baseStartController');
 const BaseWalletController = require('../controller/base/baseWalletController');
 const BasePositionController = require('../controller/base/basePositionController');
 const BaseCopyTradingController = require('../controller/base/baseCopyTradingController');
+const BaseSettingController = require('../controller/base/baseSettingController');
 
 dotenv.config();
 
@@ -293,6 +294,27 @@ const init = () => {
             }
             else if (callBackQuery.includes(`copy_base_`)) {
                 BaseCopyTradingController.copyTradingStartAndStopPageETH(bot, query, callBackQuery.slice(10, callBackQuery.length));
+            }
+            else if (callBackQuery === `base_setting`) {
+                BaseSettingController.settingPageETH(bot, query);
+            }
+            else if (callBackQuery === `base_buy_amount`) {
+                BaseSettingController.settingBuyAmountPageETH(bot, query);
+            }
+            else if (callBackQuery === `base_edit_slippage`) {
+                BaseSettingController.settingEditSlippagePageETH(bot, query);
+            }
+            else if (callBackQuery === `base_sell_type_all`) {
+                BaseSettingController.settingSellTypeAllPageETH(bot, query);
+            }
+            else if (callBackQuery === `base_sell_type_persent`) {
+                BaseSettingController.settingSellTypePercentPageETH(bot, query);
+            }
+            else if (callBackQuery === `base_edit_stop_loss`) {
+                BaseSettingController.settingEditStopLossPageETH(bot, query);
+            }
+            else if (callBackQuery === `base_edit_take_profit`) {
+                BaseSettingController.settingEditTakeProfitPageETH(bot, query);
             }
 
 
