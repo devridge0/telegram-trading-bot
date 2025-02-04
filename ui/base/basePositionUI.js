@@ -32,19 +32,19 @@ Current page ${currentPageNumber + 1} pages`
 
         const button = [
             [
-                { text: `Buy 🎯`, callback_data: `token_buy` },
-                { text: `Sell & Manage 🛠`, callback_data: `sell_manage_page` }
+                { text: `Buy 🎯`, callback_data: `base_token_buy` },
+                { text: `Sell & Manage 🛠`, callback_data: `base_sell_manage_page` }
             ],
             [
-                { text: `Prev`, callback_data: `my_token_prev-${currentPageNumber - 1}` },
+                { text: `Prev`, callback_data: `my_base_token_prev-${currentPageNumber - 1}` },
                 { text: `${currentPageNumber + 1}`, callback_data: `page_number` },
-                { text: `Next`, callback_data: `my_token_next-${currentPageNumber + 1}` }
+                { text: `Next`, callback_data: `my_base_token_next-${currentPageNumber + 1}` }
             ],
             [
                 { text: `Refresh♻️`, callback_data: `refresh_${token.name}` }
             ],
             [
-                { text: `Back 🔙`, callback_data: `position_back` }
+                { text: `Back 🔙`, callback_data: `base_position_back` }
             ]
         ];
 
@@ -67,7 +67,7 @@ Current page ${currentPageNumber + 1} pages`
             //     { text: `Refresh♻️`, callback_data: `refresh_` }
             // ],
             [
-                { text: `Back 🔙`, callback_data: `position_back` }
+                { text: `Back 🔙`, callback_data: `base_position_back` }
             ]
         ];
 
@@ -86,40 +86,38 @@ Check the token on  <a href="https://dexscreener.com/solana/${token.mint}" >DexS
 Current page ${currentPageNumber + 1} pages`;
         const button = [
             [
-                { text: `Buy X SOL`, callback_data: `current_token_buy_${token.mint}` },
-                { text: `Sell X %`, callback_data: `current_token_sell_${token.mint}` }
+                { text: `Buy X SOL`, callback_data: `current_base_token_buy_${token.mint}` },
+                { text: `Sell X %`, callback_data: `current_base_token_sell_${token.mint}` }
             ],
             [
-                { text: `Prev`, callback_data: `my_token_sell_prev-${currentPageNumber - 1}` },
+                { text: `Prev`, callback_data: `my_base_token_sell_prev-${currentPageNumber - 1}` },
                 { text: `${currentPageNumber + 1}`, callback_data: `page_number` },
-                { text: `Next`, callback_data: `my_token_sell_next-${currentPageNumber + 1}` }
+                { text: `Next`, callback_data: `my_base_token_sell_next-${currentPageNumber + 1}` }
             ],
             [
-                { text: `Burn 🔥`, callback_data: `burn_${token.mint}` }
+                { text: `Burn 🔥`, callback_data: `base_burn_${token.mint}` }
             ],
             [
-                { text: `Back 🔙`, callback_data: `position_back` }
+                { text: `Back 🔙`, callback_data: `base_position_back` }
             ]
         ];
 
         return { title, button };
     },
     myTokensBurnPage: (currentAmount, tokenAddress) => {
-        const title = `If you confirm you will lose your tokens and claim ${currentAmount} SOL
+        const title = `If you confirm you will lose your tokens and claim ${currentAmount} ETH
 Your burn transaction will be processed at the slowest speed, we don’t want to burn big transaction fee money.
 Click “Yes” or “No” below to confirm your burn ⬇️`;
         const button = [
             [
-                { text: `Yes✅`, callback_data: `token_burn_yes_${tokenAddress}` },
-                { text: `No❌`, callback_data: `token_burn_no` }
+                { text: `Yes✅`, callback_data: `token_base_burn_yes_${tokenAddress}` },
+                { text: `No❌`, callback_data: `token_base_burn_no` }
             ],
         ];
 
         return { title, button };
     },
     myTradesPage: (trade, currentPageNumber) => {
-        console.log(`trade ====🚀`, trade);
-
         const title = `
 
         🪙Coin: <code>${trade.whaleWallet}</code>
@@ -134,13 +132,13 @@ Current page ${currentPageNumber + 1} pages`;
         const button = [
 
             [
-                { text: `Prev⬅️`, callback_data: `my_trade_result_prev-${currentPageNumber - 1}` },
+                { text: `Prev⬅️`, callback_data: `my_base_trade_result_prev-${currentPageNumber - 1}` },
                 { text: `${currentPageNumber + 1}`, callback_data: `page_number` },
-                { text: `Next➡️`, callback_data: `my_trade_result_next-${currentPageNumber + 1}` }
+                { text: `Next➡️`, callback_data: `my_base_trade_result_next-${currentPageNumber + 1}` }
             ],
 
             [
-                { text: `Back 🔙`, callback_data: `position_back` }
+                { text: `Back 🔙`, callback_data: `base_position_back` }
             ]
         ];
 
@@ -158,7 +156,7 @@ Current page ${currentPageNumber + 1} pages`;
             ],
 
             [
-                { text: `Back 🔙`, callback_data: `position_back` }
+                { text: `Back 🔙`, callback_data: `base_position_back` }
             ]
         ];
         return { title, button };

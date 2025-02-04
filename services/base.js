@@ -94,7 +94,7 @@ const BaseNetwork = {
         }
     },
 
-    isValidBasePublicKey: (publicKey) => {
+    isValidBasePublicKey: async (publicKey) => {
         try {
             if (typeof publicKey !== 'string' || publicKey.length != 42) {
                 return false; // Not a string

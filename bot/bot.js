@@ -241,11 +241,42 @@ const init = () => {
             else if (callBackQuery === 'base_deposit') {
                 BaseWalletController.depositETH(bot, query);
             }
-            else if (callBackQuery === 'base_position') {
+            else if (callBackQuery === 'base_position' || callBackQuery === `base_position_back`) {
                 BasePositionController.positionETH(bot, query);
             }
             else if (callBackQuery === 'base_my_tokens') {
                 BasePositionController.positionMyTokenETH(bot, query);
+            }
+            else if (callBackQuery === 'base_token_buy') {
+                BasePositionController.positionTokenBuyETH(bot, query);
+            }
+            else if (callBackQuery === 'base_sell_manage_page') {
+                BasePositionController.positionSellAndManageETH(bot, query);
+            }
+            else if (callBackQuery.includes('current_base_token_buy_')) {
+                BasePositionController.positionCurrentTokenBuyETH(bot, query, callBackQuery.slice(23, callBackQuery.length));
+            }
+            else if (callBackQuery.includes('current_base_token_sell_')) {
+                BasePositionController.positionCurrentTokenSellETH(bot, query, callBackQuery.slice(24, callBackQuery.length));
+            }
+            // else if (callBackQuery === 'token_base_burn_no') {
+            //     BasePositionController.positionCurrentTokenBurnNoETH(bot, query);
+            // }
+            // else if (callBackQuery === 'token_base_burn_no') {
+            //     BasePositionController.positionCurrentTokenBurnNoETH(bot, query);
+            // }
+            else if (callBackQuery === 'base_my_trades') {
+                BasePositionController.positionMyTradePageETH(bot, query);
+            }
+            else if (callBackQuery.includes('my_base_trade_result_prev-')) {
+                if (Number(callBackQuery.slice(21, callBackQuery.length)) < 0) {
+                    return
+                } else {
+                    BasePositionController.positionMyTradePageETH(bot, query, Number(callBackQuery.slice(26, callBackQuery.length)));
+                }
+            }
+            else if (callBackQuery.includes('my_base_trade_result_next-')) {
+                BasePositionController.positionMyTradePageETH(bot, query, Number(callBackQuery.slice(26, callBackQuery.length)));
             }
 
 
