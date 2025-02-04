@@ -10,7 +10,6 @@ const WebSocket = require('ws');
 const dotenv = require('dotenv');
 dotenv.config();
 
-
 const Red = (str) => console.log(chalk.bgRed(str));
 const Yellow = (str) => console.log(chalk.bgYellow(str));
 const Blue = (str) => console.log(chalk.bgBlue(str));
@@ -144,50 +143,17 @@ const CopyTradingController = {
             await UI.switchMenu(bot, chatId, messageId, title, button,);
 
             if (newData[1] == 'true') {
-                await stopTracking(newData[0], chatId);
+                stopTracking(newData[0], chatId);
             }
             else {
-                await startTracking(newData[0], chatId);
+                startTracking(newData[0], chatId);
             }
         } catch (error) {
             Red(`copyTradingStartAndStopPageSOL ====>   ${error}`)
         }
     },
 
-    actionMainCopyTrading: async (result) => {
-        try {
-            if (result.isSwap) {
-                console.log(`✅ Find opportunity!!!📌`);
-                Green(JSON.stringify(result))
-                bot.sendMessage(chatId, `Find oppounity!!`);
-                const findUserWallet = await WalletDBAccess.findWallet(chatId);
-                const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
-                if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
-                    bot.sendMessage(chatId, `Not enough SOL balance.`);
-                    return;
-                }
-
-                let mode;
-                let copyTradingResult;
-                if (result.receiveToken == `So11111111111111111111111111111111111111112`) {
-                    mode = "sell";
-                    const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
-                    Blue(`sell Amount  --------> ${sellAmount}`)
-                    copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
-                } else {
-                    mode = 'buy';
-                    copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
-                }
-                if (copyTradingResult) {
-                    const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(userId, chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
-                }
-            }
-
-        } catch (error) {
-            Red(`actionMainCopyTrading ====>   ${error}`);
-        }
-    }
-
+   
 }
 
 module.exports = CopyTradingController;
