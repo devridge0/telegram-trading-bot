@@ -1,13 +1,12 @@
-const WalletDBAccess = require("../db/wallet-db-access");
-const { getMyTokensInWalletSOL, isValidPublicKeySOL, JUPITER_TOKN_SWAP, getSwapInfoforWallet, validateTokenAddress, getSolBalanceSOL, burnMyTokenSOL } = require("../services/solana");
 const chalk = require("chalk");
 const axios = require('axios');
-const UI = require("../ui");
-const CopyTradingUI = require("../ui/copyTradingUI");
-const TargetWallet = require("../models/targetWallet");
-const { StartCopyTrading, AddorRemoveTradingWallet, startTracking, stopTracking } = require("../services/copytradingServices");
 const WebSocket = require('ws');
 const dotenv = require('dotenv');
+const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
+const BaseTargetWallet = require("../../models/base/baseTargetWallet");
+const BaseUI = require("../../ui/base/baseLandingUI");
+const BaseCopyTradingUI = require("../../ui/base/baseCopyTradingUI");
+const { isValidBasePublicKey } = require("../../services/base");
 dotenv.config();
 
 const Red = (str) => console.log(chalk.bgRed(str));
@@ -19,7 +18,7 @@ const White = (str) => console.log(chalk.bgWhite(str));
 const WS = new WebSocket(process.env.SOLANA_WSS_ENDPOINT);
 
 const BaseCopyTradingController = {
-    copyTradingPageSOL: async (bot, queryData) => {
+    copyTradingPageETH: async (bot, queryData) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
@@ -27,16 +26,16 @@ const BaseCopyTradingController = {
             }
             const chatId = queryData.message.chat.id;
             const messageId = queryData.message?.message_id;
-            const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);
-            const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
+            const whaleWalletList = await BaseWalletDBAccess.findBaseAllTargetWallet(chatId);
+            const { title, button } = BaseCopyTradingUI.copyTradingPage(whaleWalletList);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
 
         } catch (error) {
-            Red(`copyTradingPageSOL ==== > ${error}`);
+            Red(`copyTradingPageETH ==== > ${error}`);
         }
     },
 
-    copyTradingAddNewWalletPageSOL: async (bot, queryData) => {
+    copyTradingAddNewWalletPageETH: async (bot, queryData) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
@@ -48,8 +47,8 @@ const BaseCopyTradingController = {
             bot.sendMessage(chatId, `📨 Send wallet address to copy`);
             bot.once(`message`, async (newMessage) => {
                 const copyAddress = newMessage.text;
-                const validResult = await isValidPublicKeySOL(copyAddress);
-                const isexisted = await WalletDBAccess.findTargetWallet(chatId, copyAddress);
+                const validResult = await isValidBasePublicKey(copyAddress);
+                const isexisted = await BaseWalletDBAccess.findBaseTargetWallet(chatId, copyAddress);
                 if (!validResult) {
                     bot.sendMessage(chatId, `🚫 Invalid wallet address`);
                 } else if (isexisted) {
@@ -59,13 +58,13 @@ const BaseCopyTradingController = {
                     bot.sendMessage(chatId, `📨 Give wallet a label`);
                     bot.once(`message`, async (msg) => {
                         const targetWalletName = msg.text;
-                        const result = await WalletDBAccess.saveTargetWallet(chatId, copyAddress, targetWalletName);
+                        const result = await BaseWalletDBAccess.saveBaseTargetWallet(chatId, copyAddress, targetWalletName);
                         if (!result) {
-                            Red(`targetWallet save error!!`);
+                            Red(`baseTargetWallet save error!!`);
                         } else {
                             bot.sendMessage(chatId, `Wallet added to copy trading list 🎉`);
-                            const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);
-                            const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
+                            const whaleWalletList = await BaseWalletDBAccess.findBaseAllTargetWallet(chatId);
+                            const { title, button } = BaseCopyTradingUI.copyTradingPage(whaleWalletList);
                             bot.sendMessage(chatId, title,
                                 {
                                     reply_markup: {
@@ -80,52 +79,50 @@ const BaseCopyTradingController = {
             })
 
         } catch (error) {
-            Red(`copyTradingAddNewWalletPageSOL ==== > ${error}`);
+            Red(`copyTradingAddNewWalletPageETH ==== > ${error}`);
         }
     },
 
-    copyTradingWhaleWalletPageSOL: async (bot, queryData, address) => {
+    copyTradingWhaleWalletPageETH: async (bot, queryData, address) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
                 return;
             }
-
             const chatId = queryData.message.chat.id;
             const messageId = queryData.message?.message_id;
-            const whaleWalletList = await WalletDBAccess.findTargetWallet(chatId, address);
-
-            const { title, button } = CopyTradingUI.whalePage(whaleWalletList);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
+            const whaleWalletList = await BaseWalletDBAccess.findBaseTargetWallet(chatId, address);
+            const { title, button } = BaseCopyTradingUI.whalePage(whaleWalletList);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
 
         } catch (error) {
-            Red(`copyTradingWhaleWalletPageSOL ===>  ${error}`)
+            Red(`copyTradingWhaleWalletPageETH ===>  ${error}`)
         }
     },
 
-    copyTradingDeleteWhaleWalletPageSOL: async (bot, queryData, address) => {
+    copyTradingDeleteWhaleWalletPageETH: async (bot, queryData, address) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
                 return;
             }
-
+            Green(address)
             const chatId = queryData.message.chat.id;
             const messageId = queryData.message?.message_id;
 
-            const deleteTargetWalletResult = await WalletDBAccess.deleteTargetWallet(chatId, address);
+            const deleteTargetWalletResult = await BaseWalletDBAccess.deleteBaseTargetWallet(chatId, address);
             if (!deleteTargetWalletResult) Red(`delete_traget wallet error`);
 
-            const whaleWalletList = await WalletDBAccess.findAllTargetWallet();
-            const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
+            const whaleWalletList = await BaseWalletDBAccess.findBaseAllTargetWallet();
+            const { title, button } = BaseCopyTradingUI.copyTradingPage(whaleWalletList);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
 
         } catch (error) {
-            Red(`copyTradingDeleteWhaleWalletPageSOL ====>   ${error}`)
+            Red(`copyTradingDeleteWhaleWalletPageETH ====>   ${error}`)
         }
     },
 
-    copyTradingStartAndStopPageSOL: async (bot, queryData, status) => {
+    copyTradingStartAndStopPageETH: async (bot, queryData, status) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
@@ -136,24 +133,29 @@ const BaseCopyTradingController = {
             const userId = queryData.message.chat.username;
 
             const newData = status.split("_");
+            await BaseWalletDBAccess.statusUpdateBaseTargetWallet(chatId, newData[0], newData[1]);
+            const whaleWalletList = await BaseWalletDBAccess.findBaseAllTargetWallet(chatId);
+            const { title, button } = BaseCopyTradingUI.copyTradingPage(whaleWalletList);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
 
-            await WalletDBAccess.statusUpdateTargetWallet(chatId, newData[0], newData[1]);
-            const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);
-            const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
 
-            if (newData[1] == 'true') {
-                stopTracking(newData[0], chatId);
-            }
-            else {
-                startTracking(newData[0], chatId);
-            }
+
+            /*
+            
+                base copy trading function
+            */
+            // if (newData[1] == 'true') {
+            //     stopTracking(newData[0], chatId);
+            // }
+            // else {
+            //     startTracking(newData[0], chatId);
+            // }
         } catch (error) {
-            Red(`copyTradingStartAndStopPageSOL ====>   ${error}`)
+            Red(`copyTradingStartAndStopPageETH ====>   ${error}`)
         }
     },
 
-   
+
 }
 
 module.exports = BaseCopyTradingController;
