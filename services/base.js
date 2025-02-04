@@ -14,9 +14,29 @@ const Green = (str) => console.log(chalk.bgGreen(`${str}\n`));
 const White = (str) => console.log(chalk.bgWhite(`${str}\n`));
 
 
+const DEX_ROUTER_ADDRESS = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+
+const WETH_ADDRESS = "0x4200000000000000000000000000000000000006" // Wrapped ETH
+
+const ROUTER_ABI = [
+    "function swapExactETHForTokens(uint amountOutMin, address[] path, address to, uint deadline) payable returns (uint[] memory)",
+    "function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] memory)",
+    "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] memory)",
+    "function WETH() external pure returns (address)",
+    "function getAmountsOut(uint amountIn, address[] path) external view returns (uint[] memory)"
+];
+
+const ERC20_ABI = [
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function decimals() view returns (uint8)",
+    "function totalSupply() view returns (uint256)"
+];
+
+
 
 const BASE_RPC = `https://base-sepolia.g.alchemy.com/v2/4XJ2-1bwaIzXLGsmYF-bGcQVp7GaFrgR`
-let provider =  new ethers.JsonRpcProvider(BASE_RPC);
+let provider = new ethers.JsonRpcProvider(BASE_RPC);
 
 const BaseNetwork = {
     createBaseWalletETH: async () => {
@@ -28,23 +48,262 @@ const BaseNetwork = {
 
             return { publicKey, privateKey };
         } catch (error) {
-            Red(`createBaseWalletETH ====🚀`, error);
+            Red(`createBaseWalletETH ====🚀${error}`);
         }
     },
 
     getBaseWalletBalance: async (publicKey) => {
         try {
-            Green(JSON.stringify(provider))
             const balanceWei = await provider.getBalance(publicKey);
             const balanceEth = ethers.formatEther(balanceWei);
 
             return balanceEth;
         } catch (error) {
-            Red(`getBaseWalletBalance ====🚀`, error);
+            Red(`getBaseWalletBalance ====🚀${error}`);
         }
     },
 
-}
+    isValidBasePrivateKey: async (privateKey) => {
+        if (typeof privateKey !== 'string') {
+            return false; // Not a string
+        }
 
+        if (!/^0x[0-9a-fA-F]{64}$/.test(privateKey)) {
+            return false; // Does not match hex format
+        }
+
+        try {
+            new ethers.Wallet(privateKey);
+            return true; // Valid private key
+        }
+        catch (e) {
+            Red(`isValidBasePrivateKey ====🚀${e}`);
+
+            return false; //Not a valid private key
+        }
+    },
+
+    getBasePublicKeyFromPrivateKey: async (privateKey) => {
+        try {
+            const wallet = new ethers.Wallet(privateKey);
+            const publicKey = wallet.address;
+            return publicKey;
+        } catch (error) {
+            Red(`getBasePublicKeyFromPrivateKey ====🚀${error}`);
+            return null; // Or throw an error, depending on how you want to handle failures
+        }
+    },
+
+    isValidBasePublicKey: (publicKey) => {
+        try {
+            if (typeof publicKey !== 'string' || publicKey.length != 42) {
+                return false; // Not a string
+            }
+            else return true;
+        } catch (error) {
+            Red(`getBasePublicKeyFromPrivateKey ====🚀${error}`);
+            return false;
+        }
+    },
+
+
+    isValidBaseTokenMintAddress: async (address) => {
+        try {
+            if (typeof address !== 'string') {
+                return false; // Not a string
+            }
+            if (!ethers.isAddress(address)) {
+                return false; // Invalid address format
+            }
+
+            const contract = new ethers.Contract(address, ERC20_ABI, provider);
+            // Attempt to call basic ERC-20 functions
+            await contract.name();
+            await contract.symbol();
+            await contract.decimals();
+            await contract.totalSupply();
+
+            return true; // All required functions are available
+
+        } catch (error) {
+            console.error("Error validating token mint address:", error);
+            return false; // Required functions are missing or an error occurred
+        }
+    },
+
+
+    transferAllEth: async (privateKey, toAddress) => {
+        try {
+            const wallet = new ethers.Wallet(privateKey, provider);
+            const balance = await provider.getBalance(wallet.address);
+            // estimate gas fee
+            const gasPrice = await provider.getGas
+            const gasLimit = 21000;
+            const gasFee = gasPrice * BigInt(gasLimit)
+
+            if (balance <= gasFee) {
+                return `Balance ${ethers.formatEther(balance)} ETH is not enough to pay for gas fee ${ethers.formatEther(gasFee)} ETH`;
+            }
+
+            // Calculate the amount to send (balance - gas fee)
+            const amountToSend = balance - gasFee;
+
+            const tx = {
+                to: toAddress,
+                value: amountToSend,
+                gasLimit: gasLimit,
+            };
+
+            const signedTx = await wallet.sendTransaction(tx);
+
+            console.log("Transaction sent: ", signedTx.hash);
+
+            const receipt = await signedTx.wait();
+
+            if (receipt && receipt.status == 1) {
+                console.log("Transaction successful!");
+            }
+            else {
+                throw new Error("Transaction failed");
+            }
+
+            return receipt;
+
+        } catch (error) {
+            console.error("Error sending transaction:", error);
+            throw error;
+        }
+    },
+    transferCustomerAmountEth: async (privateKey, toAddress, amount) => {
+        try {
+            const wallet = new ethers.Wallet(privateKey, provider);
+            const balance = await provider.getBalance(wallet.address);
+            // estimate gas fee
+            const gasPrice = await provider.getGas
+            const gasLimit = 21000;
+            const gasFee = gasPrice * BigInt(gasLimit)
+
+            if (balance <= gasFee) {
+                return `Balance ${ethers.formatEther(balance)} ETH is not enough to pay for gas fee ${ethers.formatEther(gasFee)} ETH`;
+            }
+
+
+            const tx = {
+                to: toAddress,
+                value: amount,
+                gasLimit: gasLimit,
+            };
+
+            const signedTx = await wallet.sendTransaction(tx);
+
+            console.log("Transaction sent: ", signedTx.hash);
+
+            const receipt = await signedTx.wait();
+
+            if (receipt && receipt.status == 1) {
+                console.log("Transaction successful!");
+            }
+            else {
+                throw new Error("Transaction failed");
+            }
+
+            return receipt;
+
+        } catch (error) {
+            console.error("Error sending transaction:", error);
+            throw error;
+        }
+    },
+
+    getBaseTokenInWalletETH: async (walletAddress) => {
+        try {
+
+            const apiUrl = `https://api.basescan.org/api?module=account&action=tokenbalance&address=${walletAddress}&tag=latest&apikey=${process.env.BASE_API_KEY}`;
+            White(apiUrl)
+
+            const response = await fetch(apiUrl);
+            Blue(JSON.stringify(response))
+            if (response.data.status === '1') {
+                const tokenBalances = response.data.result;
+                const parsedBalances = await Promise.all(tokenBalances.map(async (token) => {
+                    try {
+                        const contract = new ethers.Contract(token.contractAddress, ['function decimals() view returns (uint8)'], provider)
+                        const decimals = await contract.decimals()
+                        const balance = ethers.formatUnits(token.balance, decimals)
+                        return {
+                            contractAddress: token.contractAddress,
+                            name: token.tokenName,
+                            symbol: token.tokenSymbol,
+                            balance: balance
+                        }
+                    }
+                    catch (error) {
+                        console.error(`Error getting token info for ${token.contractAddress}: ${error}`);
+                        return {
+                            contractAddress: token.contractAddress,
+                            error: "Error getting token info"
+                        };
+                    }
+                }));
+
+
+                return parsedBalances;
+            }
+            else {
+                throw new Error(`Could not get token balances for address ${walletAddress}: ${response.data.message}`)
+            }
+
+
+        } catch (error) {
+            console.error("Error fetching token balances:", error);
+            throw error;
+        }
+    },
+
+
+    buyTokenETH: async (tokenToBuy, amountInETH) => {
+        try {
+
+            const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+            const routerContract = new ethers.Contract(DEX_ROUTER_ADDRESS, ROUTER_ABI, wallet);
+
+            const amountInWei = ethers.parseEther(amountInETH.toString());
+            const path = [WETH_ADDRESS, tokenToBuy]; // ETH -> token path
+
+            const amountsOut = await routerContract.getAmountsOut(amountInWei, path);
+            const amountOutMin = amountsOut[1] - (amountsOut[1] * 5n) / 100n; // slippage tolerance, remove 5%
+
+            const deadline = Math.floor(Date.now() / 1000) + 60 * 10; //10 minutes from now
+            const to = wallet.address
+            const tx = {
+                value: amountInWei,
+                gasLimit: 300000
+            }
+
+            const signedTx = await routerContract.swapExactETHForTokens(
+                amountOutMin,
+                path,
+                to,
+                deadline,
+                tx
+            );
+
+            console.log("Transaction sent:", signedTx.hash);
+            const receipt = await signedTx.wait()
+            if (receipt && receipt.status == 1) {
+                console.log("Transaction successful!");
+                return receipt
+            }
+            else {
+                throw new Error("Transaction failed")
+            }
+        } catch (error) {
+            console.error("Error buying token:", error)
+            throw error
+        }
+    },
+
+
+}
 
 module.exports = BaseNetwork;

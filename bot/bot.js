@@ -11,6 +11,7 @@ const ReferralController = require('../controller/referralController');
 const SettingController = require('../controller/settingController');
 const BaseStartController = require('../controller/base/baseStartController');
 const BaseWalletController = require('../controller/base/baseWalletController');
+const BasePositionController = require('../controller/base/basePositionController');
 
 dotenv.config();
 
@@ -204,11 +205,47 @@ const init = () => {
 
 
 
-            else if (callBackQuery === `base_network`) {
+            else if (callBackQuery === `base_network` || callBackQuery === `base_back` || callBackQuery === 'base_wallet_back') {
                 BaseStartController.baseStartCommand(bot, query);
             }
-            else if (callBackQuery === 'base_wallet' || callBackQuery === 'base_wallet_delete_no') {
+            else if (callBackQuery === 'base_wallet' || callBackQuery === `base_wallet_delete_no`) {
                 BaseWalletController.baseWallet(bot, query);
+            }
+            else if (callBackQuery === 'base_wallet_delete') {
+                BaseWalletController.baseWalletDeleteETH(bot, query);
+            }
+            else if (callBackQuery === 'base_wallet_delete_yes') {
+                BaseWalletController.walletDeleteYesETH(bot, query);
+            }
+            else if (callBackQuery === 'base_create_new_wallet') {
+                BaseWalletController.createNewWalletETH(bot, query);
+            }
+            else if (callBackQuery === 'base_create_new_wallet_back') {
+                BaseWalletController.createNewWalletBackETH(bot, query);
+            }
+            else if (callBackQuery === 'base_import_wallet') {
+                BaseWalletController.importWalletETH(bot, query);
+            }
+            else if (callBackQuery === 'base_withdraw') {
+                BaseWalletController.withdrawETH(bot, query);
+            }
+            else if (callBackQuery === 'base_withdraw_all') {
+                BaseWalletController.withdrawAllETH(bot, query);
+            }
+            else if (callBackQuery === 'base_withdraw_all_yes') {
+                BaseWalletController.withdrawAllYesETH(bot, query);
+            }
+            else if (callBackQuery === 'base_withdraw_all_no') {
+                BaseWalletController.withdrawAllNoSOL(bot, query);
+            }
+            else if (callBackQuery === 'base_deposit') {
+                BaseWalletController.depositETH(bot, query);
+            }
+            else if (callBackQuery === 'base_position') {
+                BasePositionController.positionETH(bot, query);
+            }
+            else if (callBackQuery === 'base_my_tokens') {
+                BasePositionController.positionMyTokenETH(bot, query);
             }
 
 
