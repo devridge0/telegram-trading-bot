@@ -48,15 +48,15 @@ const BaseWalletDBAccess = {
         }
     },
 
-    // findOneAndUpdateWallet: async (chatId, changeInfo) => {
-    //     try {
-    //         await Wallet.findOneAndUpdate({ chatId }, changeInfo);
-    //         return true;
-    //     } catch (error) {
-    //         Red(`saveWallet ====🚀${error}`);
-    //         return false;
-    //     }
-    // },
+    findOneAndUpdateBaseWallet: async (chatId, changeInfo) => {
+        try {
+            await BaseWallet.findOneAndUpdate({ chatId }, changeInfo);
+            return true;
+        } catch (error) {
+            Red(`saveWallet ====🚀${error}`);
+            return false;
+        }
+    },
 
     saveBaseTargetWallet: async (chatId, address, name) => {
         try {
