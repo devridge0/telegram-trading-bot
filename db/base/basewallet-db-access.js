@@ -1,3 +1,4 @@
+const BaseCopyTradingHistory = require("../../models/base/baseCopyTradingHistory");
 const BaseWallet = require("../../models/base/baseWallet");
 const CopyTradingHistory = require("../../models/copyTradingHistory");
 
@@ -137,18 +138,18 @@ const BaseWalletDBAccess = {
     //     }
     // },
 
-    // findCopyTradingHistory: async (chatId) => {
-    //     try {
-    //         let result = await CopyTradingHistory.find({ chatId });
-    //         if (result.length > 0) {
-    //             return result;
-    //         } else {
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         Red(`findCopyTradingHistory ====🚀${error}`);
-    //     }
-    // },
+    findBaseCopyTradingHistory: async (chatId) => {
+        try {
+            let result = await BaseCopyTradingHistory.find({ chatId });
+            if (result.length > 0) {
+                return result;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            Red(`findBaseCopyTradingHistory ====🚀${error}`);
+        }
+    },
 
 }
 
