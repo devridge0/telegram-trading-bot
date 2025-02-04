@@ -1,14 +1,11 @@
 const WebSocket = require('ws');
+const CopyTradingController = require('../controller/copyTradingController');
 const SOLANA_WSS_ENDPOINT = 'wss://mainnet.helius-rpc.com/?api-key=adcb5efb-1e8d-4b33-8e77-6b9b4e009b73'; //Replace
-const walletAddresses = [
-    'CWvdyvKHEu8Z6QqGraJT3sLPyp9bJfFhoXcxUYRKC8ou',  //Replace
-    'J485YzQjuJPLYoFEYjrjxd7NAoLHTiyUU63JwK7kLxRr',
-];
-
+const TelegramBot = require('node-telegram-bot-api');
 const chalk = require("chalk");
 const WalletDBAccess = require('../db/wallet-db-access');
-const { getSwapInfo, getSolBalanceSOL } = require('./solana');
-const { copyTradingStartAndStopPageSOL } = require('../controller/copyTradingController');
+const { getSwapInfo, getSolBalanceSOL, getSellTokenAmount, JUPITER_TOKN_SWAP } = require('./solana');
+
 
 const Red = (str) => console.log(chalk.bgRed(str));
 const Yellow = (str) => console.log(chalk.bgYellow(str));
@@ -16,14 +13,13 @@ const Blue = (str) => console.log(chalk.bgBlue(str));
 const Green = (str) => console.log(chalk.bgGreen(str));
 const White = (str) => console.log(chalk.bgWhite(str));
 
-const WS = new WebSocket(SOLANA_WSS_ENDPOINT);
 
+const WS = new WebSocket(SOLANA_WSS_ENDPOINT);
 let activeAddresses = [];
 
 const StartCopyTrading = (ws) => {
     console.log(`Copy Trading WebSocket starting...`);
     try {
-
         ws.on('message', async (data) => {
             const response = JSON.parse(data);
             Green(`New address starting ... ${JSON.stringify(response)}`);
@@ -36,9 +32,49 @@ const StartCopyTrading = (ws) => {
                 const subAddress = activeAddresses.filter((e) => e.id == subscriptionId);
                 console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
                 const swapInfoResult = await getSwapInfo(signature);
-                const swapInfo = { ...swapInfoResult, whaleAddress: subAddress[0].address };
+                const result = { ...swapInfoResult, whaleAddress: subAddress[0].address };
+                try {
+                    if (result.isSwap) {
+                        console.log(`✅ Find opportunity!!!📌`);
+                        const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
+                        const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
+                        if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
+                            return;
+                        }
 
+                        let mode;
+                        let copyTradingResult;
+                        if (result.receiveToken == `So11111111111111111111111111111111111111112`) {
+                            mode = "sell";
+                            const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
+                            Blue(`sell Amount  --------> ${sellAmount}`)
+                            copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
+                        } else {
+                            mode = 'buy';
+                            copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
+                        }
+                        if (copyTradingResult) {
+                            const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(userId, chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
+                        }
+                    }
+
+                } catch (error) {
+                    Red(`actionMainCopyTrading ====>   ${error}`);
+                }
             }
+
+            ws.on('close', () => {
+                console.log('Disconnected from server');
+                setTimeout(() => {
+                    StartCopyTrading(new WebSocket(SOLANA_WSS_ENDPOINT));
+                }, 3000); // Retry after 5 seconds
+            });
+            ws.on('error', () => {
+                console.log('Disconnected from server');
+                setTimeout(() => {
+                    StartCopyTrading(new WebSocket(SOLANA_WSS_ENDPOINT));
+                }, 3000); // Retry after 5 seconds
+            });
         });
     } catch (error) {
         Red(`StartCopy Trading : ${error}`)
