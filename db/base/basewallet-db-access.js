@@ -20,14 +20,14 @@ const BaseWalletDBAccess = {
         }
     },
 
-    // deleteWallet: async (chatId) => {
-    //     try {
-    //         await Wallet.deleteOne({ chatId });
-    //         return true;
-    //     } catch (error) {
-    //         Red(`deleteWallet ====🚀${error}`);
-    //     }
-    // },
+    deleteBaseWallet: async (chatId) => {
+        try {
+            await BaseWallet.deleteOne({ chatId });
+            return true;
+        } catch (error) {
+            Red(`deleteBaseWallet ====🚀${error}`);
+        }
+    },
 
     saveBaseWallet: async (userId, chatId, publicKey, privateKey) => {
         try {

@@ -1,9 +1,13 @@
 const chalk = require("chalk");
 const axios = require('axios');
+const BaseWalletUI = require("../../ui/base/baseWalletUI");
+const BaseUI = require("../../ui/base/baseLandingUI");
+const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
+const { createBaseWalletETH, getBaseWalletBalance, isValidBasePrivateKey, getBasePublicKeyFromPrivateKey, isValidBasePublicKey, transferAllEth, transferCustomerAmountEth } = require("../../services/base");
+const BaseDepositUI = require("../../ui/base/baseDepositUI");
 
-
-let depostUrl = `https://buy.moonpay.io/?apiKey=pk_live_TBeEWwlvSTuyxLSueHu3dINixf4LEt&currencyCode=SOL&walletAddress=`;
-let solscanUrl = `https://solscan.io/account/`;
+let depostUrl = `https://buy.moonpay.com/?apiKey=pk_live_TBeEWwlvSTuyxLSueHu3dINixf4LEt&currencyCode=ETH&walletAddress=`;
+let ethscanUrl = `https://etherscan.io/address`;
 
 const Red = (str) => console.log(chalk.bgRed(str));
 const Yellow = (str) => console.log(chalk.bgYellow(str));
@@ -22,7 +26,8 @@ const BaseWalletController = {
             }
 
             const chatId = queryData.message.chat.id;
-            const findUserWallet = await WalletDBAccess.findWallet(chatId);
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
+
             const data = queryData.data;
             const messageId = queryData.message?.message_id;
 
@@ -31,294 +36,294 @@ const BaseWalletController = {
                 return;
             }
             const url = {
-                deposit: `${depostUrl}${findUserWallet.publicKey}`,
-                solscan: `${solscanUrl}/${findUserWallet.publicKey}`
+                deposit: `${depostUrl}${findUserBaseWallet.publicKey}`,
+                ethscan: `${ethscanUrl}/${findUserBaseWallet.publicKey}`
             }
-            const { title, button } = WalletUI.walletPage(findUserWallet.publicKey, findUserWallet.privateKey, url);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
+            const { title, button } = BaseWalletUI.walletPage(findUserBaseWallet.publicKey, findUserBaseWallet.privateKey, url);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
         } catch (error) {
-            Red(`wallet ====>  ${error}`);
+            Red(`basewallet ====>  ${error}`);
         }
     },
 
-    // walletDeleteSOL: async (bot, queryData) => {
-    //     try {
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
+    baseWalletDeleteETH: async (bot, queryData) => {
+        try {
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
 
-    //         const findUserWallet = await WalletDBAccess.findWallet(chatId);
-    //         const { title, button } = WalletUI.deleteWalletPage(findUserWallet.publicKey);
-    //         await UI.switchMenu(bot, chatId, messageId, title, button,);
-    //     } catch (error) {
-    //         Red(`walletDeleteSOL ====>  ${error}`);
-    //     }
-    // },
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
+            const { title, button } = BaseWalletUI.deleteWalletPage(findUserBaseWallet.publicKey);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
+        } catch (error) {
+            Red(`baseWalletDeleteETH ====>  ${error}`);
+        }
+    },
 
-    // walletDeleteYesSOL: async (bot, queryData) => {
-    //     try {
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
+    walletDeleteYesETH: async (bot, queryData) => {
+        try {
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
 
-    //         const deleteWalletResult = await WalletDBAccess.deleteWallet(chatId);
-    //         if (deleteWalletResult) {
-    //             const { title, button } = WalletUI.createAndImportWalletPage();
-    //             await UI.switchMenu(bot, chatId, messageId, title, button,);
-    //         }
-    //     } catch (error) {
-    //         Red(`walletDeleteYesSOL ====>  ${error}`);
-    //     }
-    // },
+            const deleteWalletResult = await BaseWalletDBAccess.deleteBaseWallet(chatId);
+            if (deleteWalletResult) {
+                const { title, button } = BaseWalletUI.createAndImportWalletPage();
+                await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
+            }
+        } catch (error) {
+            Red(`walletDeleteYesETH ====>  ${error}`);
+        }
+    },
 
-    // createNewWalletSOL: async (bot, queryData) => {
-    //     try {
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
-    //         const userId = queryData.message.chat.username;
+    createNewWalletETH: async (bot, queryData) => {
+        try {
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
+            const userId = queryData.message.chat.username;
 
-    //         const { publicKey, privateKey } = await createWalletSOL();
-    //         const saveResult = await WalletDBAccess.saveWallet(userId, chatId, publicKey, privateKey);
+            const { publicKey, privateKey } = await createBaseWalletETH();
+            const saveResult = await BaseWalletDBAccess.saveBaseWallet(userId, chatId, publicKey, privateKey);
+            if (!saveResult) {
+                console.log(`saveResult ====🚀 FAILED`);
+            }
 
-    //         if (!saveResult) {
-    //             console.log(`saveResult ====🚀 FAILED`);
-    //         }
-    //         const { title, button } = WalletUI.createNewWalletPage(publicKey, privateKey);
-    //         await UI.switchMenu(bot, chatId, messageId, title, button,);
-    //     } catch (error) {
-    //         Red(`createNewWalletSOL ====>  ${error}`);
-    //     }
-    // },
+            const { title, button } = BaseWalletUI.createNewWalletPage(publicKey, privateKey);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
+        } catch (error) {
+            Red(`createNewWalletSOL ====>  ${error}`);
+        }
+    },
 
-    // createNewWalletBackSOL: async (bot, queryData) => {
-    //     try {
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
-    //         const userId = queryData.message.chat.username;
+    createNewWalletBackETH: async (bot, queryData) => {
+        try {
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
+            const userId = queryData.message.chat.username;
 
-    //         let currentPublicKey;
+            let currentPublicKey;
 
-    //         const findUserWallet = await WalletDBAccess.findWallet(chatId);
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
+            currentPublicKey = findUserBaseWallet.publicKey;
+            currentPrivateKey = findUserBaseWallet.privateKey;
 
-    //         if (!findUserWallet) {
-    //             const { publicKey, privateKey } = await createWalletSOL();
-    //             currentPublicKey = publicKey;
-    //             const saveResult = await WalletDBAccess.saveWallet(userId, chatId, publicKey, privateKey);
-    //             if (!saveResult) {
-    //                 console.log(`saveResult ====🚀 FAILED`);
-    //             }
-    //         }
-    //         const getMyWalletBalance = await getSolBalanceSOL(findUserWallet.publicKey);
-    //         const currentSOLUSD = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd`);
+            if (!findUserBaseWallet) {
+                const { publicKey, privateKey } = await createBaseWalletETH();
+                currentPublicKey = publicKey;
+                const saveResult = await BaseWalletDBAccess.saveBaseWallet(userId, chatId, publicKey, privateKey);
+                if (!saveResult) {
+                    console.log(`saveResult ====🚀 FAILED`);
+                }
+            }
+            let currentETHUSD = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&chain=base`);
+            getMyWalletETHBalance = await getBaseWalletBalance(currentPublicKey);
+            White(`${getMyWalletETHBalance}ETH ~ ${currentETHUSD.data.ethereum.usd}`);
+            const { title, button } = BaseUI.landingPage(getMyWalletETHBalance, currentETHUSD.data.ethereum.usd);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button)
+        } catch (error) {
+            Red(`createNewWalletBackETH ====>  ${error}`);
+        }
+    },
+
+    importWalletETH: async (bot, queryData) => {
+        try {
+
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
+            const userId = queryData.message.chat.username;
+
+            await bot.sendMessage(chatId, `📨 Send wallet PK`);
+            bot.once('message', async (newMsg) => {
+                const importPrivateKey = newMsg.text;
+                const validPrivateKey = await isValidBasePrivateKey(importPrivateKey);
+                const privateKey = importPrivateKey;
+                const existPrivateKey = await BaseWalletDBAccess.findBaseWallet(privateKey);
+
+                if (!validPrivateKey) {
+                    bot.sendMessage(chatId, 'Invalid token address!').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    return;
+                }
+                else if (existPrivateKey) {
+                    bot.sendMessage(chatId, 'Exist privateKey').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    return;
+                }
+                else {
+                    getBasePublicKeyFromPrivateKey
+                    const importPublicKey = await getBasePublicKeyFromPrivateKey(importPrivateKey);
+                    const saveResult = await BaseWalletDBAccess.saveBaseWallet(userId, chatId, importPublicKey, importPrivateKey);
+                    if (!saveResult) {
+                        console.log(`saveResult ====🚀 FAILED`);
+                    }
+                    else {
+                        const { title, button } = BaseWalletUI.importNewWalletPage();
+                        await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
+                    }
+                }
+
+            });
+        } catch (error) {
+            Red(`importWalletETH ====>  ${error}`);
+        }
+    },
+
+    withdrawETH: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+            const chatId = queryData.message.chat.id;
+            const data = queryData.data;
+            const messageId = queryData.message?.message_id;
+
+            const title = `
+        📨 Provide wallet address below
+            Currency : ETH
+            Chain&Protocol : ETH (SPL)
+
+            BE CAREFULL TO PROVIDE WALLET ADDRESS,
+             CHECK IT TWICE
+            IF YOU PROVIDE WRONG WALLET ADDRESS,
+             YOU MAY LOSE YOUR FUNDS
+            WE ARE NOT RESPONSIBLE FOR ANY LOSS OF FUNDS
+            Chain and Protocol are important,
+             please provide them correctly`;
+
+            await bot.sendMessage(chatId, title);
+            bot.once('message', async (newMsg) => {
+                withdrawWalletAddress = newMsg.text;
+                const validPublicKey = isValidBasePublicKey(withdrawWalletAddress)
+                if (!validPublicKey) {
+                    bot.sendMessage(chatId, 'Invalid wallet address!').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                }
+                else {
+                    const { title, button } = BaseWalletUI.withdrawAmountPage();
+                    bot.sendMessage(chatId, title,
+                        {
+                            reply_markup: {
+                                inline_keyboard: button
+                            }
+                        }
+                    );
+                }
+
+            });
+        } catch (error) {
+            Red(`withdrawtETH ====>  ${error}`);
+        }
+
+    },
+
+    withdrawAllETH: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+            const chatId = queryData.message.chat.id;
+            const { title, button } = BaseWalletUI.withdrawAllConfirmYesPage();
+
+            bot.sendMessage(chatId, title, {
+                reply_markup: {
+                    inline_keyboard: button
+                },
+                parse_mode: "HTML"
+            });
+        } catch (error) {
+            Red(`withdrawAllETH ====>  ${error}`);
+        }
+    },
+
+    withdrawAllYesETH: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+
+            const chatId = queryData.message.chat.id;
+            if (!withdrawWalletAddress) {
+                bot.sendMessage(chatId, 'Find the withdraw to Wallet Address.').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+            }
+
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
+
+            const withdrawAllResult = await transferAllEth(findUserBaseWallet.privateKey, withdrawWalletAddress);
+            if (withdrawAllResult) {
+                bot.sendMessage(chatId, 'Withdraw All successful.').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+            }
+        } catch (error) {
+            Red(`withdrawAllYesETH ====>  ${error}`);
+        }
+    },
+
+    withdrawAllNoSOL: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
+            await bot.editMessageText('Withdraw Cancelled 🚫', { chat_id: chatId, message_id: messageId, reply_markup: null, disable_web_page_preview: true, parse_mode: 'HTML' }).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+        } catch (error) {
+            Red(`withdrawAllNoSOL ====>  ${error}`);
+        }
+    },
+
+    withdrawCustomerAmountSOL: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
+
+            await bot.sendMessage(chatId, `Enter amount to withdraw`);
+            bot.once('message', async (newMsg) => {
+                const withdrawAmount = newMsg.text;
+                const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
 
 
-    //         const { title, button } = UI.landingPage(getMyWalletBalance, currentSOLUSD.data.solana.usd);
-    //         await UI.switchMenu(bot, chatId, messageId, title, button,);
-    //     } catch (error) {
-    //         Red(`createNewWalletBackSOL ====>  ${error}`);
-    //     }
-    // },
+                const amount = await getBaseWalletBalance(findUserBaseWallet.publicKey);
+                if (Number(withdrawAmount) == withdrawAmount && amount > withdrawAmount) {
+                    const withdrawCosutomResult = await transferCustomerAmountEth(findUserBaseWallet.privateKey, withdrawWalletAddress, withdrawAmount);
+                    if (withdrawCosutomResult)
+                        bot.sendMessage(chatId, `success`);
+                }
+                else if (Number(withdrawAmount) != withdrawAmount) {
+                    bot.sendMessage(chatId, '🚫 Invalid amount, try again').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                }
+                else if (amount < withdrawAmount) {
+                    bot.sendMessage(chatId, `Amount cannot be greater than wallet balance, write less than <code>${amount}</code>, or <code>/start</code> to cancel`);
+                }
+            });
+        } catch (error) {
+            Red(`withdrawCustomerAmountSOL ====>  ${error}`);
+        }
+    },
 
-    // importWalletSOL: async (bot, queryData) => {
-    //     try {
+    depositETH: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+            const messageId = queryData.message?.message_id;
+            const chatId = queryData.message.chat.id;
 
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
-    //         const userId = queryData.message.chat.username;
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
 
-    //         await bot.sendMessage(chatId, `📨 Send wallet PK`);
-    //         bot.once('message', async (newMsg) => {
-    //             const importPrivateKey = newMsg.text;
-    //             const validPrivateKey = await isValidPrivateKeySOL(importPrivateKey);
-    //             const privateKey = importPrivateKey;
-    //             const existPrivateKey = await WalletDBAccess.findWallet(importPrivateKey);
-    //             if (!validPrivateKey) {
-    //                 bot.sendMessage(chatId, 'Invalid token address!').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //                 return;
-    //             }
-    //             else if( existPrivateKey){
-    //                 bot.sendMessage(chatId, 'Exist privateKey').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //                 return;
-    //             }
-    //             else {
-    //                 const importPublicKey = await getPublicKeyFromPrivateKeySOL(importPrivateKey);
-    //                 const saveResult = await WalletDBAccess.saveWallet(userId, chatId, importPublicKey, importPrivateKey);
-    //                 if (!saveResult) {
-    //                     Red(`save Error.`);
-    //                 }
-    //                 const { title, button } = WalletUI.importNewWalletPage();
-    //                 await UI.switchMenu(bot, chatId, messageId, title, button,);
-    //             }
+            const url = {
+                deposit: `${depostUrl}${findUserBaseWallet.publicKey}`,
+                ethscan: `${ethscanUrl}/${findUserBaseWallet.publicKey}`
+            }
 
-    //         });
-    //     } catch (error) {
-    //         Red(`importWalletSOL ====>  ${error}`);
-    //     }
-    // },
-
-    // withdrawSOL: async (bot, queryData) => {
-    //     try {
-    //         if (!queryData.message) {
-    //             console.log('no queryData.message');
-    //             return;
-    //         }
-    //         const chatId = queryData.message.chat.id;
-    //         const data = queryData.data;
-    //         const messageId = queryData.message?.message_id;
-
-    //         if (!data) {
-    //             console.log('no queryData.data');
-    //             return;
-    //         }
-    //         const title = `
-    //     📨 Provide wallet address below
-    //         Currency : SOL
-    //         Chain&Protocol : SOL (SPL)
-
-    //         BE CAREFULL TO PROVIDE WALLET ADDRESS,
-    //          CHECK IT TWICE
-    //         IF YOU PROVIDE WRONG WALLET ADDRESS,
-    //          YOU MAY LOSE YOUR FUNDS
-    //         WE ARE NOT RESPONSIBLE FOR ANY LOSS OF FUNDS
-    //         Chain and Protocol are important,
-    //          please provide them correctly`;
-
-    //         await bot.sendMessage(chatId, title);
-    //         bot.once('message', async (newMsg) => {
-    //             withdrawWalletAddress = newMsg.text;
-    //             const validPublicKey = await isValidPublicKeySOL(withdrawWalletAddress)
-    //             if (!validPublicKey) {
-    //                 bot.sendMessage(chatId, 'Invalid wallet address!').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //             }
-    //             else {
-    //                 const { title, button } = WalletUI.withdrawAmountPage();
-    //                 bot.sendMessage(chatId, title,
-    //                     {
-    //                         reply_markup: {
-    //                             inline_keyboard: button
-    //                         }
-    //                     }
-    //                 );
-    //             }
-
-    //         });
-    //     } catch (error) {
-    //         Red(`withdrawtSOL ====>  ${error}`);
-    //     }
-
-    // },
-
-    // withdrawAllSOL: async (bot, queryData) => {
-    //     try {
-    //         if (!queryData.message) {
-    //             console.log('no queryData.message');
-    //             return;
-    //         }
-    //         const chatId = queryData.message.chat.id;
-    //         const { title, button } = WalletUI.withdrawAllConfirmYesPage(withdrawWalletAddress);
-
-    //         bot.sendMessage(chatId, title, {
-    //             reply_markup: {
-    //                 inline_keyboard: button
-    //             }
-    //         });
-    //     } catch (error) {
-    //         Red(`withdrawAllSOL ====>  ${error}`);
-    //     }
-    // },
-
-    // withdrawAllYesSOL: async (bot, queryData) => {
-    //     try {
-    //         if (!queryData.message) {
-    //             console.log('no queryData.message');
-    //             return;
-    //         }
-
-    //         const chatId = queryData.message.chat.id;
-    //         if (!withdrawWalletAddress) {
-    //             bot.sendMessage(chatId, 'Find the withdraw to Wallet Address.').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //         }
-
-    //         const findUserWallet = await WalletDBAccess.findWallet(chatId);
-    //         const signer = await getKeypairfromPirvaetKeySOL(findUserWallet.privateKey);
-    //         const amount = await getSolBalanceSOL(findUserWallet.publicKey);
-
-    //         const withdrawAllResult = await withdrawAllSOL(findUserWallet.publicKey, withdrawWalletAddress, signer, amount);
-    //         if (withdrawAllResult) {
-    //             bot.sendMessage(chatId, 'Withdraw All successful.').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //         }
-    //     } catch (error) {
-    //         Red(`withdrawAllYesSOL ====>  ${error}`);
-    //     }
-    // },
-
-    // withdrawAllNoSOL: async (bot, queryData) => {
-    //     try {
-    //         if (!queryData.message) {
-    //             console.log('no queryData.message');
-    //             return;
-    //         }
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
-    //         await bot.editMessageText('Withdraw Cancelled 🚫', { chat_id: chatId, message_id: messageId, reply_markup: null, disable_web_page_preview: true, parse_mode: 'HTML' }).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //     } catch (error) {
-    //         Red(`withdrawAllNoSOL ====>  ${error}`);
-    //     }
-    // },
-
-    // withdrawCustomerAmountSOL: async (bot, queryData) => {
-    //     try {
-    //         if (!queryData.message) {
-    //             console.log('no queryData.message');
-    //             return;
-    //         }
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
-
-    //         await bot.sendMessage(chatId, `Enter amount to withdraw`);
-    //         bot.once('message', async (newMsg) => {
-    //             const withdrawAmount = newMsg.text;
-    //             const findUserWallet = await WalletDBAccess.findWallet(chatId);
-    //             const amount = await getSolBalanceSOL(findUserWallet.publicKey);
-    //             if (Number(withdrawAmount) == withdrawAmount && amount > withdrawAmount) {
-    //                 const signer = await getKeypairfromPirvaetKeySOL(findUserWallet.privateKey);
-    //                 White(`${findUserWallet.publicKey}, ${withdrawWalletAddress}, ${signer}, ${withdrawAmount}`)
-    //                 const withdrawCosutomResult = await withdrawAllSOL(findUserWallet.publicKey, withdrawWalletAddress, signer, withdrawAmount);
-    //                 if (withdrawCosutomResult)
-    //                     bot.sendMessage(chatId, `success`);
-    //             }
-    //             else if (Number(withdrawAmount) != withdrawAmount) {
-    //                 bot.sendMessage(chatId, '🚫 Invalid amount, try again').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-    //             }
-    //             else if (amount < withdrawAmount) {
-    //                 bot.sendMessage(chatId, `Amount cannot be greater than wallet balance, write less than <code>${amount}</code>, or <code>/start</code> to cancel`);
-    //             }
-    //         });
-    //     } catch (error) {
-    //         Red(`withdrawCustomerAmountSOL ====>  ${error}`);
-    //     }
-    // },
-
-    // depositSOL: async (bot, queryData) => {
-    //     try {
-    //         if (!queryData.message) {
-    //             console.log('no queryData.message');
-    //             return;
-    //         }
-    //         const messageId = queryData.message?.message_id;
-    //         const chatId = queryData.message.chat.id;
-
-    //         const findUserWallet = await WalletDBAccess.findWallet(chatId);
-
-    //         const url = {
-    //             deposit: `${depostUrl}${findUserWallet.publicKey}`,
-    //             solscan: `${solscanUrl}/${findUserWallet.publicKey}`
-    //         }
-
-    //         const { title, button } = DepositUI.depositPage(findUserWallet.publicKey, url);
-    //         await UI.switchMenu(bot, chatId, messageId, title, button,);
-    //     } catch (error) {
-    //         Red(`depositSOL ====>  ${error}`);
-    //     }
-    // }
+            const { title, button } = BaseDepositUI.depositPage(findUserBaseWallet.publicKey, url);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button);
+        } catch (error) {
+            Red(`depositETH ====>  ${error}`);
+        }
+    }
 }
 
 module.exports = BaseWalletController;
