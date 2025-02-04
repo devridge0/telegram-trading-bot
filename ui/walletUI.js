@@ -1,6 +1,14 @@
 const WalletUI = {
     walletPage: (publicKey, privateKey, url) => {
-        const title = `My wallet Info. \n\ My Publickey  : <code>${publicKey}</code> \n ____________________________________________________ \n 💡 My PrivateKey  :<code> ${privateKey}</code>`;
+        const title = `📝 EDIT WALLET: Select an option
+
+Address: <code>${publicKey}</code>
+(Tap to copy)
+
+Private key:
+<code>${privateKey}</code>
+
+(Tap to reveal)`;
         const button = [
             [
                 { text: `Wallet Delete 🗑`, callback_data: `wallet_delete` }
@@ -110,7 +118,7 @@ BE SURE TO COPY DOWN THIS INFORMATION NOW AS IT WILL NEVER BE SHOWN AGAIN`;
 
         return { title, button };
     },
-    
+
     withdrawCustomerAmountConfirmPage: (publicKey) => {
         const title = `Enter amount to withdraw`;
         const button = [
