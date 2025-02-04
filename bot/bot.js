@@ -12,6 +12,7 @@ const SettingController = require('../controller/settingController');
 const BaseStartController = require('../controller/base/baseStartController');
 const BaseWalletController = require('../controller/base/baseWalletController');
 const BasePositionController = require('../controller/base/basePositionController');
+const BaseCopyTradingController = require('../controller/base/baseCopyTradingController');
 
 dotenv.config();
 
@@ -278,6 +279,24 @@ const init = () => {
             else if (callBackQuery.includes('my_base_trade_result_next-')) {
                 BasePositionController.positionMyTradePageETH(bot, query, Number(callBackQuery.slice(26, callBackQuery.length)));
             }
+            else if (callBackQuery === 'base_copy_trading' || callBackQuery === `base_copy_trading_page_back`) {
+                BaseCopyTradingController.copyTradingPageETH(bot, query, Number(callBackQuery.slice(26, callBackQuery.length)));
+            }
+            else if (callBackQuery === 'add_new_base_whale_address') {
+                BaseCopyTradingController.copyTradingAddNewWalletPageETH(bot, query);
+            }
+            else if (callBackQuery.includes(`whale_base_page_`)) {
+                BaseCopyTradingController.copyTradingWhaleWalletPageETH(bot, query, callBackQuery.slice(16, callBackQuery.length));
+            }
+            else if (callBackQuery.includes(`del_base_w_wallet_`)) {
+                BaseCopyTradingController.copyTradingDeleteWhaleWalletPageETH(bot, query, callBackQuery.slice(18, callBackQuery.length));
+            }
+            else if (callBackQuery.includes(`copy_base_`)) {
+                BaseCopyTradingController.copyTradingStartAndStopPageETH(bot, query, callBackQuery.slice(10, callBackQuery.length));
+            }
+
+
+
 
 
         } catch (error) {

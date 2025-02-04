@@ -1,16 +1,16 @@
-const CopyTradingUI = {
+const BaseCopyTradingUI = {
     copyTradingPage: (whale) => {
         const title = `🔄 COPY: Select a wallet to follow
 
 Discover our top wallets -><a href="https://t.me/eclipsewhales">CLICK HERE</a>`;
         const button = [
             [
-                { text: `➕Add new copy address`, callback_data: `add_new_whale_address` }
+                { text: `➕Add new copy address`, callback_data: `add_new_base_whale_address` }
             ],
         ];
         const showAllWhale = (Whales) => {
-            const result = Whales.map((whale) => [{ text: `${whale.status === `false` ? "OFF🚫" : "Yes✅"}`, callback_data: `copytrade_${whale.address}_${whale.status}` },
-            { text: `${whale.name}📝`, callback_data: `whale_page_${whale.address}` }]
+            const result = Whales.map((whale) => [{ text: `${whale.status === `false` ? "OFF🚫" : "Yes✅"}`, callback_data: `copy_base_${whale.address}_${whale.status}` },
+            { text: `${whale.name}📝`, callback_data: `whale_base_page_${whale.address}` }]
             )
             button.push(...result);
         }
@@ -18,7 +18,7 @@ Discover our top wallets -><a href="https://t.me/eclipsewhales">CLICK HERE</a>`;
             showAllWhale(whale);
         }
         button.push([
-            { text: `Back 🔙`, callback_data: `back` }
+            { text: `Back 🔙`, callback_data: `base_copy_trading` }
         ]);
 
         return { title, button };
@@ -30,16 +30,16 @@ Label: ${whale.name}
 Address: <code>${whale.address}</code>`;
         const button = [
             [
-                { text: `Delete 🗑`, callback_data: `delete_whale_wallet_${whale.address}` }
+                { text: `Delete 🗑`, callback_data: `del_base_w_wallet_${whale.address}` }
             ],
             [
-                { text: `View on Solscan 🌐`, callback_data: `add_new_whale_address`, url: `https://solscan.io/account/${whale.address}` }
+                { text: `View on Solscan 🌐`, callback_data: `add_new_base_whale_address`, url: `https://etherscan.io/address/${whale.address}` }
             ],
             [
-                { text: `Analytic📊`, callback_data: `add_new_whale_address`, url: `https://coinstats.app/address/${whale.address}` }
+                { text: `Analytic📊`, callback_data: `add_new_base_whale_address`, url: `https://coinstats.app/address/${whale.address}` }
             ],
             [
-                { text: `Back 🔙`, callback_data: `copy_trading_page_back` }
+                { text: `Back 🔙`, callback_data: `base_copy_trading_page_back` }
             ]
         ];
 
@@ -47,4 +47,4 @@ Address: <code>${whale.address}</code>`;
     },
 }
 
-module.exports = CopyTradingUI;
+module.exports = BaseCopyTradingUI;
