@@ -33,12 +33,13 @@ const StartCopyTrading = (ws) => {
                 console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
                 const swapInfoResult = await getSwapInfo(signature);
                 const result = { ...swapInfoResult, whaleAddress: subAddress[0].address };
+                White(`📜 ${JSON.stringify(result)}`)
                 try {
                     if (result.isSwap) {
                         console.log(`✅ Find opportunity!!!📌`);
                         const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
                         const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
-                        if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
+                        if (currentSolBalance * (10 ** 9) < findUrsserWallet.jitoTip) {
                             return;
                         }
 
@@ -54,7 +55,7 @@ const StartCopyTrading = (ws) => {
                             copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
                         }
                         if (copyTradingResult) {
-                            const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(userId, chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
+                            const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
                         }
                     }
 
@@ -63,17 +64,27 @@ const StartCopyTrading = (ws) => {
                 }
             }
 
-            ws.on('close', () => {
+            ws.on('close', async () => {
                 console.log('Disconnected from server');
-                setTimeout(() => {
+                Green(JSON.stringify(activeAddresses))
+                setTimeout(async () => {
                     StartCopyTrading(new WebSocket(SOLANA_WSS_ENDPOINT));
-                }, 3000); // Retry after 5 seconds
+                    const trackingPromises = activeAddresses.map((e) =>
+                        startTracking(e.address, e.chatId)
+                    );
+                    await Promise.all(trackingPromises);
+                }, 5000);
             });
-            ws.on('error', () => {
-                console.log('Disconnected from server');
-                setTimeout(() => {
+            ws.on('error', async () => {
+                console.log('Disconnected from server error');
+                Green(JSON.stringify(activeAddresses))
+                setTimeout(async () => {
                     StartCopyTrading(new WebSocket(SOLANA_WSS_ENDPOINT));
-                }, 3000); // Retry after 5 seconds
+                    const trackingPromises = activeAddresses.map((e) =>
+                        startTracking(e.address, e.chatId)
+                    );
+                    await Promise.all(trackingPromises);
+                }, 5000);
             });
         });
     } catch (error) {
