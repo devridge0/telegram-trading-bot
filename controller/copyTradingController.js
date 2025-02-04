@@ -139,21 +139,20 @@ const CopyTradingController = {
 
             await WalletDBAccess.statusUpdateTargetWallet(chatId, newData[0], newData[1]);
             const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);
-            const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
-
             if (newData[1] == 'true') {
                 stopTracking(newData[0], chatId);
             }
             else {
                 startTracking(newData[0], chatId);
             }
+            const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
+            await UI.switchMenu(bot, chatId, messageId, title, button,);
         } catch (error) {
             Red(`copyTradingStartAndStopPageSOL ====>   ${error}`)
         }
     },
 
-   
+
 }
 
 module.exports = CopyTradingController;
