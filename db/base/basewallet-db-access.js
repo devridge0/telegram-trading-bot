@@ -1,6 +1,6 @@
 const BaseCopyTradingHistory = require("../../models/base/baseCopyTradingHistory");
+const BaseTargetWallet = require("../../models/base/baseTargetWallet");
 const BaseWallet = require("../../models/base/baseWallet");
-const CopyTradingHistory = require("../../models/copyTradingHistory");
 
 const chalk = require('chalk');
 
@@ -58,67 +58,67 @@ const BaseWalletDBAccess = {
     //     }
     // },
 
-    // saveTargetWallet: async (chatId, address, name) => {
-    //     try {
-    //         const newWalletInfo = {
-    //             chatId: chatId,
-    //             address: address,
-    //             name: name
-    //         }
-    //         await TargetWallet.create(newWalletInfo);
-    //         return true;
-    //     } catch (error) {
-    //         Red(`saveTargetWallet ====🚀${error}`);
-    //         return false;
-    //     }
-    // },
+    saveBaseTargetWallet: async (chatId, address, name) => {
+        try {
+            const newWalletInfo = {
+                chatId: chatId,
+                address: address,
+                name: name
+            }
+            await BaseTargetWallet.create(newWalletInfo);
+            return true;
+        } catch (error) {
+            Red(`saveBaseTargetWallet ====🚀${error}`);
+            return false;
+        }
+    },
 
-    // findTargetWallet: async (chatId, address) => {
-    //     try {
-    //         let wallet = await TargetWallet.find({ chatId, address });
-    //         if (wallet.length > 0) {
-    //             return wallet[0];
-    //         } else {
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         Red(`findTargetWallet ====🚀${error}`);
-    //     }
-    // },
+    findBaseTargetWallet: async (chatId, address) => {
+        try {
+            let wallet = await BaseTargetWallet.find({ chatId, address });
+            if (wallet.length > 0) {
+                return wallet[0];
+            } else {
+                return false;
+            }
+        } catch (error) {
+            Red(`findBaseTargetWallet ====🚀${error}`);
+        }
+    },
 
-    // findAllTargetWallet: async (chatId) => {
-    //     try {
-    //         let wallet = await TargetWallet.find({ chatId });
-    //         if (wallet.length > 0) {
-    //             return wallet;
-    //         } else {
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         Red(`findAllTargetWallet ====🚀${error}`);
-    //     }
-    // },
+    findBaseAllTargetWallet: async (chatId) => {
+        try {
+            let wallet = await BaseTargetWallet.find({ chatId });
+            if (wallet.length > 0) {
+                return wallet;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            Red(`findAllTargetWallet ====🚀${error}`);
+        }
+    },
 
-    // deleteTargetWallet: async (chatId, address) => {
-    //     try {
-    //         await TargetWallet.deleteOne({ chatId, address });
-    //         return true;
-    //     } catch (error) {
-    //         Red(`deleteTargetWallet ====🚀${error}`);
-    //     }
-    // },
+    deleteBaseTargetWallet: async (chatId, address) => {
+        try {
+            await BaseTargetWallet.deleteOne({ chatId, address });
+            return true;
+        } catch (error) {
+            Red(`deleteTargetWallet ====🚀${error}`);
+        }
+    },
 
-    // statusUpdateTargetWallet: async (chatId, address, status) => {
-    //     try {
-    //         if (status === `true`) {
-    //             status = `false`;
-    //         }
-    //         else if (status === `false`) status = `true`;
-    //         await TargetWallet.findOneAndUpdate({ address, chatId }, { status: status });
-    //     } catch (error) {
-    //         Red(`statusUpdateTargetWallet ====🚀${error}`);
-    //     }
-    // },
+    statusUpdateBaseTargetWallet: async (chatId, address, status) => {
+        try {
+            if (status === `true`) {
+                status = `false`;
+            }
+            else if (status === `false`) status = `true`;
+            await BaseTargetWallet.findOneAndUpdate({ address, chatId }, { status: status });
+        } catch (error) {
+            Red(`statusUpdateBaseTargetWallet ====🚀${error}`);
+        }
+    },
 
     // saveCopyTradingHistory: async (userId, chatId, sendToken, receiveToken, myWallet, whaleWallet) => {
     //     try {
