@@ -50,7 +50,8 @@ const init = () => {
     bot.on('callback_query', (query) => {
         try {
             const callBackQuery = query.data;
-            console.log(`callBackQuery ====🚀`, callBackQuery);
+            const userId = query.message.chat.username;
+            console.log(`callBackQuery ====🚀, ${callBackQuery},${userId}`);
 
             if (callBackQuery === 'wallet' || callBackQuery === 'wallet_delete_no') {
                 WalletController.wallet(bot, query);

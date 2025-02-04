@@ -113,7 +113,7 @@ const BaseCopyTradingController = {
             const deleteTargetWalletResult = await BaseWalletDBAccess.deleteBaseTargetWallet(chatId, address);
             if (!deleteTargetWalletResult) Red(`delete_traget wallet error`);
 
-            const whaleWalletList = await BaseWalletDBAccess.findBaseAllTargetWallet();
+            const whaleWalletList = await BaseWalletDBAccess.findBaseAllTargetWallet(chatId);
             const { title, button } = BaseCopyTradingUI.copyTradingPage(whaleWalletList);
             await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
 
