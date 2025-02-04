@@ -1,4 +1,4 @@
-const WalletUI = {
+const BaseWalletUI = {
     walletPage: (publicKey, privateKey, url) => {
         const title = `📝 EDIT WALLET: Select an option
 
@@ -11,17 +11,17 @@ Private key:
 (Tap to reveal)`;
         const button = [
             [
-                { text: `Wallet Delete 🗑`, callback_data: `wallet_delete` }
+                { text: `Wallet Delete 🗑`, callback_data: `base_wallet_delete` }
             ],
             [
-                { text: `Solscan 🌐`, callback_data: `deposit`, url: url.solscan }
+                { text: `Etherscan 🌐`, callback_data: `base_ethscan`, url: url.ethscan }
             ],
             [
-                { text: `Deposit 💵`, callback_data: `deposit`, url: url.deposit },
-                { text: `Withdraw`, callback_data: `withdraw` }
+                { text: `Deposit 💵`, callback_data: `base_deposit`, url: url.deposit },
+                { text: `Withdraw`, callback_data: `base_withdraw` }
             ],
             [
-                { text: `Back 🔙`, callback_data: `back` }
+                { text: `Back 🔙`, callback_data: `base_back` }
             ]
         ];
 
@@ -38,10 +38,10 @@ Private key:
 
         const button = [
             [
-                { text: `✅Yes`, callback_data: `wallet_delete_yes` }
+                { text: `✅Yes`, callback_data: `base_wallet_delete_yes` }
             ],
             [
-                { text: `❌No`, callback_data: `wallet_delete_no` }
+                { text: `❌No`, callback_data: `base_wallet_delete_no` }
             ]
         ];
 
@@ -52,13 +52,13 @@ Private key:
 
         const button = [
             [
-                { text: `Create new wallet🆕`, callback_data: `create_new_wallet` }
+                { text: `Create new wallet🆕`, callback_data: `base_create_new_wallet` }
             ],
             [
-                { text: `Import existing wallet📥`, callback_data: `import_wallet` }
+                { text: `Import existing wallet📥`, callback_data: `base_import_wallet` }
             ],
             [
-                { text: `Back 🔙`, callback_data: `wallet_back` }
+                { text: `Back 🔙`, callback_data: `base_wallet_back` }
             ]
         ];
 
@@ -77,7 +77,7 @@ BE SURE TO COPY DOWN THIS INFORMATION NOW AS IT WILL NEVER BE SHOWN AGAIN`;
 
         const button = [
             [
-                { text: `Back 🔙`, callback_data: `create_wallet_back` }
+                { text: `Back 🔙`, callback_data: `base_create_new_wallet_back` }
             ]
         ];
 
@@ -88,7 +88,7 @@ BE SURE TO COPY DOWN THIS INFORMATION NOW AS IT WILL NEVER BE SHOWN AGAIN`;
 
         const button = [
             [
-                { text: `Back 🔙`, callback_data: `create_wallet_back` }
+                { text: `Back 🔙`, callback_data: `base_create_new_wallet_back` }
             ]
         ];
 
@@ -99,20 +99,20 @@ BE SURE TO COPY DOWN THIS INFORMATION NOW AS IT WILL NEVER BE SHOWN AGAIN`;
         const title = `Choose amount to withdraw`;
         const button = [
             [
-                { text: `Withdraw All`, callback_data: `withdraw_all` },
-                { text: `Customer Amount`, callback_data: `customer_amount` }
+                { text: `Withdraw All`, callback_data: `base_withdraw_all` },
+                { text: `Customer Amount`, callback_data: `base_customer_amount` }
             ]
         ];
 
         return { title, button };
     },
 
-    withdrawAllConfirmYesPage: (publicKey) => {
-        const title = `Confirm Withdraw. \n\ My Publickey  : <code>${publicKey}</code> \n `;
+    withdrawAllConfirmYesPage: () => {
+        const title = `Confirm Withdraw.`;
         const button = [
             [
-                { text: `Yes✅`, callback_data: `withdraw_all_yes` },
-                { text: `No❌`, callback_data: `withdraw_all_no` }
+                { text: `Yes✅`, callback_data: `base_withdraw_all_yes` },
+                { text: `No❌`, callback_data: `base_withdraw_all_no` }
             ]
         ];
 
@@ -131,4 +131,4 @@ BE SURE TO COPY DOWN THIS INFORMATION NOW AS IT WILL NEVER BE SHOWN AGAIN`;
     },
 }
 
-module.exports = WalletUI;
+module.exports = BaseWalletUI;

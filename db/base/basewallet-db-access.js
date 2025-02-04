@@ -1,3 +1,4 @@
+const BaseCopyTradingHistory = require("../../models/base/baseCopyTradingHistory");
 const BaseWallet = require("../../models/base/baseWallet");
 const CopyTradingHistory = require("../../models/copyTradingHistory");
 
@@ -20,14 +21,14 @@ const BaseWalletDBAccess = {
         }
     },
 
-    // deleteWallet: async (chatId) => {
-    //     try {
-    //         await Wallet.deleteOne({ chatId });
-    //         return true;
-    //     } catch (error) {
-    //         Red(`deleteWallet ====🚀${error}`);
-    //     }
-    // },
+    deleteBaseWallet: async (chatId) => {
+        try {
+            await BaseWallet.deleteOne({ chatId });
+            return true;
+        } catch (error) {
+            Red(`deleteBaseWallet ====🚀${error}`);
+        }
+    },
 
     saveBaseWallet: async (userId, chatId, publicKey, privateKey) => {
         try {
@@ -137,18 +138,18 @@ const BaseWalletDBAccess = {
     //     }
     // },
 
-    // findCopyTradingHistory: async (chatId) => {
-    //     try {
-    //         let result = await CopyTradingHistory.find({ chatId });
-    //         if (result.length > 0) {
-    //             return result;
-    //         } else {
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         Red(`findCopyTradingHistory ====🚀${error}`);
-    //     }
-    // },
+    findBaseCopyTradingHistory: async (chatId) => {
+        try {
+            let result = await BaseCopyTradingHistory.find({ chatId });
+            if (result.length > 0) {
+                return result;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            Red(`findBaseCopyTradingHistory ====🚀${error}`);
+        }
+    },
 
 }
 
