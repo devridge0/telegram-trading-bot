@@ -234,6 +234,8 @@ const SolanaNetwork = {
             const wallet = new Wallet(Keypair.fromSecretKey(bs58.decode(payerSecretKey)));
             const keypair = Keypair.fromSecretKey(bs58.decode(payerSecretKey));
 
+            Blue(`MODE ++++++++++++++++ ${mode}`)
+
             let quoteResponse;
             if (mode == 'buy') {
                 White(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`)
@@ -265,6 +267,9 @@ const SolanaNetwork = {
                     }),
                 }
             );
+
+            Blue(JSON.stringify(swapTransactionResponse))
+
             const { swapTransaction } = await swapTransactionResponse.json();
 
             const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
