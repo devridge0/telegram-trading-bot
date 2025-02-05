@@ -151,7 +151,7 @@ const PositionController = {
             const findUserWallet = await WalletDBAccess.findWallet(chatId);
             bot.once('message', async (newMsg) => {
                 const buyAmount = newMsg.text;
-                const currentTokenBuyResult = await JUPITER_TOKN_SWAP(tokenAddress, findUserWallet.privateKey, buyAmount, findUserWallet.slippage, mode = 'buy');
+                const currentTokenBuyResult = await JUPITER_TOKN_SWAP(tokenAddress, findUserWallet.privateKey, Number(buyAmount), findUserWallet.slippage,findUserWallet.jitoTip, mode = 'buy');
                 if (!currentTokenBuyResult) {
                     bot.sendMessage(chatId, `Token buy failed.`);
                     return;
@@ -173,7 +173,7 @@ const PositionController = {
             const chatId = queryData.message.chat.id;
 
             await bot.sendMessage(chatId, `📨 Provide amount to sell below (in %)`);
-            bot.once('message', async (newMsg) => {
+            bot.once('message', async (newMsg) => { 
                 const sellAmount = newMsg.text;
                 if (Number(sellAmount) != sellAmount) {
                     bot.sendMessage(chatId, `Invalid sell amount.`);
@@ -182,13 +182,17 @@ const PositionController = {
                 const findUserWallet = await WalletDBAccess.findWallet(chatId);
                 const myTokens = await getMyTokensInWalletSOL(findUserWallet.publicKey);
                 const sellToken = myTokens.filter((token) => token.mint == tokenAddress);
-                const newAmount = Math.floor((Number(sellToken[0].amount) * (Number(sellAmount) / 100)) * (10 ** Number(sellToken[0].decimals)))
+                const newAmount = Math.floor((Number(sellToken[0].amount) * (Number(sellAmount) / 100)));
+                const decimalsAmount = 10 ** Number(sellToken[0].decimals);
 
-                const currentTokenBuyResult = await JUPITER_TOKN_SWAP(tokenAddress, findUserWallet.privateKey, newAmount, findUserWallet.slippage, mode = 'sell');
+                const finalAmount = BigInt(newAmount * decimalsAmount);
+                Blue(finalAmount);
+
+                const currentTokenBuyResult = await JUPITER_TOKN_SWAP(tokenAddress, findUserWallet.privateKey, finalAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode = 'sell');
                 if (!currentTokenBuyResult) {
                     bot.sendMessage(chatId, `Token sell failed.`);
                     return;
-                } else bot.sendMessage(chatId, `Token sell successfult.`)
+                } else bot.sendMessage(chatId, `Token sell successfully.`)
             });
 
         } catch (error) {
