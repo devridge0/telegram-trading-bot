@@ -39,7 +39,7 @@ const StartCopyTrading = (ws) => {
                         console.log(`✅ Find opportunity!!!📌`);
                         const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
                         const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
-                        if (currentSolBalance * (10 ** 9) < findUrsserWallet.jitoTip) {
+                        if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
                             return;
                         }
 
