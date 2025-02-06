@@ -48,11 +48,12 @@ const CopyTradingController = {
             bot.sendMessage(chatId, `📨 Send wallet address to copy`);
             bot.once(`message`, async (newMessage) => {
                 const copyAddress = newMessage.text;
-                const validResult = await isValidPublicKeySOL(copyAddress);
+                // const validResult = await isValidPublicKeySOL(copyAddress);
                 const isexisted = await WalletDBAccess.findTargetWallet(chatId, copyAddress);
-                if (!validResult) {
-                    bot.sendMessage(chatId, `🚫 Invalid wallet address`);
-                } else if (isexisted) {
+                // if (!validResult) {
+                //     bot.sendMessage(chatId, `🚫 Invalid wallet address`);
+                // } else
+                if (isexisted) {
                     bot.sendMessage(chatId, `🚫 Mirror already exists, try another one!`);
                 }
                 else {
