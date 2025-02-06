@@ -53,6 +53,7 @@ const CopyTradingController = {
                 // if (!validResult) {
                 //     bot.sendMessage(chatId, `🚫 Invalid wallet address`);
                 // } else
+                
                 if (isexisted) {
                     bot.sendMessage(chatId, `🚫 Mirror already exists, try another one!`);
                 }
