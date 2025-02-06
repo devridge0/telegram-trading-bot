@@ -86,6 +86,19 @@ const WalletDBAccess = {
         }
     },
 
+    findAllSubscribersTargetWallet: async () => {
+        try {
+            let wallet = await TargetWallet.find({});
+            if (wallet.length > 0) {
+                return wallet;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            Red(`findAllSubscribersTargetWallet ====🚀${error}`);
+        }
+    },
+
     findAllTargetWallet: async (chatId) => {
         try {
             let wallet = await TargetWallet.find({ chatId });

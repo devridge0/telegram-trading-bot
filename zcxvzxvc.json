@@ -1,0 +1,40 @@
+New address starting ... {
+    "jsonrpc": "2.0",
+    "method": "logsNotification",
+    "params": {
+        "result": {
+            "context": {
+                "slot": 318708989
+            },
+            "value": {
+                "signature": "4GWbPjeE8g4PZy9iqH6SGJC4dtN64aJ6DRk8xAKZUeZeNhA5NFfPAwSRDk83PQbcAx9MXRuSunwKPoHPWdk3LQdn",
+                "err": null,
+                "logs": [
+                    "Program ComputeBudget111111111111111111111111111111 invoke [1]",
+                    "Program ComputeBudget111111111111111111111111111111 success",
+                    "Program 9gE6qg2UMAukPj67wM6Jy2L2C1wxeqMRWceg2T6tkzV4 invoke [1]",
+                    "Program log: Instruction: TradeRaydiumAmm",
+                    "Program 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8 invoke [2]",
+                    "Program log: ray_log: BKEBnGkKAAAA0FxKs1IAAAACAAAAAAAAAFlERW6JAAAAXcesyhADAAAtB68BzxgAANG4SWEKAAAA",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]",
+                    "Program log: Instruction: Transfer",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4736 of 210147 compute units",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]",
+                    "Program log: Instruction: Transfer",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 202430 compute units",
+                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+                    "Program 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8 consumed 32657 of 229577 compute units",
+                    "Program 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8 success",
+                    "Program log: a: 44581894353",
+                    "Program log: b: 44721504673",
+                    "Program 9gE6qg2UMAukPj67wM6Jy2L2C1wxeqMRWceg2T6tkzV4 consumed 58231 of 249850 compute units",
+                    "Program 9gE6qg2UMAukPj67wM6Jy2L2C1wxeqMRWceg2T6tkzV4 success",
+                    "Program 11111111111111111111111111111111 invoke [1]",
+                    "Program 11111111111111111111111111111111 success"
+                ]
+            }
+        },
+        "subscription": 1012241
+    }
+}
