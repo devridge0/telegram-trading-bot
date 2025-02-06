@@ -1,94 +1,228 @@
 {
-    "jsonrpc": "2.0",
-    "method": "logsNotification",
-    "params": {
-        "result": {
-            "context": {
-                "slot": 318064735
-            },
-            "value": {
-                "signature": "3nGdGBxLeyfe65W28rhQEPbTZhFoa7bmzXhvrnbxXxwpGDjUxFEJkLAqcN9VvspFvovMJsH6dHA9kBjEmH9eqRuN",
-                "err": null,
-                "logs": [
-                    "Program ComputeBudget111111111111111111111111111111 invoke [1]",
-                    "Program ComputeBudget111111111111111111111111111111 success",
-                    "Program ComputeBudget111111111111111111111111111111 invoke [1]",
-                    "Program ComputeBudget111111111111111111111111111111 success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4437 of 299700 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 295263 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4437 of 290619 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 286182 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 8937 of 281538 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 272601 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4437 of 267957 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 263520 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 5937 of 258876 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 252939 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4437 of 248295 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 243858 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 5937 of 239214 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 233277 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4437 of 228633 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 224196 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
-                    "Program log: CreateIdempotent",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 4437 of 219552 compute units",
-                    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
-                    "Program log: Instruction: Transfer",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4644 of 215115 compute units",
-                    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success"
-                ]
-            }
+    "_events": {},
+    "_eventsCount": 1,
+    "_binaryType": "nodebuffer",
+    "_closeCode": 1006,
+    "_closeFrameReceived": false,
+    "_closeFrameSent": false,
+    "_closeMessage": {
+        "type": "Buffer",
+        "data": []
+    },
+    "_closeTimer": null,
+    "_errorEmitted": false,
+    "_extensions": {},
+    "_paused": false,
+    "_protocol": "",
+    "_readyState": 1,
+    "_receiver": {
+        "_events": {},
+        "_writableState": {
+            "highWaterMark": 16384,
+            "length": 0,
+            "corked": 0,
+            "writelen": 0,
+            "bufferedIndex": 0,
+            "pendingcb": 0
         },
-        "subscription": 338336
-    }
+        "_allowSynchronousEvents": true,
+        "_binaryType": "nodebuffer",
+        "_extensions": {},
+        "_isServer": false,
+        "_maxPayload": 104857600,
+        "_skipUTF8Validation": false,
+        "_bufferedBytes": 0,
+        "_buffers": [],
+        "_compressed": false,
+        "_payloadLength": 0,
+        "_fragmented": 0,
+        "_masked": false,
+        "_fin": false,
+        "_opcode": 0,
+        "_totalPayloadLength": 0,
+        "_messageLength": 0,
+        "_fragments": [],
+        "_errored": false,
+        "_loop": false,
+        "_state": 0,
+        "_eventsCount": 6
+    },
+    "_sender": {
+        "_extensions": {},
+        "_socket": {
+            "_tlsOptions": {
+                "pipe": false,
+                "secureContext": {
+                    "context": {}
+                },
+                "isServer": false,
+                "requestCert": true,
+                "rejectUnauthorized": true
+            },
+            "_secureEstablished": true,
+            "_securePending": false,
+            "_newSessionPending": false,
+            "_controlReleased": true,
+            "secureConnecting": false,
+            "_SNICallback": null,
+            "servername": "mainnet.helius-rpc.com",
+            "alpnProtocol": false,
+            "authorized": true,
+            "authorizationError": null,
+            "encrypted": true,
+            "_events": {
+                "close": [
+                    null,
+                    null
+                ],
+                "end": [
+                    null,
+                    null
+                ],
+                "newListener": [
+                    null,
+                    null
+                ]
+            },
+            "_eventsCount": 6,
+            "connecting": false,
+            "_hadError": false,
+            "_parent": null,
+            "_host": "mainnet.helius-rpc.com",
+            "_closeAfterHandlingError": false,
+            "_readableState": {
+                "highWaterMark": 16384,
+                "buffer": [],
+                "bufferIndex": 0,
+                "length": 0,
+                "pipes": [],
+                "awaitDrainWriters": null
+            },
+            "_writableState": {
+                "highWaterMark": 16384,
+                "length": 0,
+                "corked": 0,
+                "writelen": 0,
+                "bufferedIndex": 0,
+                "pendingcb": 0
+            },
+            "allowHalfOpen": false,
+            "_sockname": null,
+            "_pendingData": null,
+            "_pendingEncoding": "",
+            "_server": null,
+            "ssl": {
+                "_parent": {
+                    "reading": true,
+                    "onconnection": null
+                },
+                "_parentWrap": null,
+                "_secureContext": {
+                    "context": {}
+                },
+                "reading": true
+            },
+            "_requestCert": true,
+            "_rejectUnauthorized": true,
+            "parser": null,
+            "_httpMessage": null,
+            "autoSelectFamilyAttemptedAddresses": [
+                "172.64.151.87:443"
+            ],
+            "timeout": 0
+        },
+        "_firstFragment": true,
+        "_compress": false,
+        "_bufferedBytes": 0,
+        "_queue": [],
+        "_state": 0
+    },
+    "_socket": {
+        "_tlsOptions": {
+            "pipe": false,
+            "secureContext": {
+                "context": {}
+            },
+            "isServer": false,
+            "requestCert": true,
+            "rejectUnauthorized": true
+        },
+        "_secureEstablished": true,
+        "_securePending": false,
+        "_newSessionPending": false,
+        "_controlReleased": true,
+        "secureConnecting": false,
+        "_SNICallback": null,
+        "servername": "mainnet.helius-rpc.com",
+        "alpnProtocol": false,
+        "authorized": true,
+        "authorizationError": null,
+        "encrypted": true,
+        "_events": {
+            "close": [
+                null,
+                null
+            ],
+            "end": [
+                null,
+                null
+            ],
+            "newListener": [
+                null,
+                null
+            ]
+        },
+        "_eventsCount": 6,
+        "connecting": false,
+        "_hadError": false,
+        "_parent": null,
+        "_host": "mainnet.helius-rpc.com",
+        "_closeAfterHandlingError": false,
+        "_readableState": {
+            "highWaterMark": 16384,
+            "buffer": [],
+            "bufferIndex": 0,
+            "length": 0,
+            "pipes": [],
+            "awaitDrainWriters": null
+        },
+        "_writableState": {
+            "highWaterMark": 16384,
+            "length": 0,
+            "corked": 0,
+            "writelen": 0,
+            "bufferedIndex": 0,
+            "pendingcb": 0
+        },
+        "allowHalfOpen": false,
+        "_sockname": null,
+        "_pendingData": null,
+        "_pendingEncoding": "",
+        "_server": null,
+        "ssl": {
+            "_parent": {
+                "reading": true,
+                "onconnection": null
+            },
+            "_parentWrap": null,
+            "_secureContext": {
+                "context": {}
+            },
+            "reading": true
+        },
+        "_requestCert": true,
+        "_rejectUnauthorized": true,
+        "parser": null,
+        "_httpMessage": null,
+        "autoSelectFamilyAttemptedAddresses": [
+            "172.64.151.87:443"
+        ],
+        "timeout": 0
+    },
+    "_bufferedAmount": 0,
+    "_isServer": false,
+    "_redirects": 0,
+    "_autoPong": true,
+    "_url": "wss://mainnet.helius-rpc.com/?api-key=adcb5efb-1e8d-4b33-8e77-6b9b4e009b73",
+    "_req": null
 }

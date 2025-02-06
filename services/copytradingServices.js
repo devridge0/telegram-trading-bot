@@ -14,83 +14,9 @@ const Green = (str) => console.log(chalk.bgGreen(str));
 const White = (str) => console.log(chalk.bgWhite(str));
 
 
-const WS = new WebSocket(SOLANA_WSS_ENDPOINT);
+let WS = null;
 let activeAddresses = [];
 
-const StartCopyTrading = (ws) => {
-    console.log(`Copy Trading WebSocket starting...`);
-    try {
-        ws.on('message', async (data) => {
-            const response = JSON.parse(data);
-            Green(`New address starting ... ${JSON.stringify(response)}`);
-            if (typeof response.result == 'number') {
-                activeAddresses[activeAddresses.length - 1].id = response.result;
-            }
-            if (response.method === "logsNotification") {
-                const signature = response.params.result.value.signature;
-                const subscriptionId = response.params.subscription;
-                const subAddress = activeAddresses.filter((e) => e.id == subscriptionId);
-                console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
-                const swapInfoResult = await getSwapInfo(signature);
-                const result = { ...swapInfoResult, whaleAddress: subAddress[0].address };
-                White(`📜 ${JSON.stringify(result)}`)
-                try {
-                    if (result.isSwap) {
-                        console.log(`✅ Find opportunity!!!📌`);
-                        const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
-                        const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
-                        if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
-                            return;
-                        }
-
-                        let mode;
-                        let copyTradingResult;
-                        if (result.receiveToken == `So11111111111111111111111111111111111111112`) {
-                            mode = "sell";
-                            const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
-                            Blue(`sell Amount  --------> ${sellAmount}`)
-                            copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
-                        } else {
-                            mode = 'buy';
-                            copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
-                        }
-                        if (copyTradingResult) {
-                            const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
-                        }
-                    }
-
-                } catch (error) {
-                    Red(`actionMainCopyTrading ====>   ${error}`);
-                }
-            }
-
-            ws.on('close', async () => {
-                console.log('Disconnected from server');
-                Green(JSON.stringify(activeAddresses))
-                setTimeout(async () => {
-                    StartCopyTrading(new WebSocket(SOLANA_WSS_ENDPOINT));
-                    const trackingPromises = activeAddresses.map((e) =>
-                        startTracking(e.address, e.chatId)
-                    );
-                    await Promise.all(trackingPromises);
-                }, 5000);
-            });
-            ws.on('error', async () => {
-                console.log('Disconnected from server error');
-                Green(JSON.stringify(activeAddresses))
-                setTimeout(async () => {
-                    StartCopyTrading(new WebSocket(SOLANA_WSS_ENDPOINT));
-                    const trackingPromises = activeAddresses.map((e) =>
-                        startTracking(e.address, e.chatId)
-                    );
-                    await Promise.all(trackingPromises);
-                }, 5000);
-            });
-        });
-    } catch (error) {
-        Red(`StartCopy Trading : ${error}`)
-    }
-}
 
 function startTracking(address, chatId) {
     subscribeAddress(address, chatId);
@@ -133,6 +59,111 @@ function unsubscribeAddress(address) {
         Red(`unsubsciption ===== ${error}`)
     }
 }
+
+
+
+const StartCopyTrading = async () => {
+    try {
+
+        const previousSubscribers = await WalletDBAccess.findAllSubscribersTargetWallet();
+
+        await previousSubscribers.map((e) => {
+            if (e.status == 'true') {
+                activeAddresses.push({ address: e.address, chatId: e.chatId, id: 1 })
+            }
+        })
+
+        WS = new WebSocket(SOLANA_WSS_ENDPOINT);
+        console.log(`Copy Trading WebSocket starting...`);
+
+
+        WS.on('open', async () => {
+            Green(`New subscribeAddress starting ... ${JSON.stringify(activeAddresses)}`);
+            await activeAddresses.map((e) =>
+                WS.send(JSON.stringify({
+                    jsonrpc: "2.0",
+                    id: `sub-${e.address}`,
+                    method: "logsSubscribe",
+                    params: [{ mentions: [e.address] }, { commitment: "confirmed" }]
+                }))
+            );
+        });
+
+
+
+        WS.on('message', async (data) => {
+            const response = JSON.parse(data);
+            Green(`New address starting ... ${JSON.stringify(response)}`);
+            if (typeof response.result == 'number') {
+                activeAddresses = activeAddresses.map((e) => {
+                    if (e.address == response.id.slice(4, response.id.length)) {
+                        e.id = response.result
+                    }
+                    return e;
+                })
+            }
+
+            if (response.method === "logsNotification") {
+                const signature = response.params.result.value.signature;
+                const subscriptionId = response.params.subscription;
+
+                const subAddress = activeAddresses.filter((e) => e.id == subscriptionId);
+
+                console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
+                const swapInfoResult = await getSwapInfo(signature);
+                const result = { ...swapInfoResult, whaleAddress: subAddress[0].address };
+                const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
+                Blue(`📜 ${JSON.stringify(result)}`)
+                try {
+                    if (result.isSwap) {
+                        console.log(`✅ Find opportunity!!!📌`);
+                        console.log(`✅ Find opportunity!!!📌${findUserWallet[0].jitoTip}`);
+                        console.log(`✅ Find opportunity!!!📌${findUserWallet.jitoTip}`);
+                        const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
+                        if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
+                            return; 
+                        }
+
+                        let mode;
+                        let copyTradingResult;
+
+                        const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
+                        Blue(`sell Amount  --------> ${sellAmount}`)
+                        copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
+                    } else {
+                        mode = 'buy';
+                        copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
+                    }
+                    if (copyTradingResult) {
+                        const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
+                    }
+
+                } catch (error) {
+                    Red(`copy trading Servercie error ====>   ${error}`);
+                }
+            }
+        });
+
+        WS.on('close', async () => {
+            console.log('Disconnected from server');
+            WS.close();
+            setTimeout(async () => {
+                StartCopyTrading(WS);
+            }, 5000);
+        });
+
+        WS.on('error', async () => {
+            console.log('Disconnected from server error');
+            WS.close();
+            setTimeout(async () => {
+                StartCopyTrading(WS);
+            }, 5000);
+        });
+    } catch (error) {
+        Red(`StartCopy Trading : ${error}`)
+    }
+}
+
 
 // StartCopyTrading(WS);
 
