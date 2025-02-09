@@ -7,7 +7,7 @@ const { createBaseWalletETH, getBaseWalletBalance, isValidBasePrivateKey, getBas
 const BaseDepositUI = require("../../ui/base/baseDepositUI");
 
 let depostUrl = `https://buy.moonpay.com/?apiKey=pk_live_TBeEWwlvSTuyxLSueHu3dINixf4LEt&currencyCode=ETH&walletAddress=`;
-let ethscanUrl = `https://etherscan.io/address`;
+let ethscanUrl = `https://basescan.org/address`;
 
 const Red = (str) => console.log(chalk.bgRed(str));
 const Yellow = (str) => console.log(chalk.bgYellow(str));
@@ -255,7 +255,7 @@ const BaseWalletController = {
         }
     },
 
-    withdrawAllNoSOL: async (bot, queryData) => {
+    withdrawAllNoETH: async (bot, queryData) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
@@ -269,7 +269,7 @@ const BaseWalletController = {
         }
     },
 
-    withdrawCustomerAmountSOL: async (bot, queryData) => {
+    withdrawCustomerAmountETH: async (bot, queryData) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
@@ -278,23 +278,17 @@ const BaseWalletController = {
             const messageId = queryData.message?.message_id;
             const chatId = queryData.message.chat.id;
 
-            await bot.sendMessage(chatId, `Enter amount to withdraw`);
+            await bot.sendMessage(chatId, `Enter amount to withdraw (% ETH)`);
             bot.once('message', async (newMsg) => {
                 const withdrawAmount = newMsg.text;
                 const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
-
-
-                const amount = await getBaseWalletBalance(findUserBaseWallet.publicKey);
-                if (Number(withdrawAmount) == withdrawAmount && amount > withdrawAmount) {
-                    const withdrawCosutomResult = await transferCustomerAmountEth(findUserBaseWallet.privateKey, withdrawWalletAddress, withdrawAmount);
+                if (Number(withdrawAmount) == withdrawAmount) {
+                    const withdrawCosutomResult = await transferCustomerAmountEth(findUserBaseWallet.privateKey, withdrawWalletAddress, withdrawAmount / 100);
                     if (withdrawCosutomResult)
                         bot.sendMessage(chatId, `success`);
                 }
-                else if (Number(withdrawAmount) != withdrawAmount) {
+                else {
                     bot.sendMessage(chatId, '🚫 Invalid amount, try again').then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
-                }
-                else if (amount < withdrawAmount) {
-                    bot.sendMessage(chatId, `Amount cannot be greater than wallet balance, write less than <code>${amount}</code>, or <code>/start</code> to cancel`);
                 }
             });
         } catch (error) {
