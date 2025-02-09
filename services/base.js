@@ -3,6 +3,7 @@ const fetch = require('cross-fetch')
 const chalk = require('chalk');
 const dotenv = require('dotenv');
 const { ethers } = require("ethers");
+const BN = require('bn.js');
 dotenv.config();
 
 let newSignList = [];
@@ -35,8 +36,9 @@ const ERC20_ABI = [
 
 
 
-const BASE_RPC = `https://base-sepolia.g.alchemy.com/v2/4XJ2-1bwaIzXLGsmYF-bGcQVp7GaFrgR`
-let provider = new ethers.JsonRpcProvider(BASE_RPC);
+const BASE_RPC = `https://base-sepolia.g.alchemy.com/v2/4XJ2-1bwaIzXLGsmYF-bGcQVp7GaFrgR`;
+const BASE_RPC1 = `https://mainnet.base.org`;
+let provider = new ethers.JsonRpcProvider(BASE_RPC1);
 
 const BaseNetwork = {
     createBaseWalletETH: async () => {
@@ -54,10 +56,8 @@ const BaseNetwork = {
 
     getBaseWalletBalance: async (publicKey) => {
         try {
-            const balanceWei = await provider.getBalance(publicKey);
-            const balanceEth = ethers.formatEther(balanceWei);
-
-            return balanceEth;
+            const balance = await provider.getBalance(publicKey);
+            return ethers.formatEther(balance); // Convert Wei to ETH
         } catch (error) {
             Red(`getBaseWalletBalance ====🚀${error}`);
         }
@@ -132,82 +132,52 @@ const BaseNetwork = {
     },
 
 
-    transferAllEth: async (privateKey, toAddress) => {
+    transferAllEth: async (privateKey, receiverAddress) => {
         try {
             const wallet = new ethers.Wallet(privateKey, provider);
             const balance = await provider.getBalance(wallet.address);
-            // estimate gas fee
-            const gasPrice = await provider.getGas
-            const gasLimit = 21000;
-            const gasFee = gasPrice * BigInt(gasLimit)
-
-            if (balance <= gasFee) {
-                return `Balance ${ethers.formatEther(balance)} ETH is not enough to pay for gas fee ${ethers.formatEther(gasFee)} ETH`;
+            if (balance - BigInt(129960928660572) <= 0) {
+                return false;
             }
-
-            // Calculate the amount to send (balance - gas fee)
-            const amountToSend = balance - gasFee;
+            const amountToSend = ethers.formatEther(balance - BigInt(129960928660572));
 
             const tx = {
-                to: toAddress,
-                value: amountToSend,
-                gasLimit: gasLimit,
-            };
-
-            const signedTx = await wallet.sendTransaction(tx);
-
-            console.log("Transaction sent: ", signedTx.hash);
-
-            const receipt = await signedTx.wait();
-
-            if (receipt && receipt.status == 1) {
-                console.log("Transaction successful!");
-            }
-            else {
-                throw new Error("Transaction failed");
+                to: receiverAddress,
+                value: ethers.parseEther(amountToSend)
             }
 
-            return receipt;
-
+            const txResponse = await wallet.sendTransaction(tx);
+            const txReceipt = await txResponse.wait(); // Wait for confirmation
+            console.log(`Transaction hash: https://basescan.org/tx/${txReceipt.hash}`);
+            return txReceipt.hash;
         } catch (error) {
-            console.error("Error sending transaction:", error);
-            throw error;
+            console.error("Error transferring ETH:", error);
+            return null; // Return null if an error occurred
         }
     },
-    transferCustomerAmountEth: async (privateKey, toAddress, amount) => {
+
+    transferCustomerAmountEth: async (privateKey, receiverAddress, amount) => {
         try {
             const wallet = new ethers.Wallet(privateKey, provider);
             const balance = await provider.getBalance(wallet.address);
-            // estimate gas fee
-            const gasPrice = await provider.getGas
-            const gasLimit = 21000;
-            const gasFee = gasPrice * BigInt(gasLimit)
+            console.log(`amount ====🚀`, amount);
+            
+            const amountToSend = balance * BigInt(Math.floor(amount * 1e18)) / BigInt(1e18);
+            console.log(`amountToSend ====🚀`, amountToSend);
 
-            if (balance <= gasFee) {
-                return `Balance ${ethers.formatEther(balance)} ETH is not enough to pay for gas fee ${ethers.formatEther(gasFee)} ETH`;
+            if (amountToSend <= 0) {
+                return false;
             }
-
 
             const tx = {
-                to: toAddress,
-                value: amount,
-                gasLimit: gasLimit,
+                to: receiverAddress,
+                value: amountToSend
             };
 
-            const signedTx = await wallet.sendTransaction(tx);
-
-            console.log("Transaction sent: ", signedTx.hash);
-
-            const receipt = await signedTx.wait();
-
-            if (receipt && receipt.status == 1) {
-                console.log("Transaction successful!");
-            }
-            else {
-                throw new Error("Transaction failed");
-            }
-
-            return receipt;
+            const txResponse = await wallet.sendTransaction(tx);
+            const txReceipt = await txResponse.wait(); // Wait for confirmation
+            console.log(`Transaction hash: https://basescan.org/tx/${txReceipt.hash}`);
+            return txReceipt.hash;
 
         } catch (error) {
             console.error("Error sending transaction:", error);
