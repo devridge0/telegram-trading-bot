@@ -21,7 +21,7 @@ const BaseUI = {
                 { text: `BASE🟢`, callback_data: `base_network` }
             ],
             [
-                { text: `Wallet : ${balance} ETH ~ $${(balance * usd)} 💰`, callback_data: `base_wallet` }
+                { text: `Wallet : ${balance} ETH ~ $${(balance * usd).toFixed(2)} 💰`, callback_data: `base_wallet` }
             ],
             [
                 { text: `Deposit 💵`, callback_data: `base_deposit` }
