@@ -239,7 +239,10 @@ const init = () => {
                 BaseWalletController.withdrawAllYesETH(bot, query);
             }
             else if (callBackQuery === 'base_withdraw_all_no') {
-                BaseWalletController.withdrawAllNoSOL(bot, query);
+                BaseWalletController.withdrawAllNoETH(bot, query);
+            }
+            else if (callBackQuery === 'base_customer_amount') {
+                BaseWalletController.withdrawCustomerAmountETH(bot, query);
             }
             else if (callBackQuery === 'base_deposit') {
                 BaseWalletController.depositETH(bot, query);
