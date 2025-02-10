@@ -14,7 +14,7 @@ const Green = (str) => console.log(chalk.bgGreen(str));
 const White = (str) => console.log(chalk.bgWhite(str));
 
 
-let WS = null;
+let WS = new WebSocket(SOLANA_WSS_ENDPOINT);;
 let activeAddresses = [];
 
 
@@ -163,6 +163,8 @@ const StartCopyTrading = async () => {
         Red(`StartCopy Trading : ${error}`)
     }
 }
+
+
 
 
 // StartCopyTrading(WS);
