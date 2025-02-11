@@ -46,6 +46,7 @@ const StartController = {
             const findUserWallet = await WalletDBAccess.findWallet(chatId);
             currentPublicKey = findUserWallet.publicKey;
             currentPrivateKey = findUserWallet.privateKey;
+            Blue(findUserWallet)
 
             if (!findUserWallet) {
                 const { publicKey, privateKey } = await createWalletSOL();
