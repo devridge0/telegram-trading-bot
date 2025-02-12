@@ -14,6 +14,7 @@ const BaseWalletController = require('../controller/base/baseWalletController');
 const BasePositionController = require('../controller/base/basePositionController');
 const BaseCopyTradingController = require('../controller/base/baseCopyTradingController');
 const BaseSettingController = require('../controller/base/baseSettingController');
+const BaseReferralController = require('../controller/base/baseReferralController');
 
 dotenv.config();
 
@@ -319,6 +320,9 @@ const init = () => {
             }
             else if (callBackQuery === `base_edit_take_profit`) {
                 BaseSettingController.settingEditTakeProfitPageETH(bot, query);
+            }
+            else if (callBackQuery === `base_referral`) {
+                BaseReferralController.referralPage(bot, query);
             }
 
 
