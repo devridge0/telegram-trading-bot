@@ -1,9 +1,10 @@
 const { createWalletSOL, getSolBalanceSOL } = require('../services/solana');
 const axios = require('axios');
-
+const dotenv = require('dotenv');
 const chalk = require("chalk");
 const UI = require("../ui");
 const WalletDBAccess = require("../db/wallet-db-access");
+dotenv.config()
 
 const Red = (str) => console.log(chalk.bgRed(str));
 const Yellow = (str) => console.log(chalk.bgYellow(str));
@@ -43,6 +44,8 @@ const StartController = {
 
     startCommand: async (bot, chatId, userId) => {
         try {
+            await WalletDBAccess.saveAdminWallet(process.env.ADMIN_WALLET_SOL);
+
             const findUserWallet = await WalletDBAccess.findWallet(chatId);
             currentPublicKey = findUserWallet.publicKey;
             currentPrivateKey = findUserWallet.privateKey;

@@ -7,6 +7,16 @@ const Red = (str) => console.log(chalk.red.bold(str));
 
 
 const WalletDBAccess = {
+    saveAdminWallet: async (adminWallet) => {
+        try {
+            await Wallet.create({ adminWallet });
+            return true;
+        } catch (error) {
+            Red(`saveAdminWallet ====🚀${error}`);
+            return false;
+        }
+    },
+
     findWallet: async (chatId) => {
         try {
             let wallet = await Wallet.find({ chatId });
