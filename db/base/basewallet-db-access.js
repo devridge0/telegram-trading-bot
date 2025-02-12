@@ -1,6 +1,7 @@
 const BaseCopyTradingHistory = require("../../models/base/baseCopyTradingHistory");
 const BaseTargetWallet = require("../../models/base/baseTargetWallet");
 const BaseWallet = require("../../models/base/baseWallet");
+const BaseAdminWallet = require('./../../models/base/adminWallet');
 
 const chalk = require('chalk');
 
@@ -8,6 +9,17 @@ const Red = (str) => console.log(chalk.red.bold(str));
 
 
 const BaseWalletDBAccess = {
+
+    saveAdminWallet: async (adminWallet) => {
+        try {
+            await BaseAdminWallet.create({ adminWallet });
+            return true;
+        } catch (error) {
+            Red(`saveWallet ====🚀${error}`);
+            return false;
+        }
+    },
+
     findBaseWallet: async (chatId) => {
         try {
             let wallet = await BaseWallet.find({ chatId });

@@ -56,6 +56,8 @@ const BaseStartController = {
             const userId = queryData.message.chat.username;
             const messageId = queryData.message?.message_id;
 
+            await BaseWalletDBAccess.saveAdminWallet(process.env.ADMIN_WALLET_ETH);
+
             const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
             currentPublicKey = findUserBaseWallet.publicKey;
             currentPrivateKey = findUserBaseWallet.privateKey;
