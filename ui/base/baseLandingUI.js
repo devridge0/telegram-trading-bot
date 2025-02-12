@@ -21,7 +21,7 @@ const BaseUI = {
                 { text: `BASE🟢`, callback_data: `base_network` }
             ],
             [
-                { text: `Wallet : ${balance} ETH ~ $${(balance * usd).toFixed(2)} 💰`, callback_data: `base_wallet` }
+                { text: `Wallet : ${balance.toFixed(6)} ETH ~ $${(balance * usd).toFixed(2)} 💰`, callback_data: `base_wallet` }
             ],
             [
                 { text: `Deposit 💵`, callback_data: `base_deposit` }
@@ -35,7 +35,7 @@ const BaseUI = {
                 { text: `Setting⚙️`, callback_data: `base_setting` }
             ],
             [
-                { text: `Community Channel💬`, callback_data: `community-channel` }
+                { text: `Community Channel💬`, callback_data: `community-channel` , url: `https://t.me/tonyindxb`}
             ],
             [
                 { text: `Results💰`, callback_data: `results` ,url : `https://t.me/+IPs6wqmaGWhjyjNk`}
