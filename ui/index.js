@@ -14,7 +14,7 @@ const UI = {
         }
     },
     landingPage: (balance, usd) => {
-        const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Ethereum and Solana networks. 🐳. \n ____________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
+        const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Solana and Base networks. 🐳. \n ____________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
         const button = [
             [
                 { text: `SOL🟢`, callback_data: `sol_network` },
@@ -35,10 +35,10 @@ const UI = {
                 { text: `Setting⚙️`, callback_data: `setting` }
             ],
             [
-                { text: `Community Channel💬`, callback_data: `community-channel` }
+                { text: `Community Channel💬`, callback_data: `community-channel`, url: `https://t.me/tonyindxb` }
             ],
             [
-                { text: `Results💰`, callback_data: `results` ,url : `https://t.me/+IPs6wqmaGWhjyjNk`}
+                { text: `Results💰`, callback_data: `results`, url: `https://t.me/+IPs6wqmaGWhjyjNk` }
             ],
             [
                 { text: `Refresh♻️`, callback_data: `refresh` }

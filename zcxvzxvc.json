@@ -1,1 +1,358 @@
- {"target":"0x1F98431c8aD98523631AE4a59f267346ea31F984","interface":{"fragments":[{"type":"function","inputs":[{"name":"tokenA","type":"address","baseType":"address","indexed":null,"components":null,"arrayLength":null,"arrayChildren":null},{"name":"tokenB","type":"address","baseType":"address","indexed":null,"components":null,"arrayLength":null,"arrayChildren":null},{"name":"fee","type":"uint24","baseType":"uint24","indexed":null,"components":null,"arrayLength":null,"arrayChildren":null}],"name":"getPool","constant":true,"outputs":[{"name":"pool","type":"address","baseType":"address","indexed":null,"components":null,"arrayLength":null,"arrayChildren":null}],"stateMutability":"view","payable":false,"gas":null},{"type":"function","inputs":[],"name":"factory","constant":true,"outputs":[{"name":"","type":"address","baseType":"address","indexed":null,"components":null,"arrayLength":null,"arrayChildren":null}],"stateMutability":"view","payable":false,"gas":null}],"deploy":{"type":"constructor","inputs":[],"payable":false,"gas":null},"fallback":null,"receive":false},"runner":{"provider":{},"address":"0xF0B3675AD44922B65306D01539986d7E78262968"},"filters":{},"fallback":null}
+{
+    "target": "0x0227628f3F023bb0B980b67D528571c95c6DaC1c",
+    "interface": {
+        "fragments": [
+            {
+                "type": "constructor",
+                "inputs": [],
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "event",
+                "inputs": [
+                    {
+                        "name": "fee",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "tickSpacing",
+                        "type": "int24",
+                        "baseType": "int24",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "FeeAmountEnabled",
+                "anonymous": false
+            },
+            {
+                "type": "event",
+                "inputs": [
+                    {
+                        "name": "oldOwner",
+                        "type": "address",
+                        "baseType": "address",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "newOwner",
+                        "type": "address",
+                        "baseType": "address",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "OwnerChanged",
+                "anonymous": false
+            },
+            {
+                "type": "event",
+                "inputs": [
+                    {
+                        "name": "token0",
+                        "type": "address",
+                        "baseType": "address",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "token1",
+                        "type": "address",
+                        "baseType": "address",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "fee",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "indexed": true,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "tickSpacing",
+                        "type": "int24",
+                        "baseType": "int24",
+                        "indexed": false,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "pool",
+                        "type": "address",
+                        "baseType": "address",
+                        "indexed": false,
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "PoolCreated",
+                "anonymous": false
+            },
+            {
+                "type": "function",
+                "inputs": [
+                    {
+                        "name": "tokenA",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "tokenB",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "fee",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "createPool",
+                "constant": false,
+                "outputs": [
+                    {
+                        "name": "pool",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "stateMutability": "nonpayable",
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "function",
+                "inputs": [
+                    {
+                        "name": "fee",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "tickSpacing",
+                        "type": "int24",
+                        "baseType": "int24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "enableFeeAmount",
+                "constant": false,
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "function",
+                "inputs": [
+                    {
+                        "name": "",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "feeAmountTickSpacing",
+                "constant": true,
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "int24",
+                        "baseType": "int24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "stateMutability": "view",
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "function",
+                "inputs": [
+                    {
+                        "name": "",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "getPool",
+                "constant": true,
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "stateMutability": "view",
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "function",
+                "inputs": [],
+                "name": "owner",
+                "constant": true,
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "stateMutability": "view",
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "function",
+                "inputs": [],
+                "name": "parameters",
+                "constant": true,
+                "outputs": [
+                    {
+                        "name": "factory",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "token0",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "token1",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "fee",
+                        "type": "uint24",
+                        "baseType": "uint24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    },
+                    {
+                        "name": "tickSpacing",
+                        "type": "int24",
+                        "baseType": "int24",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "stateMutability": "view",
+                "payable": false,
+                "gas": null
+            },
+            {
+                "type": "function",
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address",
+                        "baseType": "address",
+                        "components": null,
+                        "arrayLength": null,
+                        "arrayChildren": null
+                    }
+                ],
+                "name": "setOwner",
+                "constant": false,
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "payable": false,
+                "gas": null
+            }
+        ],
+        "deploy": {
+            "type": "constructor",
+            "inputs": [],
+            "payable": false,
+            "gas": null
+        },
+        "fallback": null,
+        "receive": false
+    },
+    "runner": {},
+    "filters": {},
+    "fallback": null
+}
