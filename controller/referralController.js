@@ -57,11 +57,14 @@ If you want to change it, just send a new one. Otherwise <code>/start</code> to 
                     bot.sendMessage(chatId, `Not invalid addresss`);
                 }
                 else {
-                    const updateResult = await WalletDBAccess.findOneAndUpdateWallet(chatId, { referralWallet });
+                    const updateResult = await WalletDBAccess.findOneAndUpdateWallet(chatId, { referralWallet: commissionWallet });
                     if (!updateResult) {
-                        Red(`asldfjas;dlfjasol`)
+                        bot.sendMessage(chatId, `Save failed.`).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                        return;
                     }
-                    Yellow(`SUcceslsl`)
+                    else {
+                        bot.sendMessage(chatId, `Save Successfully.`).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    }
                 }
             })
         } catch (error) {

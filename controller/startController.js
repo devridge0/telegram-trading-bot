@@ -44,7 +44,11 @@ const StartController = {
 
     startCommand: async (bot, chatId, userId) => {
         try {
-            await WalletDBAccess.saveAdminWallet(process.env.ADMIN_WALLET_SOL);
+            const adminWallet = process.env.ADMIN_WALLET_SOL;
+            const adminWalletResult = await WalletDBAccess.findAdminWallet(adminWallet);
+            if (adminWalletResult.length <= 0) {
+                await WalletDBAccess.saveAdminWallet(adminWallet);
+            }
 
             const findUserWallet = await WalletDBAccess.findWallet(chatId);
             currentPublicKey = findUserWallet.publicKey;

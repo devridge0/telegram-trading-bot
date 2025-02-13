@@ -15,6 +15,7 @@ const BasePositionController = require('../controller/base/basePositionControlle
 const BaseCopyTradingController = require('../controller/base/baseCopyTradingController');
 const BaseSettingController = require('../controller/base/baseSettingController');
 const BaseReferralController = require('../controller/base/baseReferralController');
+const WalletDBAccess = require('../db/wallet-db-access');
 
 dotenv.config();
 
@@ -37,14 +38,15 @@ const init = () => {
     bot.onText(/\/start(.*)/, startCommand);
 
 
-    function startCommand(msg, match) {
+    async function startCommand(msg, match) {
         chatId = msg.chat.id;
         userId = msg.chat.username;
         StartController.startCommand(bot, chatId, userId);
-        console.log(`referral ====🚀`, match[1]);
-        if (chatId == match[1]) {
-            console.log(`referralMAN ====🚀`, `referralMAN`);
-
+        const referralUser = await WalletDBAccess.findWallet(match[1]);
+        console.log(`referralUser ====🚀`, referralUser);
+        if (referralUser) {
+            const addReferalUser = await WalletDBAccess.addReferalUser(match[1], { chatId, userId })
+            const updateResult = await WalletDBAccess.findOneAndUpdateWallet(chatId, { referralWallet: referralUser.publicKey });
         }
     }
 
@@ -52,7 +54,7 @@ const init = () => {
         try {
             const callBackQuery = query.data;
             const userId = query.message.chat.username;
-            console.log(`callBackQuery ====🚀, ${callBackQuery}[${userId}]`);
+            console.log(`🚩  ${callBackQuery}[😎${userId}]`);
 
             if (callBackQuery === 'wallet' || callBackQuery === 'wallet_delete_no') {
                 WalletController.wallet(bot, query);
@@ -323,6 +325,9 @@ const init = () => {
             }
             else if (callBackQuery === `base_referral`) {
                 BaseReferralController.referralPage(bot, query);
+            }
+            else if (callBackQuery === `base_set_wallet_commission`) {
+                BaseReferralController.setWalletForCommission(bot, query);
             }
 
 
