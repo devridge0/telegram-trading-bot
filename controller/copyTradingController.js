@@ -53,7 +53,7 @@ const CopyTradingController = {
                 // if (!validResult) {
                 //     bot.sendMessage(chatId, `🚫 Invalid wallet address`);
                 // } else
-                
+
                 if (isexisted) {
                     bot.sendMessage(chatId, `🚫 Mirror already exists, try another one!`);
                 }
@@ -118,7 +118,7 @@ const CopyTradingController = {
             const deleteTargetWalletResult = await WalletDBAccess.deleteTargetWallet(chatId, address);
             if (!deleteTargetWalletResult) Red(`delete_traget wallet error`);
 
-            const whaleWalletList = await WalletDBAccess.findAllTargetWallet();
+            const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);
             const { title, button } = CopyTradingUI.copyTradingPage(whaleWalletList);
             await UI.switchMenu(bot, chatId, messageId, title, button,);
 
@@ -139,9 +139,9 @@ const CopyTradingController = {
 
 
 
-            const REDIS = async () =>{
-                const { createClient } = require( 'redis');
-                    const findUserWallet = await WalletDBAccess.findWallet(chatId);
+            const REDIS = async () => {
+                const { createClient } = require('redis');
+                const findUserWallet = await WalletDBAccess.findWallet(chatId);
                 const client = createClient({
                     username: 'default',
                     password: '3NSmRy9fIRBFaVvmVNW2ehZidvJHerEz',
@@ -157,6 +157,7 @@ const CopyTradingController = {
             REDIS()
 
             const newData = status.split("_");
+
 
             await WalletDBAccess.statusUpdateTargetWallet(chatId, newData[0], newData[1]);
             const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);
