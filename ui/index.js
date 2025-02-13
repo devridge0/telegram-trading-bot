@@ -38,7 +38,7 @@ const UI = {
                 { text: `Community Channel💬`, callback_data: `community-channel`, url: `https://t.me/tonyindxb` }
             ],
             [
-                { text: `Results💰`, callback_data: `results`, url: `https://t.me/+IPs6wqmaGWhjyjNk` }
+                { text: `Token News🆕`, callback_data: `results`, url: `https://t.me/tokens_launchs` }
             ],
             [
                 { text: `Refresh♻️`, callback_data: `refresh` }
