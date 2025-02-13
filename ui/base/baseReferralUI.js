@@ -16,13 +16,13 @@ Link:
 
         const button = [
             [
-                { text: `Set Wallet For Commissions🎁`, callback_data: `set_wallet_commission` }
+                { text: `Set Wallet For Commissions🎁`, callback_data: `base_set_wallet_commission` }
             ],
+            // [
+            //     { text: `Share your referral link`, callback_data: `base_share_your_referral_link` }
+            // ],
             [
-                { text: `Share your referral link`, callback_data: `share_your_referral_link` }
-            ],
-            [
-                { text: `Back 🔙`, callback_data: `back` }
+                { text: `Back 🔙`, callback_data: `base_back` }
             ]
         ];
 

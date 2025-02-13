@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = require('mongoose');
 
-const AdminWallet = new Schema({
-  adminWallet: { type: String, required: true },
+const AdminWalletSchema = new Schema({
+  adminWallet: { type: String },
 });
 
-const Admin = mongoose.model("Admin", AdminWallet);
+const AdminWallet = mongoose.model("AdminWallet", AdminWalletSchema);
 
-module.exports = Admin;
+module.exports = AdminWallet;

@@ -19,6 +19,15 @@ const BaseWalletDBAccess = {
             return false;
         }
     },
+    findAdminWallet: async (adminWallet) => {
+        try {
+            const result = await BaseAdminWallet.find({ adminWallet });
+            return result;
+        } catch (error) {
+            Red(`saveWallet ====🚀${error}`);
+            return false;
+        }
+    },
 
     findBaseWallet: async (chatId) => {
         try {
