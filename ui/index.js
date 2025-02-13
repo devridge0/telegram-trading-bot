@@ -14,7 +14,7 @@ const UI = {
         }
     },
     landingPage: (balance, usd) => {
-        const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Solana and Base networks. 🐳. \n ____________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
+        const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Solana and Base networks. 🐳. \n _________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
         const button = [
             [
                 { text: `SOL🟢`, callback_data: `sol_network` },

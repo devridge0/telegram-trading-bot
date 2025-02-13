@@ -1,10 +1,9 @@
-const WalletDBAccess = require("../db/wallet-db-access");
-const { getMyTokensInWalletSOL, buyTokenSOL, validateTokenAddress, getSolBalanceSOL, isValidPublicKeySOL } = require("../services/solana");
 const chalk = require("chalk");
 const axios = require('axios');
 const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
 const BaseReferralUI = require("../../ui/base/baseReferralUI");
 const { isValidBasePublicKey } = require("../../services/base");
+const BaseUI = require("../../ui/base/baseLandingUI");
 
 
 const Red = (str) => console.log(chalk.bgRed(str));
@@ -26,7 +25,7 @@ const BaseReferralController = {
             const findUserWallet = await BaseWalletDBAccess.findBaseWallet(chatId)
 
             const { title, button } = BaseReferralUI.referralPage(chatId, findUserWallet.publicKey);
-            await UI.switchMenu(bot, chatId, messageId, title, button,);
+            await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
         } catch (error) {
             Red(`referralPage ===> ${error}`);
         }
@@ -57,9 +56,9 @@ If you want to change it, just send a new one. Otherwise <code>/start</code> to 
                     bot.sendMessage(chatId, `Not invalid addresss`);
                 }
                 else {
-                    const updateResult = await BaseWalletDBAccess.findOneAndUpdateBaseWallet(chatId, { referralWallet });
+                    const updateResult = await BaseWalletDBAccess.findOneAndUpdateBaseWallet(chatId, { referralWallet: commissionWallet });
                     if (!updateResult) {
-                        bot.sendMessage(chatId, `Save failed.`);
+                        bot.sendMessage(chatId, `Save failed.`).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
                         return;
                     }
                     else {

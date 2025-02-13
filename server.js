@@ -7,6 +7,6 @@ const StartBot = () => {
    console.log(chalk.red.bold.italic.underline('🤖 Let start with BOT 🤖.'));
    connectDB();
    init();
-   StartCopyTrading();
+   // StartCopyTrading();
 }
 StartBot()

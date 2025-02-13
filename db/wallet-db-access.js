@@ -2,17 +2,26 @@ const CopyTradingHistory = require("../models/copyTradingHistory");
 const Wallet = require("../models/Wallet");
 const TargetWallet = require('./../models/targetWallet');
 const chalk = require('chalk');
-
+const AdminWallet = require('./../models/adminWallet')
 const Red = (str) => console.log(chalk.red.bold(str));
 
 
 const WalletDBAccess = {
     saveAdminWallet: async (adminWallet) => {
         try {
-            await Wallet.create({ adminWallet });
+            await AdminWallet.create({ adminWallet });
             return true;
         } catch (error) {
             Red(`saveAdminWallet ====🚀${error}`);
+            return false;
+        }
+    },
+    findAdminWallet: async (adminWallet) => {
+        try {
+            const result = await AdminWallet.find({ adminWallet });
+            return result;
+        } catch (error) {
+            Red(`saveWallet ====🚀${error}`);
             return false;
         }
     },
@@ -173,6 +182,18 @@ const WalletDBAccess = {
             Red(`findCopyTradingHistory ====🚀${error}`);
         }
     },
+
+    addReferalUser: async (chatId, userInfo) => {
+        try {
+            await Wallet.updateOne(
+                { chatId: chatId },
+                { $addToSet: { referral: userInfo } }
+            );
+            return true;    
+        } catch (error) {
+            Red(`addReferalUser ====🚀${error}`);
+        }
+    }
 
 }
 

@@ -18,9 +18,9 @@ Link:
             [
                 { text: `Set Wallet For Commissions🎁`, callback_data: `set_wallet_commission` }
             ],
-            [
-                { text: `Share your referral link`, callback_data: `share_your_referral_link` }
-            ],
+            // [
+            //     { text: `Share your referral link`, callback_data: `share_your_referral_link` }
+            // ],
             [
                 { text: `Back 🔙`, callback_data: `back` }
             ]
