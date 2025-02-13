@@ -66,6 +66,7 @@ const StartCopyTrading = async () => {
     try {
 
         const previousSubscribers = await WalletDBAccess.findAllSubscribersTargetWallet();
+        activeAddresses = [];
 
         await previousSubscribers.map((e) => {
             if (e.status == 'true') {
