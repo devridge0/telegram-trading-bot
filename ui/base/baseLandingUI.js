@@ -14,14 +14,14 @@ const BaseUI = {
         }
     },
     landingPage: (balance, usd) => {
-        const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Ethereum and Solana networks. 🐳. \n ____________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
+        const title = `🦸 Welcome To My revenger Bot🤖. \n\ My bot allows you to track the investments of the biggest crypto whales on the Ethereum and Solana networks. 🐳. \n ________________________________________________ \n 💡 If you aren't already, we advise that you create or import wallets`
         const button = [
             [
                 { text: `SOL🔴`, callback_data: `sol_network` },
                 { text: `BASE🟢`, callback_data: `base_network` }
             ],
             [
-                { text: `Wallet : ${balance.toFixed(6)} ETH ~ $${(balance * usd).toFixed(2)} 💰`, callback_data: `base_wallet` }
+                { text: `Wallet : ${balance.slice(0, 6)} ETH ~ $${(balance * usd).toFixed(2)} 💰`, callback_data: `base_wallet` }
             ],
             [
                 { text: `Deposit 💵`, callback_data: `base_deposit` }
@@ -35,10 +35,10 @@ const BaseUI = {
                 { text: `Setting⚙️`, callback_data: `base_setting` }
             ],
             [
-                { text: `Community Channel💬`, callback_data: `community-channel` , url: `https://t.me/tonyindxb`}
+                { text: `Community Channel💬`, callback_data: `community-channel`, url: `https://t.me/tonyindxb` }
             ],
             [
-                { text: `Results💰`, callback_data: `results` ,url : `https://t.me/+IPs6wqmaGWhjyjNk`}
+                { text: `Results💰`, callback_data: `results`, url: `https://t.me/+IPs6wqmaGWhjyjNk` }
             ],
             [
                 { text: `Refresh♻️`, callback_data: `refresh` }
