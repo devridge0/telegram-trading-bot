@@ -1,96 +1,137 @@
-const { ethers } = require("ethers");
-const { TradeType, Token, CurrencyAmount, Percent } = require("@uniswap/sdk-core");
-const { Pool, Route, Trade, SwapRouter } = require("@uniswap/v3-sdk");
+require('dotenv').config(); // Load environment variables from .env (optional, but recommended)
+const ethers = require('ethers');
 
 // --- Configuration ---
-const RPC_URL = "https://mainnet.base.org"; // Base Mainnet RPC
-const PRIVATE_KEY = `0x0fcb3f266f4a8dff1c98c689bc7e84de17529534b9129dbce236ecafa5c59767`;
-const WALLET_ADDRESS = "0xF0B3675AD44922B65306D01539986d7E78262968"; // Replace with your wallet address
-
-// --- Token Addresses ---
-const ETH_ADDRESS = "0x4200000000000000000000000000000000000006"; // WETH on Base
-const CUSTOM_TOKEN_ADDRESS = "0x7a5f5ccd46ebd7ac30615836d988ca3bd57412b3";
-
-// --- Token Config ---
-const ETH = new Token(8453, ETH_ADDRESS, 18, "ETH", "Ether");
-const CUSTOM_TOKEN = new Token(8453, CUSTOM_TOKEN_ADDRESS, 18, "CUSTOM", "Your Token");
-
-console.log(`ETH ====🚀`, ETH);
-console.log(`CUSTOM_TOKEN ====🚀`, CUSTOM_TOKEN);
-
-const provider = new ethers.JsonRpcProvider(RPC_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-
-
-const UNISWAP_V3_FACTORY = "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"; // Base Mainnet Uniswap V3 Factory
-const factoryABI = [
-    "function getPool(address tokenA, address tokenB, uint24 fee) external view returns (address)"
-];
-
-const FEE_TIER = 3000; // 0.3% Fee Tier (Check different tiers if needed)
+const BASE_RPC_URL = `https://mainnet.base.org` // Replace with your Base RPC URL
+const PRIVATE_KEY = `0x0fcb3f266f4a8dff1c98c689bc7e84de17529534b9129dbce236ecafa5c59767`;  // Replace with your private key (NEVER commit this to public repos!)
+const TOKEN_ADDRESS = "0x7a5f5ccd46ebd7ac30615836d988ca3bd57412b3"; // Replace with the token you want to buy
+const AMOUNT_ETH_TO_SPEND = 0.0005; //  Amount of ETH you want to spend on the token
+const GAS_LIMIT = 500000; // Adjust gas limit if necessary.  Start with a generous amount
+const GAS_PRICE_GWEI = 0.0001; //  Adjust gas price in Gwei.  Check current network conditions
+const UNISWAP_V2_ROUTER_ADDRESS = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"; // Uniswap V2 Router on Base
+const WETH_ADDRESS = "0x4200000000000000000000000000000000000006"; // Wrapped ETH on Base (Uniswap uses WETH)  use this in the path as it's eth, not weth
 
 async function main() {
-    const factory = new ethers.Contract(UNISWAP_V3_FACTORY, factoryABI, provider);
-    const poolAddress = await factory.getPool(ETH_ADDRESS, CUSTOM_TOKEN_ADDRESS, FEE_TIER);
-
-    console.log(`poolAddress ====🚀`, poolAddress);
-
-    if (poolAddress === ethers.ZeroAddress) {
-        console.log("No Uniswap V3 pool found for ETH → Your Token at 0.3% fee.");
-    } else {
-        console.log(`Uniswap V3 Pool Address: ${poolAddress}`);
+    if (!BASE_RPC_URL || BASE_RPC_URL === 'YOUR_BASE_RPC_URL') {
+        console.error('Error: BASE_RPC_URL not configured.  Set it in .env or directly in the code.');
+        return;
     }
 
-    const poolContract = new ethers.Contract(
-        poolAddress,
-        [
-            "function slot0() view returns (uint160, int24, uint16, uint16, uint16, uint8, bool)",
-            "function liquidity() view returns (uint128)"
-        ],
-        provider
-    );
+    if (!PRIVATE_KEY || PRIVATE_KEY === 'YOUR_PRIVATE_KEY') {
+        console.error('Error: PRIVATE_KEY not configured.  Set it in .env or directly in the code.');
+        return;
+    }
 
-    const [sqrtPriceX96, tick] = await poolContract.slot0();
-    console.log(`sqrtPriceX96 ====🚀`, JSON.stringify(sqrtPriceX96));
-    const liquidity = await poolContract.liquidity();
 
-    // --- Create Uniswap Pool ---
-    const pool = new Pool(ETH, CUSTOM_TOKEN, 3000, sqrtPriceX96, liquidity, tick);
+    try {
+        // --- Initialize Provider and Wallet ---
+        const provider = new ethers.JsonRpcProvider(BASE_RPC_URL);
+        const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 
-    // --- Create Route & Trade ---
-    const route = new Route([pool], ETH, CUSTOM_TOKEN);
-    const trade = await Trade.fromRoute(route, CurrencyAmount.fromRawAmount(ETH, ethers.parseUnits("0.0002", 18)), TradeType.EXACT_INPUT);
+        console.log(`Using wallet address: ${wallet.address}`);
+        const balance = await provider.getBalance(wallet.address);
+        const balanceEth = ethers.formatEther(balance);
+        console.log(`Wallet ETH balance: ${balanceEth} ETH`);
 
-    // --- Get Minimum Output with Slippage ---
-    const slippageTolerance = new Percent(50, 10_000); // 0.50% Slippage
-    const amountOutMin = trade.minimumAmountOut(slippageTolerance).toExact();
+        if (parseFloat(balanceEth) < AMOUNT_ETH_TO_SPEND + 0.0001) {  // Add a buffer for gas
+            console.error(`Insufficient ETH balance.  Need at least ${AMOUNT_ETH_TO_SPEND + 0.0001} ETH,  have ${balanceEth}`);
+            return;
+        }
 
-    console.log(`Minimum ${CUSTOM_TOKEN.symbol} Expected: ${amountOutMin}`);
+        const tokenABI = [
+            // ERC-20 standard functions
+            "function decimals() external view returns (uint8)",
+            "function approve(address spender, uint256 amount) external returns (bool)",
+            "function balanceOf(address account) external view returns (uint256)",
+            "function transfer(address recipient, uint256 amount) external returns (bool)",
+            "function allowance(address owner, address spender) external view returns (uint256)",
+        ];
 
-    // --- Encode Swap Transaction ---
-    const swapRouterAddress = "0x2626664c2603336E57B271c5C0b26F421741e481"; // Uniswap V3 Router on Base
-    const swapRouter = new ethers.Contract(swapRouterAddress, [
-        "function exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160)) external payable returns (uint256)"
-    ], wallet);
+        const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenABI, provider); // Use provider, not wallet, for read-only operations
+       
+        
+        // --- Uniswap Router ABI ---
+        const uniswapRouterABI = [
+          "function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts)",
+          "function getAmountsOut(uint amountIn, address[] memory path) public view returns (uint[] memory amounts)",
+        ];
 
-    const params = {
-        tokenIn: ETH_ADDRESS,
-        tokenOut: CUSTOM_TOKEN_ADDRESS,
-        fee: 3000, // 0.3% Fee Tier
-        recipient: WALLET_ADDRESS,
-        deadline: Math.floor(Date.now() / 1000) + 60 * 10, // 10 minutes deadline
-        amountIn: ethers.parseUnits("0.0003", 18), // Swap 0.0003 ETH
-        amountOutMinimum: ethers.parseUnits(amountOutMin, 18),
-        sqrtPriceLimitX96: 0 // No price limit
-    };
 
-    // --- Send Swap Transaction ---
-    const tx = await swapRouter.exactInputSingle(params, { value: ethers.parseUnits("0.0002", 18), gasLimit: 300000 });
-    console.log(`Transaction Hash: ${tx.hash}`);
+        const uniswapRouterContract = new ethers.Contract(UNISWAP_V2_ROUTER_ADDRESS, uniswapRouterABI, wallet);
+        const path = [WETH_ADDRESS, TOKEN_ADDRESS];
+        
+        const slippagePercentage = 0.5; // 1% slippage.  Adjust as needed
+        const ethAmount = ethers.parseEther(AMOUNT_ETH_TO_SPEND.toString());
+        
+        let amountOutMin;
 
-    // --- Wait for Transaction to Confirm ---
-    const receipt = await tx.wait();
-    console.log("Swap Successful! Transaction Receipt:", receipt);
+        try {
+            let amounts;
+            try {
+                amounts = await uniswapRouterContract.getAmountsOut(ethAmount, path);
+            } catch (error) {
+                console.error("Error fetching amounts out:", error);
+                console.error("Possible reasons:");
+                console.error("1. Incorrect token address.");
+                console.error("2. Token not supported by Uniswap.");
+                console.error("3. Incorrect path.");
+                throw new Error("Failed to fetch amounts out. Please check the token address and ensure it is supported by Uniswap.");
+            }
+            const amountOut = amounts[1]; // The second amount in the return is the token amount
+            
+            const decimals = await tokenContract.decimals(); // Get the number of decimals
+            const slippageAmount = amountOut * slippagePercentage;
+            amountOutMin = amountOut - slippageAmount;
+
+            console.log(`Estimated tokens out: ${ethers.formatUnits(amountOut, decimals)}`);
+            console.log(`Amount out min (with ${slippagePercentage * 100}% slippage): ${ethers.formatUnits(amountOutMin, decimals)}`);
+
+        } catch (error) {
+           console.error("Error estimating token output:", error);
+           console.error("Likely problems:");
+           console.error("1.  Uniswap might not support this token.");
+           console.error("2.  Need to add more dependencies");
+           return;
+        }
+
+        const deadline = Math.floor(Date.now() / 1000) + 60 * 10; // 10 minutes from now
+
+        const tx = await uniswapRouterContract.swapExactETHForTokens(
+            amountOutMin,
+            path,
+            wallet.address,
+            deadline,
+            {
+                value: ethAmount,
+                gasLimit: GAS_LIMIT,
+                gasPrice: ethers.parseUnits(GAS_PRICE_GWEI.toString(), "gwei")
+            }
+        );
+
+        console.log("Transaction initiated.  Waiting for confirmation...");
+        console.log(`Transaction hash: ${tx.hash}`);
+
+        // --- Wait for Transaction Confirmation ---
+        const receipt = await tx.wait();
+
+        if (receipt.status === 1) {
+            console.log("Transaction confirmed!");
+            console.log(`Gas used: ${receipt.gasUsed.toString()}`);
+            console.log(`Transaction receipt: ${JSON.stringify(receipt, null, 2)}`); // Detailed receipt
+        } else {
+            console.error("Transaction failed.");
+            console.error(`Transaction receipt: ${JSON.stringify(receipt, null, 2)}`); // Detailed receipt
+        }
+
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
 }
 
-main().catch(console.error);
+
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });

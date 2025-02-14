@@ -105,40 +105,38 @@ const StartCopyTrading = async () => {
             }
 
             if (response.method === "logsNotification") {
-                const signature = response.params.result.value.signature;
-                const subscriptionId = response.params.subscription;
-
-                const subAddress = activeAddresses.filter((e) => e.id == subscriptionId);
-
-                console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
-                const swapInfoResult = await getSwapInfo(signature);
-                const result = { ...swapInfoResult, whaleAddress: subAddress[0].address };
-                const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
-                Blue(`📜 ${JSON.stringify(result)}`)
                 try {
-                    if (result.isSwap) {
+                    const signature = response.params.result.value.signature;
+                    const subscriptionId = response.params.subscription;
+                    const subAddress = activeAddresses.filter((e) => e.id == subscriptionId);
+
+                    console.log(`🔍Transaction find!!! ${subAddress[0].address}===> ${signature}`);
+                    const swapInfoResult = await getSwapInfo(signature);
+                    const result = { ...swapInfoResult, whaleAddress: subAddress[0].address };
+                    const findUserWallet = await WalletDBAccess.findWallet(subAddress[0].chatId);
+                    Blue(`📜 ${JSON.stringify(result)}`)
+                    if (result.isSwap && (result.sendToken == `So11111111111111111111111111111111111111112` || result.receiveToken == `So11111111111111111111111111111111111111112`)) {
                         console.log(`✅ Find opportunity!!!📌`);
-                        console.log(`✅ Find opportunity!!!📌${findUserWallet[0].jitoTip}`);
-                        console.log(`✅ Find opportunity!!!📌${findUserWallet.jitoTip}`);
                         const currentSolBalance = await getSolBalanceSOL(findUserWallet.publicKey);
                         if (currentSolBalance * (10 ** 9) < findUserWallet.jitoTip) {
-                            return; 
+                            return;
                         }
 
-                        let mode;
                         let copyTradingResult;
+                        if (result.sendToken == `So11111111111111111111111111111111111111112`) {
+                            copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, 'buy');
+                        } else if (result.receiveToken == `So11111111111111111111111111111111111111112`) {
+                            const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
+                            copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, 'sell');
+                        } else {
+                            return;
+                        }
 
-                        const sellAmount = await getSellTokenAmount(findUserWallet.publicKey, result.sendToken);
-                        Blue(`sell Amount  --------> ${sellAmount}`)
-                        copyTradingResult = await JUPITER_TOKN_SWAP(result.sendToken, findUserWallet.privateKey, sellAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
-                    } else {
-                        mode = 'buy';
-                        copyTradingResult = await JUPITER_TOKN_SWAP(result.receiveToken, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, mode);
-                    }
-                    if (copyTradingResult) {
-                        const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
-                    }
+                        if (copyTradingResult) {
+                            const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
+                        }
 
+                    }
                 } catch (error) {
                     Red(`copy trading Servercie error ====>   ${error}`);
                 }

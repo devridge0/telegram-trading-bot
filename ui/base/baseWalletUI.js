@@ -14,7 +14,7 @@ Private key:
                 { text: `Wallet Delete 🗑`, callback_data: `base_wallet_delete` }
             ],
             [
-                { text: `Etherscan 🌐`, callback_data: `base_ethscan`, url: url.ethscan }
+                { text: `Basescan 🌐`, callback_data: `base_ethscan`, url: url.ethscan }
             ],
             [
                 { text: `Deposit 💵`, callback_data: `base_deposit`, url: url.deposit },
