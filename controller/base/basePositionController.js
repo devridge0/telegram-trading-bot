@@ -28,7 +28,7 @@ const BasePositionController = {
             const { title, button } = BasePositionUI.depositPage();
             await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
         } catch (error) {
-            Red(`positionMyTokenETH ===> ${error}`);
+            Red(`positionETH ===> ${error}`);
         }
     },
 
@@ -53,13 +53,15 @@ const BasePositionController = {
 
             const chatId = queryData.message.chat.id;
             const messageId = queryData.message?.message_id;
+            Red(pageNumber)
+
             const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
             // const myTokens = await getBaseTokenInWalletETH(findUserBaseWallet.publicKey);
 
             const myTokens = [
-                { mint: "sd45yqhgnswbg43t", name: "gac", amount: 12, price: 943 },
-                { mint: "45hdfb", name: "asdf", amount: 42, price: 932 },
-                { mint: "sd45yqhgnswbg43t", name: "xbcv", amount: 8, price: 123 },
+                { mint: "sd45yqhgnswbg43t", name: "AAAAAAAA", amount: 12, price: 943 },
+                { mint: "45hdfb", name: "BBBBBB", amount: 42, price: 932 },
+                { mint: "sd45yqhgnswbg43t", name: "CCCCCCCC", amount: 8, price: 123 },
             ]
 
             if (myTokens.length <= 0) {
@@ -327,6 +329,9 @@ const BasePositionController = {
         try {
             const messageId = queryData.message?.message_id;
             const chatId = queryData.message.chat.id;
+
+            Red(pageNumber)
+
             // const myTradeResult = await BaseWalletDBAccess.findBaseCopyTradingHistory(chatId);
             const myTradeResult = [
                 { tokenName: 'sol-cat', price: 0.00234, currentPrice: 0.00524, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },

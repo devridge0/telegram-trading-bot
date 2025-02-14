@@ -286,13 +286,12 @@ const PositionController = {
                 await UI.switchMenu(bot, chatId, messageId, title, button,);
                 return
             } else {
-                // const myTradeResult = [
-                //     { tokenName: 'sol-cat', price: 0.00234, currentPrice: 0.00524, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
-                //     { tokenName: 'sol-cat', price: 0.00234, currentPrice: 0.00824, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
-                //     { tokenName: 'water-sol', price: 0.00534, currentPrice: 0.00724, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
-                //     { tokenName: 'hot-guy', price: 0.00234, currentPrice: 0.00524, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
-                //     { tokenName: 'sol-cat', price: 0.00334, currentPrice: 0.01524, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
-                // ]
+                const myTradeResult = [
+                    { tokenName: 'sol-cat', price: 0.00234, currentPrice: 0.00824, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
+                    { tokenName: 'water-sol', price: 0.00534, currentPrice: 0.00724, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
+                    { tokenName: 'hot-guy', price: 0.00234, currentPrice: 0.00524, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
+                    { tokenName: 'sol-cat', price: 0.00334, currentPrice: 0.01524, myWallet: "kdfjg83hskldjfaosdk", copyWallet: "29dsjlazxxlkjearj2" },
+                ]
 
                 const { title, button } = PositionUI.myTradesPage(myTradeResult[pageNumber], pageNumber);
                 await UI.switchMenu(bot, chatId, messageId, title, button,);

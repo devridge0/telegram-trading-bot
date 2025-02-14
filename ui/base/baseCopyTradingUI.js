@@ -33,7 +33,7 @@ Address: <code>${whale.address}</code>`;
                 { text: `Delete 🗑`, callback_data: `del_base_w_wallet_${whale.address}` }
             ],
             [
-                { text: `View on Solscan 🌐`, callback_data: `add_new_base_whale_address`, url: `https://etherscan.io/address/${whale.address}` }
+                { text: `View on Solscan 🌐`, callback_data: `add_new_base_whale_address`, url: `https://basescan.org/address/${whale.address}` }
             ],
             [
                 { text: `Analytic📊`, callback_data: `add_new_base_whale_address`, url: `https://coinstats.app/address/${whale.address}` }

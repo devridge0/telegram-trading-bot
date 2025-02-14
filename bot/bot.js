@@ -256,6 +256,22 @@ const init = () => {
             else if (callBackQuery === 'base_my_tokens') {
                 BasePositionController.positionMyTokenETH(bot, query);
             }
+
+
+            else if (callBackQuery.includes('my_base_token_prev-')) {
+                if (Number(callBackQuery.slice(20, callBackQuery.length)) < 0) {
+                    return
+                } else {
+                    BasePositionController.positionMyTokenETH(bot, query, Number(callBackQuery.slice(20, callBackQuery.length)));
+                }
+            }
+            else if (callBackQuery.includes('my_base_token_next-')) {
+                console.log(`callBackQuery.slice(20, callBackQuery.length) ====🚀`, callBackQuery.slice(19, callBackQuery.length));
+
+                BasePositionController.positionMyTokenETH(bot, query, Number(callBackQuery.slice(20, callBackQuery.length)));
+            }
+
+
             else if (callBackQuery === 'base_token_buy') {
                 BasePositionController.positionTokenBuyETH(bot, query);
             }

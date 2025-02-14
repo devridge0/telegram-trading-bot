@@ -11,9 +11,9 @@ const PositionUI = {
             // [
             //     { text: `Trade History📊`, callback_data: `trade_history` }
             // ],
-            [
-                { text: `Trade Config⚙️`, callback_data: `trade_config` }
-            ],
+            // [
+            //     { text: `Trade Config⚙️`, callback_data: `trade_config` }
+            // ],
             [
                 { text: `Back 🔙`, callback_data: `back` }
             ]
@@ -94,9 +94,9 @@ Current page ${currentPageNumber + 1} pages`;
                 { text: `${currentPageNumber + 1}`, callback_data: `page_number` },
                 { text: `Next`, callback_data: `my_token_sell_next-${currentPageNumber + 1}` }
             ],
-            [
-                { text: `Burn 🔥`, callback_data: `burn_${token.mint}` }
-            ],
+            // [
+            //     { text: `Burn 🔥`, callback_data: `burn_${token.mint}` }
+            // ],
             [
                 { text: `Back 🔙`, callback_data: `position_back` }
             ]
@@ -118,11 +118,9 @@ Click “Yes” or “No” below to confirm your burn ⬇️`;
         return { title, button };
     },
     myTradesPage: (trade, currentPageNumber) => {
-        console.log(`trade ====🚀`, trade);
-        
         const title = `
 
-        🪙Coin: <code>${trade.whaleWallet}</code>
+        🪙Coin: <code>${trade.tokenName}</code>
         💳Wallet: 
         <code>${trade.myWallet}</code>
         👑Copy Trader:

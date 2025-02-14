@@ -5,15 +5,15 @@ const BasePositionUI = {
         `;
         const button = [
             [
-                { text: `My Tokens 💰`, callback_data: `base_my_tokens` },
+                // { text: `My Tokens 💰`, callback_data: `base_my_tokens` },
                 { text: `My Trades 📊`, callback_data: `base_my_trades` }
             ],
             // [
             //     { text: `Trade History📊`, callback_data: `trade_history` }
             // ],
-            [
-                { text: `Trade Config⚙️`, callback_data: `base_trade_config` }
-            ],
+            // [
+            //     { text: `Trade Config⚙️`, callback_data: `base_trade_config` }
+            // ],
             [
                 { text: `Back 🔙`, callback_data: `base_back` }
             ]
@@ -22,6 +22,7 @@ const BasePositionUI = {
     },
 
     myTokensPage: (token, currentPageNumber) => {
+        console.log(`currentPageNumber ====🚀`, currentPageNumber);
 
         const title = `Click token to start selling
 
