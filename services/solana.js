@@ -231,23 +231,21 @@ const SolanaNetwork = {
     JUPITER_TOKN_SWAP: async (tokenMintAddress, payerSecretKey, amount, slippage, jitoTip, mode) => {
         try {
 
+          Red(`🦄🦄🦄 ${tokenMintAddress}, ${payerSecretKey}, ${amount}, ${slippage}, ${jitoTip}, ${mode}`);
+
             const wallet = new Wallet(Keypair.fromSecretKey(bs58.decode(payerSecretKey)));
             const keypair = Keypair.fromSecretKey(bs58.decode(payerSecretKey));
-
-            Blue(`MODE ++++++++++++++++ ${mode}`)
 
             let quoteResponse;
             if (mode == 'buy') {
                 White(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`)
                 quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`);
-            }
-            else {
-                Blue(`Sell mode............`)
+            } else {
                 White(`https://quote-api.jup.ag/v6/quote?inputMint=${tokenMintAddress}&outputMint=So11111111111111111111111111111111111111112&amount=${amount}&slippageBps=${slippage}`)
                 quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${tokenMintAddress}&outputMint=So11111111111111111111111111111111111111112&amount=${amount}&slippageBps=${slippage}`);
             }
 
-            const quote = await quoteResponse.json();
+            const quote = await (await quoteResponse).json();
             console.log("--> Quote:", quote);
 
             const swapTransactionResponse = await fetch(
@@ -429,7 +427,6 @@ const SolanaNetwork = {
                     }
                 } else if (instructions[i].programId.toBase58() === jupiterAggregatorV6) {
                     Blue(`JUPITER^^^^^^^^^^^^^^^^^^^^^^^^^^^^`)
-                    console.log('index = ', i);
                     for (let j = 0; j < innerinstructions.length; j++) {
                         if (innerinstructions[j].index === i) {
                             const length = innerinstructions[j].instructions.length;
