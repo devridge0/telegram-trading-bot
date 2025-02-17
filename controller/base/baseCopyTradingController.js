@@ -6,7 +6,7 @@ const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
 const BaseTargetWallet = require("../../models/base/baseTargetWallet");
 const BaseUI = require("../../ui/base/baseLandingUI");
 const BaseCopyTradingUI = require("../../ui/base/baseCopyTradingUI");
-const { isValidBasePublicKey, buyTokenETH } = require("../../services/base");
+const { isValidBasePublicKey, buyTokenETH, sellTokenETH } = require("../../services/base");
 const getWhaleAddressTransaction = require("../../services/baseCopyTradingServices");
 dotenv.config();
 
@@ -16,7 +16,7 @@ const Blue = (str) => console.log(chalk.bgBlue(str));
 const Green = (str) => console.log(chalk.bgGreen(str));
 const White = (str) => console.log(chalk.bgWhite(str));
 
-var  copyTraindAction;
+var copyTraindAction;
 
 
 const BaseCopyTradingController = {
@@ -142,13 +142,26 @@ const BaseCopyTradingController = {
 
             let whaleTransactionResult;
 
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId)
+
             if (newData[1] !== 'true') {
                 copyTraindAction = setInterval(async () => {
-                    whaleTransactionResult = await getWhaleAddressTransaction(newData[0])
-                    if(whaleTransactionResult.sendToken == `0x4200000000000000000000000000000000000006`){
-                        buyTokenETH()
+                    whaleTransactionResult = await getWhaleAddressTransaction(newData[0]);
+
+                    Green(JSON.stringify(whaleTransactionResult));
+
+                    if (whaleTransactionResult.sendToken == `0x4200000000000000000000000000000000000006`) {
+                        Blue(`buy`)
+                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.receiveToken, findUserBaseWallet.buyAmount);
+                    } else if (whaleTransactionResult.receiveToken == `0x4200000000000000000000000000000000000006`) {
+                        Blue(`sell`)
+                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.sendToken, findUserBaseWallet.buyAmount)
+                    }else{
+                        Blue(`swap`)
+                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.sendToken, findUserBaseWallet.buyAmount)
+                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.receiveToken, findUserBaseWallet.buyAmount);
                     }
-                }, 2000);
+                }, 5000);
             } else {
                 clearInterval(copyTraindAction);
             }
