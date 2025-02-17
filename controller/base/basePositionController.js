@@ -2,7 +2,7 @@ const chalk = require("chalk");
 const axios = require('axios');
 const BasePositionUI = require("../../ui/base/basePositionUI");
 const BaseUI = require("../../ui/base/baseLandingUI");
-const { getBaseTokenInWalletETH, isValidBaseTokenMintAddress } = require("../../services/base");
+const { getBaseWalletBalance, isValidBaseTokenMintAddress, buyTokenETH,sellTokenETH } = require("../../services/base");
 const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
 
 
@@ -97,45 +97,70 @@ const BasePositionController = {
 
             bot.once('message', async (newMsg) => {
                 const mintAddress = newMsg.text;
-                const validResult = await isValidBaseTokenMintAddress(mintAddress);
-                if (!validResult) {
-                    bot.sendMessage(chatId, `Token not found, try another one!`)
-                } else {
-                    await bot.sendMessage(chatId, `📨 Provide amount to buy below (in ETH)`);
-                    bot.once(`message`, async (newMessage) => {
-                        const butAmount = newMessage.text;
-                        const currentAmount = await getBaseWalletBalance(findUserBaseWallet.publicKey);
-                        if (butAmount > currentAmount) {
-                            await bot.sendMessage(chatId, `Not enought ETH`);
-                        } else {
-                            await bot.sendMessage(chatId, `Current ETH +++ ${currentAmount}`);
-                            // const buyTokenResult = await JUPITER_TOKN_SWAP(mintAddress, findUserBaseWallet.privateKey, butAmount, findUserWallet.slippage, mode = 'buy');
-                            // if (!buyTokenResult) {
-                            //     await bot.sendMessage(chatId, `Token buy failed.`);
-                            // } else {
-                            //     await bot.sendMessage(chatId, `Token buy successful.`);
-                            //     // const { title, button } = PositionUI.myTokensPage(myTokens[pageNumber], pageNumber);
-                            //     // await UI.switchMenu(bot, chatId, messageId, title, button,);
-                            // }
+                // const validResult = await isValidBaseTokenMintAddress(mintAddress);
+                // if (!validResult) {
+                //     bot.sendMessage(chatId, `Token not found, try another one!`)
+                // } else {
+                await bot.sendMessage(chatId, `📨 Provide amount to buy below (in ETH)`);
+                bot.once(`message`, async (newMessage) => {
+                    const buyAmount = newMessage.text;
+                    const currentAmount = await getBaseWalletBalance(findUserBaseWallet.publicKey);
+                    if (buyAmount > currentAmount) {
+                        await bot.sendMessage(chatId, `Not enought ETH`);
+                    } else {
+                        await buyTokenETH(findUserBaseWallet.privateKey, mintAddress, buyAmount)
+                        bot.sendMessage(chatId, `Token buy Successfully`).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    }
 
-                            /**
-                             
-                                Uniswap  function.
-
-                             **/
-
-
-
-                        }
-
-                    })
-                }
+                })
+                // }
             });
 
         } catch (error) {
             Red(`positionToeknBuyETH ===> ${error}`);
         }
     },
+
+
+
+    positionTokenSellETH: async (bot, queryData) => {
+        try {
+            if (!queryData.message) {
+                console.log('no queryData.message');
+                return;
+            }
+            const chatId = queryData.message.chat.id;
+            const messageId = queryData.message?.message_id;
+
+            await bot.sendMessage(chatId, `Provide token address to buy ⬇️`);
+            const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId);
+
+            bot.once('message', async (newMsg) => {
+                const mintAddress = newMsg.text;
+                // const validResult = await isValidBaseTokenMintAddress(mintAddress);
+                // if (!validResult) {
+                //     bot.sendMessage(chatId, `Token not found, try another one!`)
+                // } else {
+                await bot.sendMessage(chatId, `📨 Provide amount to buy below (in ETH)`);
+                bot.once(`message`, async (newMessage) => {
+                    const buyAmount = newMessage.text;
+                    const currentAmount = await getBaseWalletBalance(findUserBaseWallet.publicKey);
+                    if (buyAmount > currentAmount) {
+                        await bot.sendMessage(chatId, `Not enought ETH`);
+                    } else {
+                        await sellTokenETH(findUserBaseWallet.privateKey, mintAddress, buyAmount)
+                        bot.sendMessage(chatId, `Token buy Successfully`).then((msg) => { setTimeout(() => { bot.deleteMessage(chatId, msg.message_id) }, 3000) });
+                    }
+
+                })
+                // }
+            });
+
+        } catch (error) {
+            Red(`positionToeknSellETH ===> ${error}`);
+        }
+    },
+
 
 
     positionSellAndManageETH: async (bot, queryData, pageNumber = 0) => {

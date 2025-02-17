@@ -110,16 +110,16 @@ const processTweets = async (tweets) => {
         // const fullTweet = await fetchFullTweet(tweet.id);
         // if (fullTweet) {
         const containsLaunchpad = LAUNCHPAD_KEYWORDS.some(keyword => tweet.text.includes(keyword));
-        // const tokenAddress = extractTokenAddress(tweet.text);
+        const tokenAddress = extractTokenAddress(tweet.text);
         if (containsLaunchpad) {
-            // const tokenPrice = tokenAddress ? await getTokenPrice(tokenAddress) : 'Not available';
+            const tokenPrice = tokenAddress ? await getTokenPrice(tokenAddress) : 'Not available';
             const message = `🚀 *New Solana Token Launch* 🚀\n 📅${escapeMarkdown(tweet.created_at)}\n\n` +
                 `🔹 ${escapeMarkdown(tweet.text)}\n` +
-                // `${tokenAddress ? `🔹 *Token Address:* ${tokenAddress}\n 💰 *Price:* ${tokenPrice}\n` : ""}` +
+                `${tokenAddress ? `🔹 *Token Address:* ${tokenAddress}\n 💰 *Price:* ${tokenPrice}\n` : ""}` +
                 `🔗 [Tweet Link](https://twitter.com/i/web/status/${tweet.id})`;
             await bot.sendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
         }
-        // }
+        // }c:\Users\Maxim Igor\Documents\base-copy-trading-bot\test.js
     }
 };
 
