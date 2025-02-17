@@ -147,9 +147,7 @@ const BaseCopyTradingController = {
             if (newData[1] !== 'true') {
                 copyTraindAction = setInterval(async () => {
                     whaleTransactionResult = await getWhaleAddressTransaction(newData[0]);
-
                     Green(JSON.stringify(whaleTransactionResult));
-
                     if (whaleTransactionResult.sendToken == `0x4200000000000000000000000000000000000006`) {
                         Blue(`buy`)
                         buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.receiveToken, findUserBaseWallet.buyAmount);
