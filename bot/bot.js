@@ -272,8 +272,11 @@ const init = () => {
             }
 
 
-            else if (callBackQuery === 'base_token_buy') {
+            else if (callBackQuery === 'base_buy_token') {
                 BasePositionController.positionTokenBuyETH(bot, query);
+            }
+            else if (callBackQuery === 'base_sell_token') {
+                BasePositionController.positionTokenSellETH(bot, query);
             }
             else if (callBackQuery === 'base_sell_manage_page') {
                 BasePositionController.positionSellAndManageETH(bot, query);

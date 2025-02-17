@@ -5,12 +5,13 @@ const BasePositionUI = {
         `;
         const button = [
             [
+                { text: `Buy`, callback_data: `base_buy_token` },
+                { text: `Sell`, callback_data: `base_sell_token` }
+            ],
+            [
                 // { text: `My Tokens 💰`, callback_data: `base_my_tokens` },
                 { text: `My Trades 📊`, callback_data: `base_my_trades` }
             ],
-            // [
-            //     { text: `Trade History📊`, callback_data: `trade_history` }
-            // ],
             // [
             //     { text: `Trade Config⚙️`, callback_data: `base_trade_config` }
             // ],
