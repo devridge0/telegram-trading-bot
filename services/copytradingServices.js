@@ -4,7 +4,7 @@ const SOLANA_WSS_ENDPOINT = 'wss://mainnet.helius-rpc.com/?api-key=adcb5efb-1e8d
 const TelegramBot = require('node-telegram-bot-api');
 const chalk = require("chalk");
 const WalletDBAccess = require('../db/wallet-db-access');
-const { getSwapInfo, getSolBalanceSOL, getSellTokenAmount, JUPITER_TOKN_SWAP } = require('./solana');
+const { getSwapInfo, getSolBalanceSOL, getSellTokenAmount, JUPITER_TOKN_SWAP, getKeypairfromPirvaetKeySOL, withdrawAllSOL } = require('./solana');
 
 
 const Red = (str) => console.log(chalk.bgRed(str));
@@ -133,7 +133,15 @@ const StartCopyTrading = async () => {
                         }
 
                         if (copyTradingResult) {
+
+                            //referall reward
                             const saveCopyTradingResult = await WalletDBAccess.saveCopyTradingHistory(chatId, result.sendToken, result.receiveToken, findUserWallet.publicKey, address, mode)
+                            const referralResult = await WalletDBAccess.referallUserConfirm(chatId);
+                            if (referralResult) {
+                                const signer = await getKeypairfromPirvaetKeySOL(findUserWallet.privateKey);
+                                const withdrawCosutomResult = await withdrawAllSOL(findUserWallet.publicKey, findUserWallet.referralWallet, signer, findUserWallet.buyAmount * 0.05);
+                            }
+
                         }
 
                     }

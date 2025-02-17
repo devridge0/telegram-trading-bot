@@ -7,6 +7,21 @@ const Red = (str) => console.log(chalk.red.bold(str));
 
 
 const WalletDBAccess = {
+    referallUserConfirm: async (chatId) => {
+        try {
+            const myWallet = await Wallet.findOne({ chatId });
+            console.log(`${myWallet.publicKey} === ${myWallet.referralWallet}`)
+            if (myWallet.publicKey === myWallet.referralWallet) {
+                return false;
+            }
+            else true;
+
+        } catch (error) {
+            Red(`referallUserConfirm ====🚀${error}`);
+        }
+
+    },
+
     saveAdminWallet: async (adminWallet) => {
         try {
             await AdminWallet.create({ adminWallet });
@@ -189,7 +204,7 @@ const WalletDBAccess = {
                 { chatId: chatId },
                 { $addToSet: { referral: userInfo } }
             );
-            return true;    
+            return true;
         } catch (error) {
             Red(`addReferalUser ====🚀${error}`);
         }
