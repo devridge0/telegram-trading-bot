@@ -16,10 +16,10 @@ const SettingUI = {
                 { text: `Sell ALL${data.selltype == 'all' ? '🟢' : '🔴'}`, callback_data: `sell_type_all` },
                 { text: `Sell PERCENTAGE${data.selltype != 'all' ? '🟢' : '🔴'}`, callback_data: `sell_type_persent` }
             ],
-            [
-                { text: `Edit stop loss - ${data.stopLoss}%📝`, callback_data: `edit_stop_loss` },
-                { text: `Edit take profit - ${data.takeProfit}%📝`, callback_data: `edit_take_profit` }
-            ],
+            // [
+            //     { text: `Edit stop loss - ${data.stopLoss}%📝`, callback_data: `edit_stop_loss` },
+            //     { text: `Edit take profit - ${data.takeProfit}%📝`, callback_data: `edit_take_profit` }
+            // ],
             [
                 { text: `Back 🔙`, callback_data: `back` }
             ]

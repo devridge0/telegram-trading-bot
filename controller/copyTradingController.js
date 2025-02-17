@@ -137,8 +137,6 @@ const CopyTradingController = {
             const messageId = queryData.message?.message_id;
             const userId = queryData.message.chat.username;
 
-
-
             const REDIS = async () => {
                 const { createClient } = require('redis');
                 const findUserWallet = await WalletDBAccess.findWallet(chatId);
@@ -157,7 +155,6 @@ const CopyTradingController = {
             REDIS()
 
             const newData = status.split("_");
-
 
             await WalletDBAccess.statusUpdateTargetWallet(chatId, newData[0], newData[1]);
             const whaleWalletList = await WalletDBAccess.findAllTargetWallet(chatId);

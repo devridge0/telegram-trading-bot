@@ -1,358 +1,123 @@
 {
-    "target": "0x0227628f3F023bb0B980b67D528571c95c6DaC1c",
-    "interface": {
-        "fragments": [
+    "_maxResultsWhenFetchLast": 100,
+    "_realData": {
+        "data": [
             {
-                "type": "constructor",
-                "inputs": [],
-                "payable": false,
-                "gas": null
+                "text": "RT @SolanaPumpfun_: $Choupet - The Perfect Investment in Meme Coin Fashion\n\n📊 Dex : https://t.co/T4tB0pozYD\n\n👉 Buy now : https://t.co/sBqNj…",
+                "edit_history_tweet_ids": [
+                    "1891545720756359550"
+                ],
+                "created_at": "2025-02-17T17:50:17.000Z",
+                "id": "1891545720756359550"
             },
             {
-                "type": "event",
-                "inputs": [
-                    {
-                        "name": "fee",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "tickSpacing",
-                        "type": "int24",
-                        "baseType": "int24",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "@DOGE \nhttps://t.co/1OPgw9yVIT",
+                "edit_history_tweet_ids": [
+                    "1891545707330363445"
                 ],
-                "name": "FeeAmountEnabled",
-                "anonymous": false
+                "created_at": "2025-02-17T17:50:14.000Z",
+                "id": "1891545707330363445"
             },
             {
-                "type": "event",
-                "inputs": [
-                    {
-                        "name": "oldOwner",
-                        "type": "address",
-                        "baseType": "address",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "newOwner",
-                        "type": "address",
-                        "baseType": "address",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "💎 @FartClickerCom As predicted by Pump Slayer on Pump Fun, ticker $FAC has successfully bonded! 🎉 Cheers to every holder—your investments are thriving! Here's to a prosperous journey ahead on Raydium for $FAC! 🚀 CA: Bftb8GKXmNWnrsHeFeQRby1H7a2odG5LtBMKgQdepump #CryptoBoom… https://t.co/2UmMb02API",
+                "edit_history_tweet_ids": [
+                    "1891545693870764513"
                 ],
-                "name": "OwnerChanged",
-                "anonymous": false
+                "created_at": "2025-02-17T17:50:11.000Z",
+                "id": "1891545693870764513"
             },
             {
-                "type": "event",
-                "inputs": [
-                    {
-                        "name": "token0",
-                        "type": "address",
-                        "baseType": "address",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "token1",
-                        "type": "address",
-                        "baseType": "address",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "fee",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "indexed": true,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "tickSpacing",
-                        "type": "int24",
-                        "baseType": "int24",
-                        "indexed": false,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address",
-                        "baseType": "address",
-                        "indexed": false,
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "Outsider Coin is live on https://t.co/UWevmLvAbn ✅\n\n\" I wish I was an insider\"\n\nCA: B8nKJeNSKsHTPy9JaP6JyCfpVrbPpZYiqgYjaX62pump https://t.co/ctblSn7U2n",
+                "edit_history_tweet_ids": [
+                    "1891545692402864293"
                 ],
-                "name": "PoolCreated",
-                "anonymous": false
+                "created_at": "2025-02-17T17:50:10.000Z",
+                "id": "1891545692402864293"
             },
             {
-                "type": "function",
-                "inputs": [
-                    {
-                        "name": "tokenA",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "tokenB",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "fee",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "RT @Vidocqstoek: PANCAKESWAP VOLUME NEWS ‼️\n\n(30d)Volume Pancakeswap crossed over Uniswap❗️\n🥞$111,29B \n🦄$103,6B \n🌊$118,1B  (crossover in a…",
+                "edit_history_tweet_ids": [
+                    "1891545654075212005"
                 ],
-                "name": "createPool",
-                "constant": false,
-                "outputs": [
-                    {
-                        "name": "pool",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
-                ],
-                "stateMutability": "nonpayable",
-                "payable": false,
-                "gas": null
+                "created_at": "2025-02-17T17: 50: 01.000Z",
+                "id": "1891545654075212005"
             },
             {
-                "type": "function",
-                "inputs": [
-                    {
-                        "name": "fee",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "tickSpacing",
-                        "type": "int24",
-                        "baseType": "int24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "$1UP LIVE ON PUMPFUN!\n\nhttps: //t.co/02vnJsxJwQ",
+                "edit_history_tweet_ids": [
+                    "1891545653316039110"
                 ],
-                "name": "enableFeeAmount",
-                "constant": false,
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "payable": false,
-                "gas": null
+                "created_at": "2025-02-17T17:50:01.000Z",
+                "id": "1891545653316039110"
             },
             {
-                "type": "function",
-                "inputs": [
-                    {
-                        "name": "",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "RT @ThoreumC: We are launching soon. 🚀 🚀 \n$TMC Presale coming soon!!\n$TMC will List on 13 major exchanges!!\n\nThoreum Coin is a decentralize…",
+                "edit_history_tweet_ids": [
+                    "1891545647339180443"
                 ],
-                "name": "feeAmountTickSpacing",
-                "constant": true,
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "int24",
-                        "baseType": "int24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
-                ],
-                "stateMutability": "view",
-                "payable": false,
-                "gas": null
+                "created_at": "2025-02-17T17:50:00.000Z",
+                "id": "1891545647339180443"
             },
             {
-                "type": "function",
-                "inputs": [
-                    {
-                        "name": "",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "RT @ThoreumC: We are launching soon. 🚀 🚀 \n$TMC Presale coming soon!!\n$TMC will List on 13 major exchanges!!\n\nThoreum Coin is a decentralize…",
+                "edit_history_tweet_ids": [
+                    "1891545644944277946"
                 ],
-                "name": "getPool",
-                "constant": true,
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
-                ],
-                "stateMutability": "view",
-                "payable": false,
-                "gas": null
+                "created_at": "2025-02-17T17:49:59.000Z",
+                "id": "1891545644944277946"
             },
             {
-                "type": "function",
-                "inputs": [],
-                "name": "owner",
-                "constant": true,
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "RT @SkiMaskStonks: 🚨ANNOUNCEMENT🚨\nWE HAVE OFFICIALLY LAUNCHED ON PUMP FUN \n\nCollaborating to bring chains together. We are each other's har…",
+                "edit_history_tweet_ids": [
+                    "1891545644281536874"
                 ],
-                "stateMutability": "view",
-                "payable": false,
-                "gas": null
+                "created_at": "2025-02-17T17:49:59.000Z",
+                "id": "1891545644281536874"
             },
             {
-                "type": "function",
-                "inputs": [],
-                "name": "parameters",
-                "constant": true,
-                "outputs": [
-                    {
-                        "name": "factory",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "token0",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "token1",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "fee",
-                        "type": "uint24",
-                        "baseType": "uint24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    },
-                    {
-                        "name": "tickSpacing",
-                        "type": "int24",
-                        "baseType": "int24",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
+                "text": "Hail Caesar Trump, Imperator of the https://t.co/DbENXiSbLB Republic, crossing the Rubicon of Raydium imminently https://t.co/1Uo4chvs8o",
+                "edit_history_tweet_ids": [
+                    "1891545642305990758"
                 ],
-                "stateMutability": "view",
-                "payable": false,
-                "gas": null
-            },
-            {
-                "type": "function",
-                "inputs": [
-                    {
-                        "name": "_owner",
-                        "type": "address",
-                        "baseType": "address",
-                        "components": null,
-                        "arrayLength": null,
-                        "arrayChildren": null
-                    }
-                ],
-                "name": "setOwner",
-                "constant": false,
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "payable": false,
-                "gas": null
+                "created_at": "2025-02-17T17:49:59.000Z",
+                "id": "1891545642305990758"
             }
         ],
-        "deploy": {
-            "type": "constructor",
-            "inputs": [],
-            "payable": false,
-            "gas": null
-        },
-        "fallback": null,
-        "receive": false
+        "meta": {
+            "newest_id": "1891545720756359550",
+            "oldest_id": "1891545642305990758",
+            "result_count": 10,
+            "next_token": "b26v89c19zqg8o3frrcqmgcrz0sw2de6a7kiwl7p9xif1"
+        }
     },
-    "runner": {},
-    "filters": {},
-    "fallback": null
+    "_rateLimit": {
+        "limit": 1,
+        "remaining": 0,
+        "reset": 1739815529
+    },
+    "_instance": {
+        "_currentUser": null,
+        "_currentUserV2": null,
+        "_requestMaker": {
+            "rateLimits": {
+                "https://api.x.com/2/tweets/search/recent": {
+                    "limit": 1,
+                    "remaining": 0,
+                    "reset": 1739815529
+                }
+            },
+            "clientSettings": {},
+            "bearerToken": "AAAAAAAAAAAAAAAAAAAAADrEzAEAAAAAlPwKJISpUO0X3g4yxcK4OlRZkoI%3DAVeK3YCnBdgl7G9ZNZiwvFSOqFsSa2U3wCaRmMpZSITaVdLAsH"
+        },
+        "_prefix": "https://api.x.com/2/"
+    },
+    "_queryParams": {
+        "max_results": 10,
+        "tweet.fields": [
+            "created_at",
+            "text"
+        ],
+        "query": "Solana new token launch OR Solana presale OR Solana IDO OR Pump.fun OR Raydium"
+    },
+    "_endpoint": "tweets/search/recent"
 }
