@@ -285,7 +285,6 @@ const WalletController = {
                 const amount = await getSolBalanceSOL(findUserWallet.publicKey);
                 if (Number(withdrawAmount) == withdrawAmount && amount > withdrawAmount) {
                     const signer = await getKeypairfromPirvaetKeySOL(findUserWallet.privateKey);
-                    White(`${findUserWallet.publicKey}, ${withdrawWalletAddress}, ${signer}, ${withdrawAmount}`)
                     const withdrawCosutomResult = await withdrawAllSOL(findUserWallet.publicKey, withdrawWalletAddress, signer, withdrawAmount);
                     if (withdrawCosutomResult)
                         bot.sendMessage(chatId, `success`);

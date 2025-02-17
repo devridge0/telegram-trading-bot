@@ -114,7 +114,6 @@ const SolanaNetwork = {
 
     withdrawAllSOL: async (fromPubkey, toPubkey, signer, amount) => {
         try {
-            Green(`${fromPubkey}, ${toPubkey}, ${signer}, ${amount}`)
             const transactionFee = 5000; // Adjust this value as needed
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
