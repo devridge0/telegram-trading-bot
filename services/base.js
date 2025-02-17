@@ -38,7 +38,7 @@ const ERC20_ABI_APPROVE = [
     "function approve(address spender, uint256 amount) returns (bool)",
 ];
 
-const UNISWAP_ROUTER_ABI = [
+const UNISWAP_ROUTER_ABI111 = [
     // Swap Exact Tokens For Tokens
     "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
 
@@ -49,6 +49,20 @@ const UNISWAP_ROUTER_ABI = [
     "function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts)"
 ];
 
+
+const UNISWAP_ROUTER_ABI = [
+    // Swap Exact Tokens For Tokens
+    "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
+
+    // Swap Exact Tokens For ETH
+    "function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
+
+    // Swap Exact ETH For Tokens (when swapping ETH)
+    "function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts)",
+
+    // Get Amounts Out
+    "function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts)"
+];
 //-----------------------------------------------------------------------------------------------------------------------
 
 
@@ -302,7 +316,7 @@ const BaseNetwork = {
                     );
 
                     await tx.wait();
-                    console.log(`Swap successful: ${networkConfig.expolorer}/tx/${tx.hash}`);
+                    console.log(`Swap successful: https://basescan.org/tx/${tx.hash}`);
                 } catch (error) {
                     console.log("Pair does not exist");
                 }
@@ -323,6 +337,7 @@ const BaseNetwork = {
 
     sellTokenETH: async (privateKey, tokenIn, amountIn) => {
         try {
+
             const wallet = new ethers.Wallet(privateKey, provider);
 
             async function getTokenDecimals(tokenAddress) {
@@ -330,66 +345,61 @@ const BaseNetwork = {
                 return Number(await tokenContract.decimals());
             }
 
-            // Convert BigInt to readable number
             async function convertBigNumberToNumber(tokenAddress, amountInUnits) {
                 const decimals = await getTokenDecimals(tokenAddress);
                 return Number(ethers.formatUnits(amountInUnits, decimals));
             }
 
-            // Convert number to BigInt with proper decimals
             async function convertNumberToBigInt(tokenAddress, amount) {
                 const decimals = await getTokenDecimals(tokenAddress);
                 return ethers.parseUnits(amount.toFixed(decimals).toString(), decimals);
             }
 
-            // Perform swap function
-            async function performSwap(amountIn, tokenIn, tokenOut) {
+            async function sellToken(amountIn, tokenIn) {
                 try {
-
-                    console.log(`________${amountIn}_______${tokenIn}____________${tokenOut}`);
                     const router = new ethers.Contract(ROUTER_ADDRESS, UNISWAP_ROUTER_ABI, wallet);
-
-                    const path = tokenIn === ZeroAddress
-                        ? ["0x4200000000000000000000000000000000000006", tokenOut] // ETH -> Token
-                        : [tokenIn, tokenOut]; // Token -> Token
+                    const path = [tokenIn, WETH_ADDRESS]; // Token -> ETH
 
                     console.log({ path });
 
                     const amountsOut = await router.getAmountsOut(amountIn, path);
                     const amountOutMin = amountsOut[amountsOut.length - 1];
-                    const amountOutNumber = await convertBigNumberToNumber(tokenOut, amountOutMin);
+                    const amountOutNumber = await convertBigNumberToNumber(WETH_ADDRESS, amountOutMin);
 
-                    // Apply 3% slippage
-                    const amountOutMinWithSlippage = await convertNumberToBigInt(tokenOut, amountOutNumber * 0.97);
+                    console.log(`You will receive approximately ${amountOutNumber} ETH`);
+
+                    const amountOutMinWithSlippage = await convertNumberToBigInt(WETH_ADDRESS, amountOutNumber * 0.9);
 
                     // Set deadline (10 minutes from now)
                     const deadline = Math.floor(Date.now() / 1000) + 600;
 
-                    let tx;
+                    const tokenInContract = new ethers.Contract(tokenIn, ERC20_ABI_APPROVE, wallet);
+                    const approvalTx = await tokenInContract.approve(ROUTER_ADDRESS, amountIn);
+                    await approvalTx.wait();
+                    console.log(`Approval successful: ${approvalTx.hash}`);
 
-                    tx = await router.swapExactETHForTokens(
+                    // Perform the swap (Token -> ETH)
+                    const tx = await router.swapExactTokensForETH(
+                        amountIn,
                         amountOutMinWithSlippage,
                         path,
                         wallet.address,
-                        deadline,
-                        { value: amountIn }
+                        deadline
                     );
 
                     await tx.wait();
-                    console.log(`Swap successful: ${networkConfig.expolorer}/tx/${tx.hash}`);
+                    console.log(`Token sold successfully: https://basescan.org/tx/${tx.hash}`);
                 } catch (error) {
-                    console.log("Pair does not exist");
+                    console.log("Error during sale:", error.message);
                 }
             }
 
-            const isETH = tokenIn === ZeroAddress;
-            const amountInUnits = isETH
-                ? ethers.parseUnits(amountIn, 18)
-                : await convertNumberToBigInt(tokenIn, parseFloat(amountIn));
 
-            await performSwap(amountInUnits, tokenIn, `0x0000000000000000000000000000000000000000`);
+            const amountInUnits = await convertNumberToBigInt(tokenIn, parseFloat(amountIn));
+            await sellToken(amountInUnits, tokenIn);
+
         } catch (error) {
-            Red(`butTokenETH ----- ${error}`)
+            Red(`sellTokenETH ----- ${error}`)
         }
     },
 }

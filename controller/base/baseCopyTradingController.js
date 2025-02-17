@@ -6,7 +6,8 @@ const BaseWalletDBAccess = require("../../db/base/basewallet-db-access");
 const BaseTargetWallet = require("../../models/base/baseTargetWallet");
 const BaseUI = require("../../ui/base/baseLandingUI");
 const BaseCopyTradingUI = require("../../ui/base/baseCopyTradingUI");
-const { isValidBasePublicKey } = require("../../services/base");
+const { isValidBasePublicKey, buyTokenETH } = require("../../services/base");
+const getWhaleAddressTransaction = require("../../services/baseCopyTradingServices");
 dotenv.config();
 
 const Red = (str) => console.log(chalk.bgRed(str));
@@ -15,7 +16,8 @@ const Blue = (str) => console.log(chalk.bgBlue(str));
 const Green = (str) => console.log(chalk.bgGreen(str));
 const White = (str) => console.log(chalk.bgWhite(str));
 
-const WS = new WebSocket(process.env.SOLANA_WSS_ENDPOINT);
+var  copyTraindAction;
+
 
 const BaseCopyTradingController = {
     copyTradingPageETH: async (bot, queryData) => {
@@ -138,18 +140,18 @@ const BaseCopyTradingController = {
             const { title, button } = BaseCopyTradingUI.copyTradingPage(whaleWalletList);
             await BaseUI.switchMenu(bot, chatId, messageId, title, button,);
 
+            let whaleTransactionResult;
 
-
-            /*
-            
-                base copy trading function
-            */
-            // if (newData[1] == 'true') {
-            //     stopTracking(newData[0], chatId);
-            // }
-            // else {
-            //     startTracking(newData[0], chatId);
-            // }
+            if (newData[1] !== 'true') {
+                copyTraindAction = setInterval(async () => {
+                    whaleTransactionResult = await getWhaleAddressTransaction(newData[0])
+                    if(whaleTransactionResult.sendToken == `0x4200000000000000000000000000000000000006`){
+                        buyTokenETH()
+                    }
+                }, 2000);
+            } else {
+                clearInterval(copyTraindAction);
+            }
         } catch (error) {
             Red(`copyTradingStartAndStopPageETH ====>   ${error}`)
         }
