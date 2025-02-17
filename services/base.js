@@ -2,7 +2,7 @@ const bs58 = require('bs58');
 const fetch = require('cross-fetch')
 const chalk = require('chalk');
 const dotenv = require('dotenv');
-const { ethers } = require("ethers");
+const { ethers, ZeroAddress } = require("ethers");
 const BN = require('bn.js');
 dotenv.config();
 
@@ -19,21 +19,37 @@ const DEX_ROUTER_ADDRESS = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
 const WETH_ADDRESS = "0x4200000000000000000000000000000000000006" // Wrapped ETH
 
-const ROUTER_ABI = [
-    "function swapExactETHForTokens(uint amountOutMin, address[] path, address to, uint deadline) payable returns (uint[] memory)",
-    "function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] memory)",
-    "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) external returns (uint[] memory)",
-    "function WETH() external pure returns (address)",
-    "function getAmountsOut(uint amountIn, address[] path) external view returns (uint[] memory)"
-];
+
+// -----------------------------------           ABI                 ----------------------------------------
+const ROUTER_ADDRESS = process.env.ROUTER_ADDRESS;
+
 
 const ERC20_ABI = [
-    "function name() view returns (string)",
-    "function symbol() view returns (string)",
+    "function balanceOf(address owner) view returns (uint)",
     "function decimals() view returns (uint8)",
-    "function totalSupply() view returns (uint256)"
 ];
 
+const UNISWAP_PAIR_ABI = [
+    "function getReserves() view returns (uint112, uint112, uint32)",
+    "function token0() view returns (address)",
+];
+
+const ERC20_ABI_APPROVE = [
+    "function approve(address spender, uint256 amount) returns (bool)",
+];
+
+const UNISWAP_ROUTER_ABI = [
+    // Swap Exact Tokens For Tokens
+    "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
+
+    // Swap Exact ETH For Tokens (when swapping ETH)
+    "function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts)",
+
+    // Get Amounts Out
+    "function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts)"
+];
+
+//-----------------------------------------------------------------------------------------------------------------------
 
 
 const BASE_RPC = `https://base-sepolia.g.alchemy.com/v2/4XJ2-1bwaIzXLGsmYF-bGcQVp7GaFrgR`;
@@ -161,7 +177,7 @@ const BaseNetwork = {
             const wallet = new ethers.Wallet(privateKey, provider);
             const balance = await provider.getBalance(wallet.address);
             console.log(`amount ====🚀`, amount);
-            
+
             const amountToSend = balance * BigInt(Math.floor(amount * 1e18)) / BigInt(1e18);
             console.log(`amountToSend ====🚀`, amountToSend);
 
@@ -231,49 +247,151 @@ const BaseNetwork = {
     },
 
 
-    buyTokenETH: async (tokenToBuy, amountInETH) => {
+    buyTokenETH: async (privateKey, tokenOut, amountIn) => {
         try {
+            const wallet = new ethers.Wallet(privateKey, provider);
 
-            const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-            const routerContract = new ethers.Contract(DEX_ROUTER_ADDRESS, ROUTER_ABI, wallet);
-
-            const amountInWei = ethers.parseEther(amountInETH.toString());
-            const path = [WETH_ADDRESS, tokenToBuy]; // ETH -> token path
-
-            const amountsOut = await routerContract.getAmountsOut(amountInWei, path);
-            const amountOutMin = amountsOut[1] - (amountsOut[1] * 5n) / 100n; // slippage tolerance, remove 5%
-
-            const deadline = Math.floor(Date.now() / 1000) + 60 * 10; //10 minutes from now
-            const to = wallet.address
-            const tx = {
-                value: amountInWei,
-                gasLimit: 300000
+            async function getTokenDecimals(tokenAddress) {
+                const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+                return Number(await tokenContract.decimals());
             }
 
-            const signedTx = await routerContract.swapExactETHForTokens(
-                amountOutMin,
-                path,
-                to,
-                deadline,
-                tx
-            );
+            // Convert BigInt to readable number
+            async function convertBigNumberToNumber(tokenAddress, amountInUnits) {
+                const decimals = await getTokenDecimals(tokenAddress);
+                return Number(ethers.formatUnits(amountInUnits, decimals));
+            }
 
-            console.log("Transaction sent:", signedTx.hash);
-            const receipt = await signedTx.wait()
-            if (receipt && receipt.status == 1) {
-                console.log("Transaction successful!");
-                return receipt
+            // Convert number to BigInt with proper decimals
+            async function convertNumberToBigInt(tokenAddress, amount) {
+                const decimals = await getTokenDecimals(tokenAddress);
+                return ethers.parseUnits(amount.toFixed(decimals).toString(), decimals);
             }
-            else {
-                throw new Error("Transaction failed")
+
+            // Perform swap function
+            async function performSwap(amountIn, tokenIn, tokenOut) {
+                try {
+
+                    console.log(`________${amountIn}_______${tokenIn}____________${tokenOut}`);
+                    const router = new ethers.Contract(ROUTER_ADDRESS, UNISWAP_ROUTER_ABI, wallet);
+
+                    const path = tokenIn === ZeroAddress
+                        ? ["0x4200000000000000000000000000000000000006", tokenOut] // ETH -> Token
+                        : [tokenIn, tokenOut]; // Token -> Token
+
+                    console.log({ path });
+
+                    const amountsOut = await router.getAmountsOut(amountIn, path);
+                    const amountOutMin = amountsOut[amountsOut.length - 1];
+                    const amountOutNumber = await convertBigNumberToNumber(tokenOut, amountOutMin);
+
+                    // Apply 3% slippage
+                    const amountOutMinWithSlippage = await convertNumberToBigInt(tokenOut, amountOutNumber * 0.97);
+
+                    // Set deadline (10 minutes from now)
+                    const deadline = Math.floor(Date.now() / 1000) + 600;
+
+                    let tx;
+
+                    tx = await router.swapExactETHForTokens(
+                        amountOutMinWithSlippage,
+                        path,
+                        wallet.address,
+                        deadline,
+                        { value: amountIn }
+                    );
+
+                    await tx.wait();
+                    console.log(`Swap successful: ${networkConfig.expolorer}/tx/${tx.hash}`);
+                } catch (error) {
+                    console.log("Pair does not exist");
+                }
             }
+
+            const tokenIn = `0x0000000000000000000000000000000000000000`;
+            const isETH = tokenIn === ZeroAddress;
+            const amountInUnits = isETH
+                ? ethers.parseUnits(amountIn, 18)
+                : await convertNumberToBigInt(tokenIn, parseFloat(amountIn));
+
+            await performSwap(amountInUnits, tokenIn, tokenOut);
         } catch (error) {
-            console.error("Error buying token:", error)
-            throw error
+            Red(`butTokenETH ----- ${error}`)
         }
     },
 
 
+    sellTokenETH: async (privateKey, tokenIn, amountIn) => {
+        try {
+            const wallet = new ethers.Wallet(privateKey, provider);
+
+            async function getTokenDecimals(tokenAddress) {
+                const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+                return Number(await tokenContract.decimals());
+            }
+
+            // Convert BigInt to readable number
+            async function convertBigNumberToNumber(tokenAddress, amountInUnits) {
+                const decimals = await getTokenDecimals(tokenAddress);
+                return Number(ethers.formatUnits(amountInUnits, decimals));
+            }
+
+            // Convert number to BigInt with proper decimals
+            async function convertNumberToBigInt(tokenAddress, amount) {
+                const decimals = await getTokenDecimals(tokenAddress);
+                return ethers.parseUnits(amount.toFixed(decimals).toString(), decimals);
+            }
+
+            // Perform swap function
+            async function performSwap(amountIn, tokenIn, tokenOut) {
+                try {
+
+                    console.log(`________${amountIn}_______${tokenIn}____________${tokenOut}`);
+                    const router = new ethers.Contract(ROUTER_ADDRESS, UNISWAP_ROUTER_ABI, wallet);
+
+                    const path = tokenIn === ZeroAddress
+                        ? ["0x4200000000000000000000000000000000000006", tokenOut] // ETH -> Token
+                        : [tokenIn, tokenOut]; // Token -> Token
+
+                    console.log({ path });
+
+                    const amountsOut = await router.getAmountsOut(amountIn, path);
+                    const amountOutMin = amountsOut[amountsOut.length - 1];
+                    const amountOutNumber = await convertBigNumberToNumber(tokenOut, amountOutMin);
+
+                    // Apply 3% slippage
+                    const amountOutMinWithSlippage = await convertNumberToBigInt(tokenOut, amountOutNumber * 0.97);
+
+                    // Set deadline (10 minutes from now)
+                    const deadline = Math.floor(Date.now() / 1000) + 600;
+
+                    let tx;
+
+                    tx = await router.swapExactETHForTokens(
+                        amountOutMinWithSlippage,
+                        path,
+                        wallet.address,
+                        deadline,
+                        { value: amountIn }
+                    );
+
+                    await tx.wait();
+                    console.log(`Swap successful: ${networkConfig.expolorer}/tx/${tx.hash}`);
+                } catch (error) {
+                    console.log("Pair does not exist");
+                }
+            }
+
+            const isETH = tokenIn === ZeroAddress;
+            const amountInUnits = isETH
+                ? ethers.parseUnits(amountIn, 18)
+                : await convertNumberToBigInt(tokenIn, parseFloat(amountIn));
+
+            await performSwap(amountInUnits, tokenIn, `0x0000000000000000000000000000000000000000`);
+        } catch (error) {
+            Red(`butTokenETH ----- ${error}`)
+        }
+    },
 }
 
 module.exports = BaseNetwork;
