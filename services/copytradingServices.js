@@ -91,7 +91,6 @@ const StartCopyTrading = async () => {
         });
 
 
-
         WS.on('message', async (data) => {
             const response = JSON.parse(data);
             Green(`New address starting ... ${JSON.stringify(response)}`);

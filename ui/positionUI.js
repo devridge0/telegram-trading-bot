@@ -119,16 +119,15 @@ Click “Yes” or “No” below to confirm your burn ⬇️`;
     },
     myTradesPage: (trade, currentPageNumber) => {
         const title = `
+🚨Price at 🔥2X 🔥
 
-        🪙Coin: <code>${trade.tokenName}</code>
-        💳Wallet: 
-        <code>${trade.myWallet}</code>
-        👑Copy Trader:
-        <code>${trade.whaleWallet}</code>
-        
-        👆Tap to copy the copy trader 💸
+🪙Coin: ${trade.tokenName}
+📈Current Price: ${trade.currentPrice}$
+💳Wallet: ${trade.myWallet}
+👑Copy Trader: ${trade.copyWallet}
 
-Current page ${currentPageNumber + 1} pages`;
+Current page ${currentPageNumber + 1} pages
+`;
         const button = [
 
             [
