@@ -286,7 +286,6 @@ const BaseNetwork = {
             async function performSwap(amountIn, tokenIn, tokenOut) {
                 try {
 
-                    console.log(`________${amountIn}_______${tokenIn}____________${tokenOut}`);
                     const router = new ethers.Contract(ROUTER_ADDRESS, UNISWAP_ROUTER_ABI, wallet);
 
                     const path = tokenIn === ZeroAddress
@@ -325,7 +324,7 @@ const BaseNetwork = {
             const tokenIn = `0x0000000000000000000000000000000000000000`;
             const isETH = tokenIn === ZeroAddress;
             const amountInUnits = isETH
-                ? ethers.parseUnits(amountIn, 18)
+                ? ethers.parseUnits(String(amountIn), 18)
                 : await convertNumberToBigInt(tokenIn, parseFloat(amountIn));
 
             await performSwap(amountInUnits, tokenIn, tokenOut);
@@ -337,7 +336,6 @@ const BaseNetwork = {
 
     sellTokenETH: async (privateKey, tokenIn, amountIn) => {
         try {
-
             const wallet = new ethers.Wallet(privateKey, provider);
 
             async function getTokenDecimals(tokenAddress) {
