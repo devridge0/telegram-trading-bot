@@ -147,16 +147,20 @@ const BaseCopyTradingController = {
             if (newData[1] !== 'true') {
                 copyTraindAction = setInterval(async () => {
                     whaleTransactionResult = await getWhaleAddressTransaction(newData[0]);
-                    if (whaleTransactionResult.sendToken == `0x4200000000000000000000000000000000000006`) {
+
+                    Blue(JSON.stringify(whaleTransactionResult, (key, value) =>
+                        typeof value === 'bigint' ? value.toString() : value))
+
+                    if (whaleTransactionResult[0].sendToken == `0x4200000000000000000000000000000000000006`) {
                         Blue(`buy`)
-                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.receiveToken, findUserBaseWallet.buyAmount);
-                    } else if (whaleTransactionResult.receiveToken == `0x4200000000000000000000000000000000000006`) {
+                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, findUserBaseWallet.buyAmount);
+                    } else if (whaleTransactionResult[0].receiveToken == `0x4200000000000000000000000000000000000006`) {
                         Blue(`sell`)
-                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.sendToken, findUserBaseWallet.buyAmount)
+                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].sendToken, findUserBaseWallet.buyAmount)
                     }else{
                         Blue(`swap`)
-                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.sendToken, findUserBaseWallet.buyAmount)
-                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult.receiveToken, findUserBaseWallet.buyAmount);
+                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].sendToken, findUserBaseWallet.buyAmount)
+                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, findUserBaseWallet.buyAmount);
                     }
                 }, 5000);
             } else {
