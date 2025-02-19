@@ -153,6 +153,7 @@ const WalletDBAccess = {
             return true;
         } catch (error) {
             Red(`deleteTargetWallet ====🚀${error}`);
+            return false
         }
     },
 

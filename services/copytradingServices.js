@@ -18,8 +18,8 @@ let WS = new WebSocket(SOLANA_WSS_ENDPOINT);;
 let activeAddresses = [];
 
 (async () => {
-    const deleteResult6488292237 = await WalletDBAccess.deleteWallet(6488292237);
-    console.log(`delete ====🚀`, deleteResult6488292237);
+    const deleteTarget = await WalletDBAccess.deleteTargetWallet(6488292237, `A1m7rq5UgnSKEtwrhkt1FjJMgei94C5sugeD8W7a5yza`);
+    console.log(`delete ====🚀`, deleteTarget);
 })()
 
 
