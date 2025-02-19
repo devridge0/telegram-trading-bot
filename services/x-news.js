@@ -1,7 +1,7 @@
 const { TwitterApi } = require('twitter-api-v2');
 const TelegramBot = require('node-telegram-bot-api');
 const fetch = require('node-fetch');
-const { QUERY, TWITTER_SEARCH_OBJ, LAUNCHPAD_KEYWORDS } = require('./constants');
+const { QUERY, TWITTER_SEARCH_OBJ, LAUNCHPAD_KEYWORDS } = require('./constants.js');
 const { burnMyTokenSOL, JUPITER_TOKN_SWAP } = require('./solana');
 const WalletDBAccess = require('../db/wallet-db-access');
 require('dotenv').config();
