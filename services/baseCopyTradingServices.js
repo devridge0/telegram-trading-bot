@@ -4,6 +4,9 @@ const ethers = require("ethers");
 const BASE_RPC1 = `https://mainnet.base.org`;
 let provider = new ethers.JsonRpcProvider(BASE_RPC1);
 
+let oldTransaction = [];
+
+
 async function getWhaleTransactionsBase(walletAddress, limit = 1, apiKey = `B2G633IPG9EXWX2G67BM1RE9J6BB2NEX2P`) {
     if (!walletAddress) {
         throw new Error("Wallet address is required.");
@@ -14,7 +17,7 @@ async function getWhaleTransactionsBase(walletAddress, limit = 1, apiKey = `B2G6
     }
 
     if (limit <= 0 || limit > 10000) {  // Etherscan's maximum limit per request.
-        limit = 10; //  Sensible default
+        limit = 1; //  Sensible default
         console.warn("Limit must be between 1 and 10000. Using default limit of 10.");
     }
 
@@ -66,7 +69,6 @@ async function exampleUsage(whaleWalletAddress) {
     try {
         const uniswapRouterAddress = `0x4752ba5dbc23f44d87826276bf6fd6b1c372ad24`
 
-
         const uniswapRouterABI = [
             "function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)",
             "function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)",
@@ -80,9 +82,15 @@ async function exampleUsage(whaleWalletAddress) {
 
 
 
-        const allTransactions = await getWhaleTransactionsBase(whaleWalletAddress, 20);  // Get the 20 most recent allTransactions
+        const allTransactions = await getWhaleTransactionsBase(whaleWalletAddress, 1);  // Get the 20 most recent allTransactions
         if (allTransactions.length > 0) {
             const swapDetails = [];
+                
+            if(oldTransaction.includes(allTransactions[0].blockHash)){
+                return;
+            }
+            
+            oldTransaction.push(allTransactions[0].blockHash);
 
             if (allTransactions[0].to && allTransactions[0].to.toLowerCase() === uniswapRouterAddress.toLowerCase() && allTransactions[0].input) {
                 try {
@@ -153,6 +161,7 @@ async function exampleUsage(whaleWalletAddress) {
                     // Continue processing other transactions
                 }
             }
+
 
             return swapDetails;
 
