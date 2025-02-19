@@ -263,6 +263,7 @@ const BaseNetwork = {
 
     buyTokenETH: async (privateKey, tokenOut, amountIn) => {
         try {
+
             const wallet = new ethers.Wallet(privateKey, provider);
 
             async function getTokenDecimals(tokenAddress) {
@@ -336,6 +337,7 @@ const BaseNetwork = {
 
     sellTokenETH: async (privateKey, tokenIn, amountIn) => {
         try {
+
             const wallet = new ethers.Wallet(privateKey, provider);
 
             async function getTokenDecimals(tokenAddress) {
@@ -387,6 +389,7 @@ const BaseNetwork = {
 
                     await tx.wait();
                     console.log(`Token sold successfully: https://basescan.org/tx/${tx.hash}`);
+                    return amountOutNumber;
                 } catch (error) {
                     console.log("Error during sale:", error.message);
                 }

