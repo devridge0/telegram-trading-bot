@@ -3,97 +3,1082 @@
     "_realData": {
         "data": [
             {
-                "text": "RT @SolanaPumpfun_: $Choupet - The Perfect Investment in Meme Coin Fashion\n\n📊 Dex : https://t.co/T4tB0pozYD\n\n👉 Buy now : https://t.co/sBqNj…",
-                "edit_history_tweet_ids": [
-                    "1891545720756359550"
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 32,
+                            "end": 37,
+                            "probability": 0.4761,
+                            "type": "Other",
+                            "normalized_text": "Bounty"
+                        }
+                    ],
+                    "mentions": [
+                        {
+                            "start": 0,
+                            "end": 11,
+                            "username": "solbountyy",
+                            "id": "384367863"
+                        },
+                        {
+                            "start": 12,
+                            "end": 22,
+                            "username": "KayTheDoc",
+                            "id": "1779135321646514176"
+                        }
+                    ],
+                    "urls": [
+                        {
+                            "start": 41,
+                            "end": 64,
+                            "url": "https://t.co/VBmkzYRNY4",
+                            "expanded_url": "https://pump.fun/coin/ELF5y5FV1DFjHaUDdbZ7darpxvQSBdKBi9koGcehpump?coins_sort=market_cap",
+                            "display_url": "pump.fun/coin/ELF5y5FV1…",
+                            "status": 200,
+                            "title": "FTX REPAYMENTS (REPAYMENTS) - Pump",
+                            "description": "FTX BAHAMAS REPAYMENTS TO START FEB 18 - PER EMAIL",
+                            "unwound_url": "https: //pump.fun/coin/ELF5y5FV1DFjHaUDdbZ7darpxvQSBdKBi9koGcehpump?coins_sort=market_cap"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:14.000Z",
+                "id": "1891885194581262392",
+                "author_id": "1878041634157604864",
+                "referenced_tweets": [
+                    {
+                        "type": "replied_to",
+                        "id": "1891884846059823188"
+                    }
                 ],
-                "created_at": "2025-02-17T17:50:17.000Z",
-                "id": "1891545720756359550"
+                "conversation_id": "1891884231632032016",
+                "lang": "en",
+                "edit_history_tweet_ids": [
+                    "1891885194581262392"
+                ],
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 2
+                },
+                "text": "@solbountyy @KayTheDoc This one Bounty?\n\nhttps://t.co/VBmkzYRNY4"
             },
             {
-                "text": "@DOGE \nhttps://t.co/1OPgw9yVIT",
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 27,
+                            "end": 29,
+                            "probability": 0.4095,
+                            "type": "Other",
+                            "normalized_text": "PvE"
+                        },
+                        {
+                            "start": 44,
+                            "end": 48,
+                            "probability": 0.4752,
+                            "type": "Other",
+                            "normalized_text": "TOADI"
+                        },
+                        {
+                            "start": 51,
+                            "end": 55,
+                            "probability": 0.568,
+                            "type": "Other",
+                            "normalized_text": "Chads"
+                        }
+                    ],
+                    "cashtags": [
+                        {
+                            "start": 43,
+                            "end": 49,
+                            "tag": "TOADI"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:14.000Z",
+                "id": "1891885194212172239",
+                "author_id": "2510378496",
+                "conversation_id": "1891885194212172239",
+                "lang": "en",
                 "edit_history_tweet_ids": [
-                    "1891545707330363445"
+                    "1891885194212172239"
                 ],
-                "created_at": "2025-02-17T17:50:14.000Z",
-                "id": "1891545707330363445"
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "Hello, the trenches need a PvE runner like $TOADI, Chads are getting in fast on pump fun before it goes parabolic!"
             },
             {
-                "text": "💎 @FartClickerCom As predicted by Pump Slayer on Pump Fun, ticker $FAC has successfully bonded! 🎉 Cheers to every holder—your investments are thriving! Here's to a prosperous journey ahead on Raydium for $FAC! 🚀 CA: Bftb8GKXmNWnrsHeFeQRby1H7a2odG5LtBMKgQdepump #CryptoBoom… https://t.co/2UmMb02API",
-                "edit_history_tweet_ids": [
-                    "1891545693870764513"
+                "created_at": "2025-02-18T16: 19: 13.000Z",
+                "id": "1891885190525472928",
+                "author_id": "1149547725924339712",
+                "referenced_tweets": [
+                    {
+                        "type": "retweeted",
+                        "id": "1891868684093735368"
+                    }
                 ],
-                "created_at": "2025-02-17T17:50:11.000Z",
-                "id": "1891545693870764513"
+                "conversation_id": "1891885190525472928",
+                "lang": "en",
+                "edit_history_tweet_ids": [
+                    "1891885190525472928"
+                ],
+                "entities": {
+                    "mentions": [
+                        {
+                            "start": 3,
+                            "end": 14,
+                            "username": "UserCoinUC",
+                            "id": "1885854281762328576"
+                        }
+                    ]
+                },
+                "public_metrics": {
+                    "retweet_count": 551,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "RT @UserCoinUC: Oooohh boooi our token is started! \nWe prepare 300.000.000 UC for earning. \nOur token already trade on https: //t.co/k6C92AK…"
             },
             {
-                "text": "Outsider Coin is live on https://t.co/UWevmLvAbn ✅\n\n\" I wish I was an insider\"\n\nCA: B8nKJeNSKsHTPy9JaP6JyCfpVrbPpZYiqgYjaX62pump https://t.co/ctblSn7U2n",
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 26,
+                            "end": 30,
+                            "probability": 0.4742,
+                            "type": "Other",
+                            "normalized_text": "Token"
+                        },
+                        {
+                            "start": 225,
+                            "end": 229,
+                            "probability": 0.5189,
+                            "type": "Other",
+                            "normalized_text": "ASHF6"
+                        }
+                    ],
+                    "mentions": [
+                        {
+                            "start": 84,
+                            "end": 96,
+                            "username": "GeanNarciso",
+                            "id": "1377613087197519876"
+                        },
+                        {
+                            "start": 97,
+                            "end": 112,
+                            "username": "KissDog_solana",
+                            "id": "1891285296119259136"
+                        },
+                        {
+                            "start": 113,
+                            "end": 126,
+                            "username": "Leo_ElBolson",
+                            "id": "111673215"
+                        },
+                        {
+                            "start": 127,
+                            "end": 142,
+                            "username": "JonathanL85417",
+                            "id": "1864140458202681348"
+                        },
+                        {
+                            "start": 143,
+                            "end": 152,
+                            "username": "lukegash",
+                            "id": "80444887"
+                        },
+                        {
+                            "start": 153,
+                            "end": 165,
+                            "username": "ShaggyHSALF",
+                            "id": "1880725880890347520"
+                        },
+                        {
+                            "start": 166,
+                            "end": 175,
+                            "username": "sodailty",
+                            "id": "1890708586831192064"
+                        },
+                        {
+                            "start": 176,
+                            "end": 189,
+                            "username": "mori_del9819",
+                            "id": "1878809729494921216"
+                        },
+                        {
+                            "start": 190,
+                            "end": 206,
+                            "username": "AmadorLuis33337",
+                            "id": "1800407853733421056"
+                        },
+                        {
+                            "start": 207,
+                            "end": 223,
+                            "username": "RuiOliveir39776",
+                            "id": "1866040454720176128"
+                        }
+                    ],
+                    "urls": [
+                        {
+                            "start": 59,
+                            "end": 82,
+                            "url": "https://t.co/TZPkoNqk5q",
+                            "expanded_url": "https://x.com/NewsTeslafin/likes",
+                            "display_url": "x.com/NewsTeslafin/l…",
+                            "status": 200,
+                            "title": "X",
+                            "unwound_url": "https://x.com/i/flow/login"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:12.000Z",
+                "id": "1891885187073560914",
+                "author_id": "1881464507941240832",
+                "conversation_id": "1891885187073560914",
+                "lang": "en",
                 "edit_history_tweet_ids": [
-                    "1891545692402864293"
+                    "1891885187073560914"
                 ],
-                "created_at": "2025-02-17T17:50:10.000Z",
-                "id": "1891545692402864293"
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "Breaking News: Join the X Token Presale!\n\n🚀 Pinned post  ➞ https://t.co/TZPkoNqk5q\n\n@GeanNarciso @KissDog_solana @Leo_ElBolson @JonathanL85417 @lukegash @ShaggyHSALF @sodailty @mori_del9819 @AmadorLuis33337 @RuiOliveir39776  ASHF6"
             },
             {
-                "text": "RT @Vidocqstoek: PANCAKESWAP VOLUME NEWS ‼️\n\n(30d)Volume Pancakeswap crossed over Uniswap❗️\n🥞$111,29B \n🦄$103,6B \n🌊$118,1B  (crossover in a…",
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 0,
+                            "end": 4,
+                            "probability": 0.5536,
+                            "type": "Other",
+                            "normalized_text": "Chads"
+                        },
+                        {
+                            "start": 49,
+                            "end": 51,
+                            "probability": 0.4881,
+                            "type": "Other",
+                            "normalized_text": "PvE"
+                        },
+                        {
+                            "start": 61,
+                            "end": 65,
+                            "probability": 0.6081,
+                            "type": "Other",
+                            "normalized_text": "TOADI"
+                        }
+                    ],
+                    "cashtags": [
+                        {
+                            "start": 60,
+                            "end": 66,
+                            "tag": "TOADI"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:12.000Z",
+                "id": "1891885186805125456",
+                "author_id": "3965214973",
+                "conversation_id": "1891885186805125456",
+                "lang": "en",
                 "edit_history_tweet_ids": [
-                    "1891545654075212005"
+                    "1891885186805125456"
                 ],
-                "created_at": "2025-02-17T17: 50: 01.000Z",
-                "id": "1891545654075212005"
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 1
+                },
+                "text": "Chads are getting into the trenches new favorite PvE runner $TOADI fast on pump fun before it brings stability to the madness."
             },
             {
-                "text": "$1UP LIVE ON PUMPFUN!\n\nhttps: //t.co/02vnJsxJwQ",
-                "edit_history_tweet_ids": [
-                    "1891545653316039110"
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 22,
+                            "end": 28,
+                            "probability": 0.4847,
+                            "type": "Other",
+                            "normalized_text": "PENTAGI"
+                        }
+                    ],
+                    "mentions": [
+                        {
+                            "start": 87,
+                            "end": 98,
+                            "username": "pumpdotfun",
+                            "id": "1622243071806128131"
+                        }
+                    ],
+                    "urls": [
+                        {
+                            "start": 63,
+                            "end": 86,
+                            "url": "https://t.co/B8gHWDjMYx",
+                            "expanded_url": "http://Pump.fun",
+                            "display_url": "Pump.fun",
+                            "status": 200,
+                            "title": "Pump",
+                            "description": "Launch a coin that is instantly tradable without having to seed liquidity.",
+                            "unwound_url": "https: //pump.fun/board"
+                        }
+                    ],
+                    "hashtags": [
+                        {
+                            "start": 21,
+                            "end": 29,
+                            "tag": "PENTAGI"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:09.000Z",
+                "id": "1891885172875985032",
+                "author_id": "193280570",
+                "referenced_tweets": [
+                    {
+                        "type": "replied_to",
+                        "id": "1891790226852544807"
+                    }
                 ],
-                "created_at": "2025-02-17T17:50:01.000Z",
-                "id": "1891545653316039110"
+                "conversation_id": "1891738160377323741",
+                "lang": "en",
+                "edit_history_tweet_ids": [
+                    "1891885172875985032"
+                ],
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "🎉 We’re LIVE! 🚀\n\nThe #PENTAGI token has officially launched on https://t.co/B8gHWDjMYx @pumpdotfun ! 🌐✨\n\n⚠️ Official Contract Address: FRKf3oPk7hQ67554jASdLa95iqs8xnqJrHLpfTvCpump\n\nThis is the ONLY legitimate contract—always verify before buying! 💎🔥"
             },
             {
-                "text": "RT @ThoreumC: We are launching soon. 🚀 🚀 \n$TMC Presale coming soon!!\n$TMC will List on 13 major exchanges!!\n\nThoreum Coin is a decentralize…",
+                "created_at": "2025-02-18T16:19:08.000Z",
+                "id": "1891885169415540949",
+                "author_id": "340169210",
+                "conversation_id": "1891885169415540949",
+                "lang": "zxx",
                 "edit_history_tweet_ids": [
-                    "1891545647339180443"
+                    "1891885169415540949"
                 ],
-                "created_at": "2025-02-17T17:50:00.000Z",
-                "id": "1891545647339180443"
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "https://t.co/L2V6Fizs6t",
+                "entities": {
+                    "urls": [
+                        {
+                            "start": 0,
+                            "end": 23,
+                            "url": "https://t.co/L2V6Fizs6t",
+                            "expanded_url": "https://pump.fun/coin/EpMKg4aeFHmUzZyXkTcQhs8M7fTo2o22s9iTq5t8pump?coins_sort=market_cap",
+                            "display_url": "pump.fun/coin/EpMKg4aeF…",
+                            "status": 200,
+                            "title": "NeirоWifElоn22inu (NWE) - Pump",
+                            "description": "dog goes bark",
+                            "unwound_url": "https://pump.fun/coin/EpMKg4aeFHmUzZyXkTcQhs8M7fTo2o22s9iTq5t8pump?coins_sort=market_cap"
+                        }
+                    ]
+                }
             },
             {
-                "text": "RT @ThoreumC: We are launching soon. 🚀 🚀 \n$TMC Presale coming soon!!\n$TMC will List on 13 major exchanges!!\n\nThoreum Coin is a decentralize…",
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 20,
+                            "end": 22,
+                            "probability": 0.6159,
+                            "type": "Organization",
+                            "normalized_text": "UFD"
+                        }
+                    ],
+                    "cashtags": [
+                        {
+                            "start": 19,
+                            "end": 23,
+                            "tag": "UFD"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:07.000Z",
+                "id": "1891885163451240460",
+                "author_id": "1869795501295484928",
+                "conversation_id": "1891885163451240460",
+                "lang": "en",
                 "edit_history_tweet_ids": [
-                    "1891545644944277946"
+                    "1891885163451240460"
                 ],
-                "created_at": "2025-02-17T17:49:59.000Z",
-                "id": "1891545644944277946"
+                "public_metrics": {
+                    "retweet_count": 0,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 1
+                },
+                "text": "Ban pump. Fun\n\nBuy $UFD\n\nThis is the way."
             },
             {
-                "text": "RT @SkiMaskStonks: 🚨ANNOUNCEMENT🚨\nWE HAVE OFFICIALLY LAUNCHED ON PUMP FUN \n\nCollaborating to bring chains together. We are each other's har…",
-                "edit_history_tweet_ids": [
-                    "1891545644281536874"
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 20,
+                            "end": 25,
+                            "probability": 0.5999,
+                            "type": "Other",
+                            "normalized_text": "HABIPE"
+                        },
+                        {
+                            "start": 123,
+                            "end": 128,
+                            "probability": 0.5126,
+                            "type": "Other",
+                            "normalized_text": "HABIPE"
+                        }
+                    ],
+                    "cashtags": [
+                        {
+                            "start": 19,
+                            "end": 26,
+                            "tag": "HABIPE"
+                        },
+                        {
+                            "start": 122,
+                            "end": 129,
+                            "tag": "HABIPE"
+                        }
+                    ],
+                    "mentions": [
+                        {
+                            "start": 3,
+                            "end": 17,
+                            "username": "TrumpSolana47",
+                            "id": "1683524929059266583"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:06.000Z",
+                "id": "1891885162306105826",
+                "author_id": "1659951794",
+                "referenced_tweets": [
+                    {
+                        "type": "retweeted",
+                        "id": "1891863225295073659"
+                    }
                 ],
-                "created_at": "2025-02-17T17:49:59.000Z",
-                "id": "1891545644281536874"
+                "conversation_id": "1891885162306105826",
+                "lang": "en",
+                "edit_history_tweet_ids": [
+                    "1891885162306105826"
+                ],
+                "public_metrics": {
+                    "retweet_count": 7,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "RT @TrumpSolana47: $HABIPE Presale islive \nListing Soon on ✅ 🔥\n\nDEX\n ✅Raydium  \n ✅Jupiter\n ✅ Orca\n ✅ Prism\n ✅ Birdeye\n\n$HABIPE is the ne…"
             },
             {
-                "text": "Hail Caesar Trump, Imperator of the https://t.co/DbENXiSbLB Republic, crossing the Rubicon of Raydium imminently https://t.co/1Uo4chvs8o",
-                "edit_history_tweet_ids": [
-                    "1891545642305990758"
+                "entities": {
+                    "annotations": [
+                        {
+                            "start": 31,
+                            "end": 35,
+                            "probability": 0.5978,
+                            "type": "Other",
+                            "normalized_text": "xbuzz"
+                        },
+                        {
+                            "start": 62,
+                            "end": 65,
+                            "probability": 0.5433,
+                            "type": "Person",
+                            "normalized_text": "Pepe"
+                        }
+                    ],
+                    "cashtags": [
+                        {
+                            "start": 30,
+                            "end": 36,
+                            "tag": "xbuzz"
+                        }
+                    ],
+                    "mentions": [
+                        {
+                            "start": 3,
+                            "end": 17,
+                            "username": "tokenbuzzswap",
+                            "id": "1808047694360760320"
+                        }
+                    ]
+                },
+                "created_at": "2025-02-18T16:19:03.000Z",
+                "id": "1891885150088188323",
+                "author_id": "1647981654416281601",
+                "referenced_tweets": [
+                    {
+                        "type": "retweeted",
+                        "id": "1891872920168771936"
+                    }
                 ],
-                "created_at": "2025-02-17T17:49:59.000Z",
-                "id": "1891545642305990758"
+                "conversation_id": "1891885150088188323",
+                "lang": "en",
+                "edit_history_tweet_ids": [
+                    "1891885150088188323"
+                ],
+                "public_metrics": {
+                    "retweet_count": 14,
+                    "reply_count": 0,
+                    "like_count": 0,
+                    "quote_count": 0,
+                    "bookmark_count": 0,
+                    "impression_count": 0
+                },
+                "text": "RT @tokenbuzzswap: In 3 hours $xbuzz will start it's journey. Pepe, you better run. The flies are headed your way!\n\nStart here:https: //t.co…"
             }
         ],
+        "includes": {
+            "users": [
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1887207654101053440/84GzhFCo_normal.jpg",
+                    "id": "1878041634157604864",
+                    "name": "Andi",
+                    "username": "Andiplayz1"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1846214295106805760/mEiKUU37_normal.png",
+                    "id": "2510378496",
+                    "name": "Abdulcrypto",
+                    "username": "MeeraKhalandar"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1424287118650609665/-HR8cBo-_normal.jpg",
+                    "id": "1149547725924339712",
+                    "name": "Essie Essen",
+                    "username": "EssenEssie"
+                },
+                {
+                    "profile_image_url": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+                    "id": "1881464507941240832",
+                    "name": "mary",
+                    "username": "mary5460895384"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1878883291635314688/jo8bkvZT_normal.png",
+                    "id": "3965214973",
+                    "name": "Crypto Profi",
+                    "username": "Bad_mouth_bad"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1884849457789091841/Sf2aS0yI_normal.jpg",
+                    "id": "193280570",
+                    "name": "Pentagi",
+                    "username": "Pent_AGI"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1878204845926023168/3tbwC4T0_normal.jpg",
+                    "id": "340169210",
+                    "name": "NeiroWifElon22inu",
+                    "username": "barkofsolpump"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1891865916146597888/SsYw3v-4_normal.jpg",
+                    "id": "1869795501295484928",
+                    "name": "Trust The Dust🦄",
+                    "username": "RonsBoard"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1803125724716429312/K6ET5tdl_normal.jpg",
+                    "id": "1659951794",
+                    "name": "hamidreza mahmudpur",
+                    "username": "HMahmudpur"
+                },
+                {
+                    "profile_image_url": "https://pbs.twimg.com/profile_images/1793311172197851136/lKWusg02_normal.jpg",
+                    "id": "1647981654416281601",
+                    "name": "Michyyy",
+                    "username": "OkorieMich92583"
+                }
+            ],
+            "tweets": [
+                {
+                    "entities": {
+                        "annotations": [
+                            {
+                                "start": 11,
+                                "end": 13,
+                                "probability": 0.8081,
+                                "type": "Other",
+                                "normalized_text": "FTX"
+                            }
+                        ],
+                        "mentions": [
+                            {
+                                "start": 0,
+                                "end": 10,
+                                "username": "KayTheDoc",
+                                "id": "1779135321646514176"
+                            }
+                        ]
+                    },
+                    "created_at": "2025-02-18T16:17:51.000Z",
+                    "id": "1891884846059823188",
+                    "author_id": "384367863",
+                    "referenced_tweets": [
+                        {
+                            "type": "replied_to",
+                            "id": "1891884231632032016"
+                        }
+                    ],
+                    "conversation_id": "1891884231632032016",
+                    "lang": "en",
+                    "edit_history_tweet_ids": [
+                        "1891884846059823188"
+                    ],
+                    "public_metrics": {
+                        "retweet_count": 0,
+                        "reply_count": 1,
+                        "like_count": 6,
+                        "quote_count": 0,
+                        "bookmark_count": 0,
+                        "impression_count": 38
+                    },
+                    "text": "@KayTheDoc FTX gonna save the trenches 🥵 "
+                },
+                {
+                    "entities": {
+                        "annotations": [
+                            {
+                                "start": 155,
+                                "end": 165,
+                                "probability": 0.6266,
+                                "type": "Other",
+                                "normalized_text": "UserCoinBot"
+                            },
+                            {
+                                "start": 194,
+                                "end": 196,
+                                "probability": 0.4865,
+                                "type": "Other",
+                                "normalized_text": "SOL"
+                            },
+                            {
+                                "start": 199,
+                                "end": 204,
+                                "probability": 0.468,
+                                "type": "Other",
+                                "normalized_text": "Solana"
+                            },
+                            {
+                                "start": 207,
+                                "end": 212,
+                                "probability": 0.7083,
+                                "type": "Other",
+                                "normalized_text": "Crypto"
+                            },
+                            {
+                                "start": 258,
+                                "end": 264,
+                                "probability": 0.6682,
+                                "type": "Other",
+                                "normalized_text": "Airdrop"
+                            }
+                        ],
+                        "urls": [
+                            {
+                                "start": 103,
+                                "end": 126,
+                                "url": "https://t.co/k6C92AKvrz",
+                                "expanded_url": "https://pump.fun/coin/AneQ9XpKAYF6iMhH5oPgQsreVanAYVMCeJ3X9bLspump",
+                                "display_url": "pump.fun/coin/AneQ9XpKA…",
+                                "status": 200,
+                                "title": "UserCoin (UC) - Pump",
+                                "description": "Are you thinks that choice can be funny? We prepare game where you out can earn our token and get it on airdrop! Watch us. Our benefits that token already trade. Reach goals with us. 300.000.000 tokens will be airdropped and ready for earn in our telegram bot!",
+                                "unwound_url": "https://pump.fun/coin/AneQ9XpKAYF6iMhH5oPgQsreVanAYVMCeJ3X9bLspump"
+                            },
+                            {
+                                "start": 169,
+                                "end": 192,
+                                "url": "https://t.co/OUNfweXhHU",
+                                "expanded_url": "https://t.me/UserCoinRobot",
+                                "display_url": "t.me/UserCoinRobot",
+                                "images": [
+                                    {
+                                        "url": "https://pbs.twimg.com/news_img/1891868727160745985/IUqyeGuD?format=png&name=orig",
+                                        "width": 256,
+                                        "height": 256
+                                    },
+                                    {
+                                        "url": "https://pbs.twimg.com/news_img/1891868727160745985/IUqyeGuD?format=png&name=150x150",
+                                        "width": 150,
+                                        "height": 150
+                                    }
+                                ],
+                                "status": 200,
+                                "title": "Telegram: Contact @UserCoinRobot",
+                                "unwound_url": "https://t.me/UserCoinRobot"
+                            }
+                        ],
+                        "hashtags": [
+                            {
+                                "start": 193,
+                                "end": 197,
+                                "tag": "SOL"
+                            },
+                            {
+                                "start": 198,
+                                "end": 205,
+                                "tag": "Solana"
+                            },
+                            {
+                                "start": 206,
+                                "end": 213,
+                                "tag": "Crypto"
+                            },
+                            {
+                                "start": 214,
+                                "end": 222,
+                                "tag": "pumpfun"
+                            },
+                            {
+                                "start": 223,
+                                "end": 232,
+                                "tag": "UserCoin"
+                            },
+                            {
+                                "start": 233,
+                                "end": 247,
+                                "tag": "PumpFunLaunch"
+                            },
+                            {
+                                "start": 248,
+                                "end": 256,
+                                "tag": "memcoin"
+                            },
+                            {
+                                "start": 257,
+                                "end": 265,
+                                "tag": "Airdrop"
+                            },
+                            {
+                                "start": 266,
+                                "end": 275,
+                                "tag": "giveaway"
+                            }
+                        ]
+                    },
+                    "created_at": "2025-02-18T15:13:38.000Z",
+                    "id": "1891868684093735368",
+                    "author_id": "1885854281762328576",
+                    "conversation_id": "1891868684093735368",
+                    "lang": "en",
+                    "edit_history_tweet_ids": [
+                        "1891868684093735368"
+                    ],
+                    "public_metrics": {
+                        "retweet_count": 551,
+                        "reply_count": 1,
+                        "like_count": 4,
+                        "quote_count": 0,
+                        "bookmark_count": 0,
+                        "impression_count": 4623
+                    },
+                    "text": "Oooohh boooi our token is started! \nWe prepare 300.000.000 UC for earning. \nOur token already trade on https://t.co/k6C92AKvrz\nInvite friends - get more!\n UserCoinBot - https://t.co/OUNfweXhHU\n#SOL #Solana #Crypto #pumpfun #UserCoin #PumpFunLaunch #memcoin #Airdrop #giveaway"
+                },
+                {
+                    "entities": {
+                        "annotations": [
+                            {
+                                "start": 143,
+                                "end": 149,
+                                "probability": 0.4751,
+                                "type": "Place",
+                                "normalized_text": "PENTAGI"
+                            }
+                        ],
+                        "hashtags": [
+                            {
+                                "start": 142,
+                                "end": 150,
+                                "tag": "PENTAGI"
+                            }
+                        ]
+                    },
+                    "created_at": "2025-02-18T10:01:52.000Z",
+                    "id": "1891790226852544807",
+                    "author_id": "193280570",
+                    "referenced_tweets": [
+                        {
+                            "type": "replied_to",
+                            "id": "1891779113104384162"
+                        }
+                    ],
+                    "conversation_id": "1891738160377323741",
+                    "lang": "en",
+                    "edit_history_tweet_ids": [
+                        "1891790226852544807"
+                    ],
+                    "public_metrics": {
+                        "retweet_count": 0,
+                        "reply_count": 2,
+                        "like_count": 0,
+                        "quote_count": 0,
+                        "bookmark_count": 0,
+                        "impression_count": 128
+                    },
+                    "text": "🚨 Deployment Update! 🚨\n\nDue to the presence of numerous fake contract addresses and sniper activity, we’ve decided to delay the deployment of #PENTAGI.\n\n🔔 We’ll post an update 5 minutes before the official launch to prevent fake CAs and snipers.\n\nThank you for your patience!🙏"
+                },
+                {
+                    "entities": {
+                        "annotations": [
+                            {
+                                "start": 1,
+                                "end": 6,
+                                "probability": 0.6768,
+                                "type": "Other",
+                                "normalized_text": "HABIPE"
+                            },
+                            {
+                                "start": 104,
+                                "end": 109,
+                                "probability": 0.5771,
+                                "type": "Other",
+                                "normalized_text": "HABIPE"
+                            },
+                            {
+                                "start": 124,
+                                "end": 128,
+                                "probability": 0.5074,
+                                "type": "Other",
+                                "normalized_text": "TRUMP"
+                            }
+                        ],
+                        "cashtags": [
+                            {
+                                "start": 0,
+                                "end": 7,
+                                "tag": "HABIPE"
+                            },
+                            {
+                                "start": 103,
+                                "end": 110,
+                                "tag": "HABIPE"
+                            },
+                            {
+                                "start": 123,
+                                "end": 129,
+                                "tag": "TRUMP"
+                            }
+                        ],
+                        "urls": [
+                            {
+                                "start": 271,
+                                "end": 294,
+                                "url": "https://t.co/BaCsLMrJij",
+                                "expanded_url": "https://x.com/i/web/status/1891863225295073659",
+                                "display_url": "x.com/i/web/status/1…"
+                            },
+                            {
+                                "start": 295,
+                                "end": 318,
+                                "url": "https://t.co/MI3sKrTlHD",
+                                "expanded_url": "https://x.com/TrumpSolana47/status/1891863225295073659/photo/1",
+                                "display_url": "pic.x.com/MI3sKrTlHD",
+                                "media_key": "3_1891863222967255040"
+                            }
+                        ]
+                    },
+                    "created_at": "2025-02-18T14:51:56.000Z",
+                    "attachments": {
+                        "media_keys": [
+                            "3_1891863222967255040"
+                        ]
+                    },
+                    "id": "1891863225295073659",
+                    "author_id": "1683524929059266583",
+                    "conversation_id": "1891863225295073659",
+                    "lang": "en",
+                    "edit_history_tweet_ids": [
+                        "1891863225295073659"
+                    ],
+                    "public_metrics": {
+                        "retweet_count": 7,
+                        "reply_count": 9,
+                        "like_count": 13,
+                        "quote_count": 0,
+                        "bookmark_count": 1,
+                        "impression_count": 302
+                    },
+                    "text": "$HABIPE Presale islive \nListing Soon on ✅ 🔥\n\nDEX\n ✅Raydium     \n ✅Jupiter\n ✅Orca\n ✅ Prism\n ✅ Birdeye\n\n$HABIPE is the next $TRUMP it could increase by 500x from here 👀\n\nSend sol to:\n\nAvcpk1ff3a3855wGo37XhWVcQfbbRjkFDjRVNjtvk3WN\n\nImagine turning 1 SOL into 500 SOL \n\nMin… https: //t.co/BaCsLMrJij https://t.co/MI3sKrTlHD"
+                },
+                {
+                    "entities": {
+                        "annotations": [
+                            {
+                                "start": 12,
+                                "end": 16,
+                                "probability": 0.7169,
+                                "type": "Other",
+                                "normalized_text": "xbuzz"
+                            },
+                            {
+                                "start": 43,
+                                "end": 46,
+                                "probability": 0.6222,
+                                "type": "Other",
+                                "normalized_text": "Pepe"
+                            }
+                        ],
+                        "cashtags": [
+                            {
+                                "start": 11,
+                                "end": 17,
+                                "tag": "xbuzz"
+                            }
+                        ],
+                        "mentions": [
+                            {
+                                "start": 133,
+                                "end": 147,
+                                "username": "pinkecosystem",
+                                "id": "1385154488449658880"
+                            }
+                        ],
+                        "urls": [
+                            {
+                                "start": 108,
+                                "end": 131,
+                                "url": "https://t.co/bXma3pHDb8",
+                                "expanded_url": "https://www.pinksale.finance/solana/launchpad/CQr3cMmfzDfppeypjL4XhpWLeNUnofxeL9w6J5q7uD9y",
+                                "display_url": "pinksale.finance/solana/launchp…",
+                                "images": [
+                                    {
+                                        "url": "https://pbs.twimg.com/news_img/1891578489872187394/U3qeg6Sa?format=png&name=orig",
+                                        "width": 612,
+                                        "height": 612
+                                    },
+                                    {
+                                        "url": "https://pbs.twimg.com/news_img/1891578489872187394/U3qeg6Sa?format=png&name=150x150",
+                                        "width": 150,
+                                        "height": 150
+                                    }
+                                ],
+                                "status": 200,
+                                "title": "XBUZZ - How to buy XBUZZ",
+                                "description": "Buzz Token ($XBUZZ) – Round 1 LIVE! Join the \"Be the House\" revolution with Buzz Token, powering a decentralized casino & gaming ecosystem where players earn, stake, and control the house! This is Stage 1 of our three-stage presale: Stage 1: 90B $XBUZZ at 225 SOL Stage 2: 105B $XBUZZ at 525 SOL Stage 3: 105B $XBUZZ at 1,250 SOL Total Raise: 2,000 SOL. Get in early—own the game! 🚀🔥",
+                                "unwound_url": "https://www.pinksale.finance/solana/launchpad/CQr3cMmfzDfppeypjL4XhpWLeNUnofxeL9w6J5q7uD9y"
+                            },
+                            {
+                                "start": 202,
+                                "end": 225,
+                                "url": "https://t.co/p3bAa1heQB",
+                                "expanded_url": "https://x.com/tokenbuzzswap/status/1891872920168771936/video/1",
+                                "display_url": "pic.x.com/p3bAa1heQB",
+                                "media_key": "7_1891867332147904512"
+                            }
+                        ],
+                        "hashtags": [
+                            {
+                                "start": 148,
+                                "end": 153,
+                                "tag": "pepe"
+                            },
+                            {
+                                "start": 154,
+                                "end": 162,
+                                "tag": "presale"
+                            },
+                            {
+                                "start": 163,
+                                "end": 170,
+                                "tag": "crypto"
+                            },
+                            {
+                                "start": 171,
+                                "end": 176,
+                                "tag": "meme"
+                            },
+                            {
+                                "start": 177,
+                                "end": 186,
+                                "tag": "memecoin"
+                            },
+                            {
+                                "start": 187,
+                                "end": 201,
+                                "tag": "Decentralized"
+                            }
+                        ]
+                    },
+                    "created_at": "2025-02-18T15:30:28.000Z",
+                    "attachments": {
+                        "media_keys": [
+                            "7_1891867332147904512"
+                        ]
+                    },
+                    "id": "1891872920168771936",
+                    "author_id": "1808047694360760320",
+                    "conversation_id": "1891872920168771936",
+                    "lang": "en",
+                    "edit_history_tweet_ids": [
+                        "1891872920168771936"
+                    ],
+                    "public_metrics": {
+                        "retweet_count": 14,
+                        "reply_count": 16,
+                        "like_count": 18,
+                        "quote_count": 0,
+                        "bookmark_count": 5,
+                        "impression_count": 732
+                    },
+                    "text": "In 3 hours $xbuzz will start it's journey. Pepe, you better run. The flies are headed your way!\n\nStart here:https://t.co/bXma3pHDb8\n\n@pinkecosystem #pepe #presale #crypto #meme #memecoin #Decentralized https://t.co/p3bAa1heQB"
+                }
+            ]
+        },
         "meta": {
-            "newest_id": "1891545720756359550",
-            "oldest_id": "1891545642305990758",
+            "newest_id": "1891885194581262392",
+            "oldest_id": "1891885150088188323",
             "result_count": 10,
-            "next_token": "b26v89c19zqg8o3frrcqmgcrz0sw2de6a7kiwl7p9xif1"
+            "next_token": "b26v89c19zqg8o3frrcqmms5kp49ttalpvd10q63gab99"
         }
     },
     "_rateLimit": {
-        "limit": 1,
-        "remaining": 0,
-        "reset": 1739815529
+        "limit": 60,
+        "remaining": 58,
+        "reset": 1739896150
     },
     "_instance": {
         "_currentUser": null,
@@ -101,13 +1086,13 @@
         "_requestMaker": {
             "rateLimits": {
                 "https://api.x.com/2/tweets/search/recent": {
-                    "limit": 1,
-                    "remaining": 0,
-                    "reset": 1739815529
+                    "limit": 60,
+                    "remaining": 58,
+                    "reset": 1739896150
                 }
             },
             "clientSettings": {},
-            "bearerToken": "AAAAAAAAAAAAAAAAAAAAADrEzAEAAAAAlPwKJISpUO0X3g4yxcK4OlRZkoI%3DAVeK3YCnBdgl7G9ZNZiwvFSOqFsSa2U3wCaRmMpZSITaVdLAsH"
+            "bearerToken": "AAAAAAAAAAAAAAAAAAAAAMjQzAEAAAAAGWwz%2FP%2BUvY2ExDK0wFohEwdZYEY%3DdDqw0AeJbGQ5lgak6LBkUyA7QUZjK8VW2ismBkR96pBXxmKDeS"
         },
         "_prefix": "https://api.x.com/2/"
     },
@@ -115,9 +1100,30 @@
         "max_results": 10,
         "tweet.fields": [
             "created_at",
-            "text"
+            "text",
+            "lang",
+            "public_metrics",
+            "conversation_id",
+            "entities"
+        ],
+        "user.fields": [
+            "username",
+            "name",
+            "profile_image_url"
+        ],
+        "media.fields": [
+            "url",
+            "preview_image_url"
+        ],
+        "expansions": [
+            "author_id",
+            "attachments.media_keys",
+            "referenced_tweets.id"
         ],
         "query": "Solana new token launch OR Solana presale OR Solana IDO OR Pump.fun OR Raydium"
     },
     "_endpoint": "tweets/search/recent"
 }
+
+
+

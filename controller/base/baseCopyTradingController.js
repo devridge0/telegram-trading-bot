@@ -16,7 +16,8 @@ const Blue = (str) => console.log(chalk.bgBlue(str));
 const Green = (str) => console.log(chalk.bgGreen(str));
 const White = (str) => console.log(chalk.bgWhite(str));
 
-var copyTraindAction;
+let copyTradingAction;
+var INTERVAL_IDS = []
 
 
 const BaseCopyTradingController = {
@@ -145,26 +146,72 @@ const BaseCopyTradingController = {
             const findUserBaseWallet = await BaseWalletDBAccess.findBaseWallet(chatId)
 
             if (newData[1] !== 'true') {
-                copyTraindAction = setInterval(async () => {
+                copyTradingAction = setInterval(async () => {
                     whaleTransactionResult = await getWhaleAddressTransaction(newData[0]);
 
-                    Blue(JSON.stringify(whaleTransactionResult, (key, value) =>
-                        typeof value === 'bigint' ? value.toString() : value))
-
-                    if (whaleTransactionResult[0].sendToken == `0x4200000000000000000000000000000000000006`) {
-                        Blue(`buy`)
-                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, findUserBaseWallet.buyAmount);
-                    } else if (whaleTransactionResult[0].receiveToken == `0x4200000000000000000000000000000000000006`) {
-                        Blue(`sell`)
-                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].sendToken, findUserBaseWallet.buyAmount)
-                    }else{
-                        Blue(`swap`)
-                        sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].sendToken, findUserBaseWallet.buyAmount)
-                        buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, findUserBaseWallet.buyAmount);
+                    if (!INTERVAL_IDS.includes(copyTradingAction)) {
+                        INTERVAL_IDS.push(copyTradingAction);
                     }
-                }, 5000);
+
+                    Blue(JSON.stringify(whaleTransactionResult, (key, value) =>
+                        typeof value === 'bigint' ? value.toString() : value));
+
+                    if (whaleTransactionResult === undefined || whaleTransactionResult.length == 0) {
+                        return;
+                    }
+                    if (whaleTransactionResult[0].sendToken == `0x4200000000000000000000000000000000000006`) {
+                        if (findUserBaseWallet.buyAmount.toString().includes(`1e-`)) {
+                            const minBuyAmount = findUserBaseWallet.buyAmount.toFixed(Number(findUserBaseWallet.buyAmount.toString().slice(-1)));
+                            await buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, minBuyAmount);
+                        }
+                        else await buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, findUserBaseWallet.buyAmount);
+                    }
+                    else if (whaleTransactionResult[0].receiveToken == `0x4200000000000000000000000000000000000006`) {
+                        function fromFixedPoint(fixedPointStr, decimals) {
+                            const divisor = 10 ** decimals;
+                            const num = Number(fixedPointStr) / divisor; // Use Number to handle potentially large values correctly
+                            return num // Return as a string to maintain precision
+                        }
+
+                        // Example
+                        const fixedPointValue = whaleTransactionResult[0].amountIn;
+                        const decimals = 18;
+                        const result = fromFixedPoint(fixedPointValue, decimals);
+                        const sellResult = await sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].sendToken, Number(result))
+                    }
+                    else {
+                        try {
+                            Blue(`swap`)
+                            const swapBuyAmount = await sellTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].sendToken, 30);
+                            function fromFixedPoint(fixedPointStr, decimals) {
+                                const divisor = 10 ** decimals;
+                                const num = Number(fixedPointStr) / divisor; // Use Number to handle potentially large values correctly
+                                return num // Return as a string to maintain precision
+                            }
+
+                            const fixedPointValue = swapBuyAmount;
+                            const decimals = 18;
+                            const result = fromFixedPoint(fixedPointValue, decimals);
+
+                            console.log(`🤣🤣🤣🤣 ${result}`)
+                            await buyTokenETH(findUserBaseWallet.privateKey, whaleTransactionResult[0].receiveToken, Number(result));
+                        } catch (error) {
+                            Red(`copyTradingStartAndStop ====>   ${error}`)
+                        }
+                    }
+
+
+                }, 1000);
+
+
             } else {
-                clearInterval(copyTraindAction);
+                console.log(`INTERVAL_IDS--------${INTERVAL_IDS}`)
+                INTERVAL_IDS.map((x) => {
+                    setTimeout(() => {
+                        clearInterval(x)
+
+                    }, 1000)
+                })
             }
         } catch (error) {
             Red(`copyTradingStartAndStopPageETH ====>   ${error}`)
