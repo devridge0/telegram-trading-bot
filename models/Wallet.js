@@ -20,7 +20,7 @@ const WalletSchema = new Schema({
   selltype: { type: String, default: `all` },
   stopLoss: { type: Number, default: 2, },
   takeProfit: { type: Number, default: 5, },
-  jitoTip: { type: Number, default: 100000, },
+  jitoTip: { type: Number, default: 500000, },
 });
 
 const Wallet = mongoose.model("Wallet", WalletSchema);

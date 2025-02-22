@@ -151,6 +151,8 @@ const SolanaNetwork = {
                 }
             });
 
+
+            
             return sellTokenAmountResult;
 
         } catch (error) {
@@ -230,16 +232,16 @@ const SolanaNetwork = {
     JUPITER_TOKN_SWAP: async (tokenMintAddress, payerSecretKey, amount, slippage, jitoTip, mode) => {
         try {
 
-          Red(`🦄🦄🦄 ${tokenMintAddress}, ${payerSecretKey}, ${amount}, ${slippage}, ${jitoTip}, ${mode}`);
-
+            Red(`🦄🦄🦄 ${tokenMintAddress}, ${payerSecretKey}, ${amount}, ${slippage}, ${jitoTip}, ${mode}`);
             const wallet = new Wallet(Keypair.fromSecretKey(bs58.decode(payerSecretKey)));
             const keypair = Keypair.fromSecretKey(bs58.decode(payerSecretKey));
 
             let quoteResponse;
             if (mode == 'buy') {
-                White(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`)
-                quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${amount * LAMPORTS_PER_SOL}&slippageBps=${slippage}`);
+                White(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${ Number(amount * LAMPORTS_PER_SOL)}&slippageBps=${slippage}`)
+                quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${tokenMintAddress}&amount=${ Number(amount * LAMPORTS_PER_SOL)}&slippageBps=${slippage}`);
             } else {
+                Blue(`sellsellsellsellsellsell`)
                 White(`https://quote-api.jup.ag/v6/quote?inputMint=${tokenMintAddress}&outputMint=So11111111111111111111111111111111111111112&amount=${amount}&slippageBps=${slippage}`)
                 quoteResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${tokenMintAddress}&outputMint=So11111111111111111111111111111111111111112&amount=${amount}&slippageBps=${slippage}`);
             }
