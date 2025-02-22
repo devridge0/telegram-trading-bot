@@ -15,7 +15,8 @@ const BaseCopyTradingController = require('../controller/base/baseCopyTradingCon
 const BaseSettingController = require('../controller/base/baseSettingController');
 const BaseReferralController = require('../controller/base/baseReferralController');
 const WalletDBAccess = require('../db/wallet-db-access');
-// const fetchTokenLaunchNews = require('../services/x-news');
+
+const fetchTokenLaunchNews = require('../services/x-news'); // XXXXXXXXXXXXXXXX
 
 dotenv.config();
 
@@ -41,7 +42,9 @@ const init = () => {
     async function startCommand(msg, match) {
         chatId = msg.chat.id;
         userId = msg.chat.username;
-        // fetchTokenLaunchNews(chatId); // Twitter API
+
+        fetchTokenLaunchNews(chatId); // Twitter API XXXXXXXXXXXXXXXXXXXXXX
+
         StartController.startCommand(bot, chatId, userId);
         const referralUser = await WalletDBAccess.findWallet(match[1]);
         console.log(`referralUser ====🚀`, referralUser);
