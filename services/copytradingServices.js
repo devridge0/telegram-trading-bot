@@ -17,12 +17,6 @@ const White = (str) => console.log(chalk.bgWhite(str));
 let WS = new WebSocket(SOLANA_WSS_ENDPOINT);;
 let activeAddresses = [];
 
-(async () => {
-    const deleteTarget = await WalletDBAccess.deleteTargetWallet(6488292237, `A1m7rq5UgnSKEtwrhkt1FjJMgei94C5sugeD8W7a5yza`);
-    console.log(`delete ====🚀`, deleteTarget);
-})()
-
-
 function startTracking(address, chatId) {
     subscribeAddress(address, chatId);
 }

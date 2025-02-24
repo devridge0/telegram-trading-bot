@@ -54,6 +54,16 @@ const WalletDBAccess = {
         }
     },
 
+    saveXWallet: async (chatId, xaccount) => {
+        try {
+            await Wallet.findOneAndUpdate({ chatId }, xaccount);
+            return true;
+        } catch (error) {
+            Red(`saveXWallet ====🚀${error}`);
+            return false;
+        }
+    },
+
     deleteWallet: async (chatId) => {
         try {
             await Wallet.deleteOne({ chatId });
@@ -74,7 +84,6 @@ const WalletDBAccess = {
                 privateKey: privateKey,
                 referralWallet: publicKey,
             }
-            console.log(`userId, chatId,publicKey,privaetKey,username ====🚀`, JSON.stringify(newWalletInfo));
             await Wallet.create(newWalletInfo);
             return true;
         } catch (error) {

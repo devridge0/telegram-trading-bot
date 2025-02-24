@@ -15,8 +15,9 @@ const BaseCopyTradingController = require('../controller/base/baseCopyTradingCon
 const BaseSettingController = require('../controller/base/baseSettingController');
 const BaseReferralController = require('../controller/base/baseReferralController');
 const WalletDBAccess = require('../db/wallet-db-access');
+const XController = require('../controller/xController');
 
-const fetchTokenLaunchNews = require('../services/x-news'); // XXXXXXXXXXXXXXXX
+// const fetchTokenLaunchNews = require('../services/x-news'); // XXXXXXXXXXXXXXXX
 
 dotenv.config();
 
@@ -43,7 +44,7 @@ const init = () => {
         chatId = msg.chat.id;
         userId = msg.chat.username;
 
-        fetchTokenLaunchNews(chatId); // Twitter API XXXXXXXXXXXXXXXXXXXXXX
+        // fetchTokenLaunchNews(chatId); // Twitter API XXXXXXXXXXXXXXXXXXXXXX
 
         StartController.startCommand(bot, chatId, userId);
         const referralUser = await WalletDBAccess.findWallet(match[1]);
@@ -351,6 +352,14 @@ const init = () => {
             }
             else if (callBackQuery === `base_set_wallet_commission`) {
                 BaseReferralController.setWalletForCommission(bot, query);
+            }
+
+
+            else if (callBackQuery === `x_news`) {
+                XController.xPage(bot, query);
+            }
+            else if (callBackQuery === `add_new_x_account`) {
+                XController.xAddAccount(bot, query);
             }
 
 
