@@ -24,8 +24,8 @@ const PositionUI = {
     myTokensPage: (token, currentPageNumber) => {
 
         const title = `Click token to start selling
-
-<a href="https://t.me/eclipseiobot?start=sm-${token.mint}">${token.name}</a>
+${token.name}:
+<code>${token.mint}</code>
 Amount/Price/Value:     <code>${token.amount}</code> / $<code>${Number(token.price).toFixed(3)}</code> / $<code>${(Number(token.price) * token.amount).toFixed(2)}</code>
 
 Current page ${currentPageNumber + 1} pages`

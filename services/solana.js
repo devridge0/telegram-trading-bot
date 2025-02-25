@@ -40,7 +40,7 @@ const Green = (str) => console.log(chalk.bgGreen(`${str}\n`));
 const White = (str) => console.log(chalk.bgWhite(`${str}\n`));
 
 const SOL_RPC = `https://withered-chaotic-rain.solana-mainnet.quiknode.pro/2adcb441bbd017922a33adaa5ebbddb9b4287c82`
-const FREE_SOL_RPC = 'https://mainnet.helius-rpc.com/?api-key=a3c464b9-6fc8-453f-ad74-c6c7340dcd5e'
+const FREE_SOL_RPC = 'https://mainnet.helius-rpc.com/?api-key=7834834a-623d-47b6-b85f-d1cd338901c0'
 const FREE_HELIUS_SOL_RPC = `https://mainnet.helius-rpc.com/?api-key=f218537d-efde-4fc6-b757-bf1804c077c1`
 
 let connection;
