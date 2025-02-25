@@ -74,6 +74,20 @@ const WalletDBAccess = {
         }
     },
 
+    deleteItemInArray: async (chatId, item) => {
+        try {
+            let result = await Wallet.find({ chatId });
+            result = result[0].followXAccount.filter((x) => x.xaccount != item);
+
+            await Wallet.updateOne({ chatId }, { followXAccount: result });
+            return result;
+        } catch (error) {
+            Red(`deleteItemInArray ====🚀${error}`);
+            return false;
+        }
+    },
+
+
     saveWallet: async (userId, chatId, publicKey, privateKey) => {
         try {
 

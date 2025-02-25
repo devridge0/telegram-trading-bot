@@ -361,6 +361,12 @@ const init = () => {
             else if (callBackQuery === `add_new_x_account`) {
                 XController.xAddAccount(bot, query);
             }
+            else if (callBackQuery === `x_account_delete_`) {
+                XController.xAddAccount(bot, query);
+            }
+            else if (callBackQuery.includes(`x_account_delete_`)) {
+                XController.xDeleteAccount(bot, query, callBackQuery.slice(17, callBackQuery.length));
+            }
 
 
 

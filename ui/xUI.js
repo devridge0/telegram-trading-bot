@@ -1,7 +1,6 @@
 const XUI = {
 
     xFollowPage: (xAccount) => {
-        console.log(`XXXXAccount ------------ ${xAccount}`)
         const title = `🔄 COPY: Select a wallet to follow
 
 Discover our top wallets -><a href="https://t.me/tokens_launchs">TOKEN NEWS</a>`;
@@ -15,8 +14,8 @@ Discover our top wallets -><a href="https://t.me/tokens_launchs">TOKEN NEWS</a>`
         ];
         const showAllWhale = (XAccounts) => {
             const result = XAccounts.map((xAccount) => [
-                { text: `${xAccount.xaccount}📝`, callback_data: `xAccount_page_${xAccount.address}` },
-                { text: `${xAccount.status === `false` ? "OFF🚫" : "Yes✅"}`, callback_data: `copytrade_${xAccount.xaccount}_${xAccount.status}` },
+                { text: `${xAccount.xaccount}📝`, callback_data: `xAccount_page_${xAccount.xaccount}` },
+                { text: `🗑 delete`, callback_data: `x_account_delete_${xAccount.xaccount}` },
             ]
             )
             button.push(...result);
