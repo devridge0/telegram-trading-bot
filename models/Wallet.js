@@ -14,6 +14,12 @@ const WalletSchema = new Schema({
     }
 
   ],
+  followXAccount: [
+    {
+      xaccount: String,
+      status: String
+    }
+  ],
   referralWallet: { type: String },
   buyAmount: { type: Number, default: 0.005, },
   slippage: { type: Number, default: 25, },
