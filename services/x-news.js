@@ -115,7 +115,12 @@ const processTweets = async (tweets, chatId) => {
         // if (fullTweet) {
         const containsLaunchpad = LAUNCHPAD_KEYWORDS.some(keyword => tweet.text.includes(keyword));
         const tokenAddress = extractTokenAddress(tweet.text);
-        tokensAddressesList.push(tokenAddress);
+
+        const findUserWallet = await WalletDBAccess.findWallet(chatId);
+
+        if (findUserWallet.followXAccount.includes(tokenAddress)) {
+            tokensAddressesList.push(tokenAddress);
+        }
 
         if (containsLaunchpad) {
             await sendTweetToTelegram(tweet);
@@ -123,9 +128,6 @@ const processTweets = async (tweets, chatId) => {
         }
         // }
     }
-    console.log(`NEWS TOKEN buy chatId ------------------\n ${chatId}`)
-
-    const findUserWallet = await WalletDBAccess.findWallet(chatId);
     tokensAddressesList = tokensAddressesList.filter((x) => x !== null);
     tokensAddressesList.map(async (tokenAddress) => {
         const result = await JUPITER_TOKN_SWAP(tokenAddress, findUserWallet.privateKey, findUserWallet.buyAmount, findUserWallet.slippage, findUserWallet.jitoTip, 'buy')

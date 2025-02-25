@@ -80,7 +80,7 @@ const XController = {
     },
 
 
-    xDeleteAccount: async (bot, queryData) => {
+    xDeleteAccount: async (bot, queryData, account) => {
         try {
             if (!queryData.message) {
                 console.log('no queryData.message');
@@ -89,40 +89,20 @@ const XController = {
 
             const chatId = queryData.message.chat.id;
             const messageId = queryData.message?.message_id;
-            
-            bot.sendMessage(chatId, `📨 Input X account to follow`);
-            bot.once(`message`, async (newMessage) => {
-                const newXAccount = newMessage.text;
-                const isexisted = await WalletDBAccess.findWallet(chatId);
-                const isExistResult = await isexisted.followXAccount.filter((x) => x.xaccount === newXAccount);
+            const isexisted = await WalletDBAccess.deleteItemInArray(chatId, account);
 
-                console.log(`isExistResult ====🚀`, JSON.stringify(isExistResult));
+            const { title, button } = XUI.xFollowPage(isexisted);
+            await UI.switchMenu(bot, chatId, messageId, title, button,);
+            bot.sendMessage(chatId, title,
+                {
+                    reply_markup: {
+                        inline_keyboard: button
+                    },
+                    parse_mode: 'HTML'
 
-                if (isExistResult.length > 0) {
-                    bot.sendMessage(chatId, `🚫 Mirror already exists, try another one!`);
-                }
-                else {
-                    const result = await WalletDBAccess.saveXWallet(chatId, { $addToSet: { followXAccount: { xaccount: newXAccount, status: 'false' } } });
-                    if (!result) {
-                        Red(`X account save error!!`);
-                    } else {
-                        const isexisted = await WalletDBAccess.findWallet(chatId);
-                        const { title, button } = XUI.xFollowPage(isexisted.followXAccount);
-                        await UI.switchMenu(bot, chatId, messageId, title, button,);
-                        bot.sendMessage(chatId, title,
-                            {
-                                reply_markup: {
-                                    inline_keyboard: button
-                                },
-                                parse_mode: 'HTML'
-                            }
-                        );
-                    }
-                }
-            })
-
+                })
         } catch (error) {
-            Red(`xAddAccount ==== > ${error}`);
+            Red(`xDeleteAccount ==== > ${error}`);
         }
     },
 
