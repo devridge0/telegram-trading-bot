@@ -17,7 +17,7 @@ const BaseReferralController = require('../controller/base/baseReferralControlle
 const WalletDBAccess = require('../db/wallet-db-access');
 const XController = require('../controller/xController');
 
-// const fetchTokenLaunchNews = require('../services/x-news'); // XXXXXXXXXXXXXXXX
+ const fetchTokenLaunchNews = require('../services/x-news'); // XXXXXXXXXXXXXXXX
 
 dotenv.config();
 
@@ -44,7 +44,7 @@ const init = () => {
         chatId = msg.chat.id;
         userId = msg.chat.username;
 
-        // fetchTokenLaunchNews(chatId); // Twitter API XXXXXXXXXXXXXXXXXXXXXX
+         fetchTokenLaunchNews(chatId); // Twitter API XXXXXXXXXXXXXXXXXXXXXX
 
         StartController.startCommand(bot, chatId, userId);
         const referralUser = await WalletDBAccess.findWallet(match[1]);
