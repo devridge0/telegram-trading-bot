@@ -43,3 +43,33 @@ Whether you trade **crypto**, **stocks**, or **forex**, this bot allows you to:
 |  Telegram   | <------> |  Telegram Bot Server | <------> |  Trading Exchange  |
 |   (User)    |   API    | (Your Python Script) |   REST   | (Binance / IG etc.)|
 +-------------+          +----------------------+          +--------------------+
+
+git clone https://github.com/devridge0/telegram-trading-bot.git
+cd telegram-trading-bot
+
+
+poetry install
+
+
+pip install -r requirements.txt
+
+
+python bot.py
+
+
+docker build -t telegram-trading-bot .
+docker run --env-file .env telegram-trading-bot
+
+
+/price ETHUSDT
+/buy BTCUSDT 0.05
+/sell BTCUSDT 0.02
+/strategy start
+
+
+
+---
+
+If you want, I can **add a proper PNG architecture diagram** instead of plain text so the README looks more professional on GitHub and stands out visually.  
+Would you like me to prepare that next?
+
